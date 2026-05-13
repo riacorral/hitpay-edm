@@ -1,0 +1,54 @@
+{
+  "name": "hitpay-edm",
+  "version": "1.0.0",
+  "description": "CLI tool to create HitPay-branded email campaigns (EDMs) from markdown",
+  "type": "module",
+  "bin": {
+    "hitpay-edm": "./dist/cli.js"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "dev:cli": "tsx src/cli.ts",
+    "build": "tsc -p tsconfig.cli.json && next build",
+    "start": "next start",
+    "test": "vitest run --exclude test/e2e.test.ts",
+    "test:e2e": "vitest run test/e2e.test.ts",
+    "test:watch": "vitest --exclude test/e2e.test.ts",
+    "typecheck": "tsc --noEmit",
+    "typecheck:cli": "tsc -p tsconfig.cli.json --noEmit"
+  },
+  "dependencies": {
+    "@auth/core": "^0.41.2",
+    "@react-email/components": "^0.0.31",
+    "@react-email/render": "^1.0.3",
+    "@supabase/ssr": "^0.10.3",
+    "@supabase/supabase-js": "^2.105.4",
+    "@tailwindcss/postcss": "^4.3.0",
+    "@vercel/blob": "^2.3.0",
+    "autoprefixer": "^10.5.0",
+    "chalk": "^5.4.0",
+    "cloudinary": "^2.9.0",
+    "commander": "^13.0.0",
+    "dotenv": "^17.3.1",
+    "gray-matter": "^4.0.3",
+    "loops": "^4.0.0",
+    "mjml": "^4.18.0",
+    "next": "^15.5.18",
+    "next-auth": "^5.0.0-beta.31",
+    "open": "^10.0.0",
+    "postcss": "^8.5.14",
+    "react": "^19.0.0",
+    "tailwindcss": "^4.3.0",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.2.3",
+    "eslint": "^9.39.4",
+    "eslint-config-next": "^16.2.6",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  }
+}
