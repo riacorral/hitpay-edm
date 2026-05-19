@@ -1,5 +1,7 @@
 import type { ParsedEdm, EdmSection } from '../schema/edm.js';
 
+const CDN = 'https://3cse8uwfv1q9zblo.public.blob.vercel-storage.com/hitpay-edm';
+
 const B = {
   deepBlue: '#002771',
   actionBlue: '#2465DE',
@@ -56,13 +58,16 @@ function sectionToMjml(section: EdmSection): string {
     </mj-column>
   </mj-section>`;
 
-    case 'paragraph':
+    case 'paragraph': {
+      const isCentered = section.text.endsWith('{.center}');
+      const paraText = isCentered ? section.text.slice(0, -'{.center}'.length).trim() : section.text;
       return `
   <mj-section padding="0">
     <mj-column padding="0 32px 16px">
-      <mj-text font-size="14px" color="${B.textSecondary}" line-height="1.6" padding="0">${inlineMd(section.text)}</mj-text>
+      <mj-text font-size="14px" color="${B.textSecondary}" line-height="1.6" padding="0"${isCentered ? ' align="center"' : ''}>${inlineMd(paraText)}</mj-text>
     </mj-column>
   </mj-section>`;
+    }
 
     case 'bullets':
       return `
@@ -346,12 +351,24 @@ export function generateMjml(edm: ParsedEdm): string {
 
   let ctaSection = '';
   if (fm.template === 'product-launch') {
-    ctaSection = `
+    if (fm.secondaryCtaText && fm.secondaryCtaUrl) {
+      ctaSection = `
+  <mj-section padding="0 32px 48px">
+    <mj-column width="50%" vertical-align="middle" padding="0 16px 0 0">
+      <mj-text align="right" padding="0"><a href="${esc(fm.secondaryCtaUrl)}" style="font-family:${B.font};font-size:14px;color:${B.actionBlue};text-decoration:underline;">${esc(fm.secondaryCtaText)}</a></mj-text>
+    </mj-column>
+    <mj-column width="50%" vertical-align="middle" padding="0">
+      <mj-button href="${esc(fm.ctaUrl)}" background-color="${B.actionBlue}" color="${B.white}" border-radius="6px" font-size="16px" font-weight="600" inner-padding="14px 28px" align="left">${esc(fm.ctaText)}</mj-button>
+    </mj-column>
+  </mj-section>`;
+    } else {
+      ctaSection = `
   <mj-section padding="0 32px 48px">
     <mj-column>
       <mj-button href="${esc(fm.ctaUrl)}" background-color="${B.actionBlue}" color="${B.white}" border-radius="6px" font-size="16px" font-weight="600" inner-padding="14px 28px" align="center">${esc(fm.ctaText)}</mj-button>
     </mj-column>
   </mj-section>`;
+    }
   }
 
   return `<mjml>
@@ -384,23 +401,23 @@ export function generateMjml(edm: ParsedEdm): string {
             <table cellpadding="0" cellspacing="0" style="margin:0 auto;">
               <tr>
                 <td style="vertical-align:middle;padding-right:10px;">
-                  <img src="https://3cse8uwfv1q9zblo.public.blob.vercel-storage.com/hitpay-edm/hitpay-logogram.svg" width="22" height="22" alt="HitPay" style="display:block;" />
+                  <img src="${CDN}/hitpay-logogram.svg" width="22" height="22" alt="HitPay" style="display:block;" />
                 </td>
                 <td style="vertical-align:middle;color:${B.neutral200};font-size:18px;line-height:1;padding-right:10px;">|</td>
                 <td style="vertical-align:middle;padding:0 3px;">
-                  <a href="https://www.instagram.com/hitpayapp"><img src="https://3cse8uwfv1q9zblo.public.blob.vercel-storage.com/hitpay-edm/social-instagram.png" width="26" height="26" alt="Instagram" style="display:block;" /></a>
+                  <a href="https://www.instagram.com/hitpayapp"><img src="${CDN}/social-instagram.png" width="26" height="26" alt="Instagram" style="display:block;" /></a>
                 </td>
                 <td style="vertical-align:middle;padding:0 3px;">
-                  <a href="https://www.facebook.com/hitpayapp"><img src="https://3cse8uwfv1q9zblo.public.blob.vercel-storage.com/hitpay-edm/social-facebook.png" width="26" height="26" alt="Facebook" style="display:block;" /></a>
+                  <a href="https://www.facebook.com/hitpayapp"><img src="${CDN}/social-facebook.png" width="26" height="26" alt="Facebook" style="display:block;" /></a>
                 </td>
                 <td style="vertical-align:middle;padding:0 3px;">
-                  <a href="https://www.linkedin.com/company/hit-pay/"><img src="https://3cse8uwfv1q9zblo.public.blob.vercel-storage.com/hitpay-edm/social-linkedin.png" width="26" height="26" alt="LinkedIn" style="display:block;" /></a>
+                  <a href="https://www.linkedin.com/company/hit-pay/"><img src="${CDN}/social-linkedin.png" width="26" height="26" alt="LinkedIn" style="display:block;" /></a>
                 </td>
                 <td style="vertical-align:middle;padding:0 3px;">
-                  <a href="https://www.tiktok.com/@hitpayapp"><img src="https://3cse8uwfv1q9zblo.public.blob.vercel-storage.com/hitpay-edm/social-tiktok.png" width="26" height="26" alt="TikTok" style="display:block;" /></a>
+                  <a href="https://www.tiktok.com/@hitpayapp"><img src="${CDN}/social-tiktok.png" width="26" height="26" alt="TikTok" style="display:block;" /></a>
                 </td>
                 <td style="vertical-align:middle;padding:0 3px;">
-                  <a href="https://www.youtube.com/@hitpayapp"><img src="https://3cse8uwfv1q9zblo.public.blob.vercel-storage.com/hitpay-edm/social-youtube.png" width="26" height="26" alt="YouTube" style="display:block;" /></a>
+                  <a href="https://www.youtube.com/@hitpayapp"><img src="${CDN}/social-youtube.png" width="26" height="26" alt="YouTube" style="display:block;" /></a>
                 </td>
                 <td style="vertical-align:middle;color:${B.neutral200};font-size:18px;line-height:1;padding-left:10px;padding-right:10px;">|</td>
                 <td style="vertical-align:middle;">
