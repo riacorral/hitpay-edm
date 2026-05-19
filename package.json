@@ -9,7 +9,8 @@
   "scripts": {
     "dev": "next dev",
     "dev:cli": "tsx src/cli.ts",
-    "build": "tsc -p tsconfig.cli.json && next build",
+    "build": "next build",
+    "build:cli": "tsc -p tsconfig.cli.json",
     "start": "next start",
     "test": "vitest run --exclude test/e2e.test.ts",
     "test:e2e": "vitest run test/e2e.test.ts",
