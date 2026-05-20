@@ -19,6 +19,7 @@
     "typecheck:cli": "tsc -p tsconfig.cli.json --noEmit"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.97.1",
     "@auth/core": "^0.41.2",
     "@react-email/components": "^0.0.31",
     "@react-email/render": "^1.0.3",
