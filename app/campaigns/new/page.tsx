@@ -2,6 +2,53 @@
 
 import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import { EmailPreview } from '@/components/email-preview';
+
+// ── Markdown toolbar helpers ──────────────────────────────────────────────
+function wrapSelection(
+  textarea: HTMLTextAreaElement,
+  setValue: (v: string) => void,
+  before: string,
+  after: string,
+) {
+  const { selectionStart: s, selectionEnd: e, value } = textarea;
+  const selected = value.slice(s, e) || 'text';
+  const newVal = value.slice(0, s) + before + selected + after + value.slice(e);
+  setValue(newVal);
+  setTimeout(() => {
+    textarea.focus();
+    textarea.setSelectionRange(s + before.length, s + before.length + selected.length);
+  }, 0);
+}
+
+function prefixLines(
+  textarea: HTMLTextAreaElement,
+  setValue: (v: string) => void,
+  prefix: string,
+) {
+  const { selectionStart: s, selectionEnd: e, value } = textarea;
+  const before = value.slice(0, s);
+  const lineStart = before.lastIndexOf('\n') + 1;
+  const selected = value.slice(lineStart, e);
+  const prefixed = selected.split('\n').map(l => prefix + l.replace(/^#{1,6}\s?/, '')).join('\n');
+  const newVal = value.slice(0, lineStart) + prefixed + value.slice(e);
+  setValue(newVal);
+  setTimeout(() => { textarea.focus(); }, 0);
+}
+
+function numberLines(
+  textarea: HTMLTextAreaElement,
+  setValue: (v: string) => void,
+) {
+  const { selectionStart: s, selectionEnd: e, value } = textarea;
+  const before = value.slice(0, s);
+  const lineStart = before.lastIndexOf('\n') + 1;
+  const selected = value.slice(lineStart, e);
+  const numbered = selected.split('\n').map((l, i) => `${i + 1}. ${l.replace(/^\d+\.\s?/, '')}`).join('\n');
+  const newVal = value.slice(0, lineStart) + numbered + value.slice(e);
+  setValue(newVal);
+  setTimeout(() => { textarea.focus(); }, 0);
+}
 import Link from 'next/link';
 
 type EditMode = 'refine' | 'edit' | 'regenerate' | 'brief';
@@ -16,6 +63,8 @@ export default function NewCampaignPage() {
   // Result state
   const [previewHtml, setPreviewHtml] = useState('');
   const [markdown, setMarkdown] = useState('');
+  const [savedId, setSavedId] = useState<string | null>(null); // set after first save
+  const [isDirty, setIsDirty] = useState(false); // true when unsaved changes exist
 
   // Edit mode (shown after first generation)
   const [editMode, setEditMode] = useState<EditMode>('refine');
@@ -29,6 +78,7 @@ export default function NewCampaignPage() {
   const [error, setError] = useState('');
 
   const fileRef = useRef<HTMLInputElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
   const hasPreview = !!previewHtml;
 
   // ── Image upload ──────────────────────────────────────
@@ -49,7 +99,7 @@ export default function NewCampaignPage() {
     setUploading(false);
   }
 
-  // ── Generate (first time) ─────────────────────────────
+  // ── Generate (first time or from brief tab) ──────────
   async function handleGenerate() {
     if (!prompt.trim()) return;
     setLoading(true);
@@ -66,6 +116,7 @@ export default function NewCampaignPage() {
       setMarkdown(data.markdown);
       setEditedMarkdown(data.markdown);
       setEditMode('refine');
+      setIsDirty(!!savedId); // dirty if we already saved a previous version
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Failed to generate email');
     } finally {
@@ -90,6 +141,7 @@ export default function NewCampaignPage() {
       setMarkdown(data.markdown);
       setEditedMarkdown(data.markdown);
       setRefinePrompt('');
+      setIsDirty(true);
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Refinement failed');
     } finally {
@@ -111,6 +163,7 @@ export default function NewCampaignPage() {
       if (!res.ok) throw new Error(data.error ?? 'Render failed');
       setPreviewHtml(data.html);
       setMarkdown(editedMarkdown);
+      setIsDirty(true);
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Render failed');
     } finally {
@@ -118,19 +171,37 @@ export default function NewCampaignPage() {
     }
   }
 
-  // ── Save ──────────────────────────────────────────────
+  // ── Save (POST first time, PATCH thereafter) ──────────
   async function handleSave() {
     setSaving(true);
     setError('');
     try {
-      const res = await fetch('/api/campaigns', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ markdown }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error ?? 'Save failed');
-      router.push(`/campaigns/${data.campaign.id}`);
+      let campaignId = savedId;
+
+      if (savedId) {
+        // Already saved — update in place
+        const res = await fetch(`/api/campaigns/${savedId}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ markdown }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error ?? 'Save failed');
+      } else {
+        // First save — create new
+        const res = await fetch('/api/campaigns', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ markdown }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error ?? 'Save failed');
+        campaignId = data.campaign.id;
+        setSavedId(campaignId);
+      }
+
+      setIsDirty(false);
+      router.push(`/campaigns/${campaignId}`);
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Save failed');
       setSaving(false);
@@ -144,6 +215,8 @@ export default function NewCampaignPage() {
     setEditedMarkdown('');
     setError('');
     setRefinePrompt('');
+    setSavedId(null);
+    setIsDirty(false);
   }
 
   return (
@@ -294,11 +367,55 @@ export default function NewCampaignPage() {
                   {/* ── Edit text: direct markdown edit ── */}
                   {editMode === 'edit' && (
                     <div>
-                      <p className="text-xs text-gray-500 mb-2">Edit the email directly. Click Re-render to update the preview.</p>
+                      {/* Toolbar */}
+                      <div className="flex flex-wrap items-center gap-1 mb-2 p-1.5 bg-gray-50 border border-gray-200 rounded-lg">
+                        {/* Format buttons */}
+                        {[
+                          { label: 'B',  title: 'Bold',   action: () => textareaRef.current && wrapSelection(textareaRef.current, setEditedMarkdown, '**', '**'), style: { fontWeight: 700 } },
+                          { label: 'I',  title: 'Italic', action: () => textareaRef.current && wrapSelection(textareaRef.current, setEditedMarkdown, '_', '_'),   style: { fontStyle: 'italic' } },
+                          { label: 'H1', title: 'Heading 1', action: () => textareaRef.current && prefixLines(textareaRef.current, setEditedMarkdown, '# '),  style: {} },
+                          { label: 'H2', title: 'Heading 2', action: () => textareaRef.current && prefixLines(textareaRef.current, setEditedMarkdown, '## '), style: {} },
+                          { label: '•',  title: 'Bullet list',   action: () => textareaRef.current && prefixLines(textareaRef.current, setEditedMarkdown, '- '),  style: { fontSize: '16px', lineHeight: '1' } },
+                          { label: '1.', title: 'Numbered list', action: () => textareaRef.current && numberLines(textareaRef.current, setEditedMarkdown), style: { fontSize: '11px' } },
+                        ].map(btn => (
+                          <button
+                            key={btn.label}
+                            type="button"
+                            title={btn.title}
+                            onClick={btn.action}
+                            className="w-7 h-7 flex items-center justify-center text-xs text-gray-600 rounded hover:bg-white hover:shadow-sm border border-transparent hover:border-gray-200 transition-all"
+                            style={btn.style}
+                          >
+                            {btn.label}
+                          </button>
+                        ))}
+
+                        <div className="w-px h-4 bg-gray-200 mx-0.5" />
+
+                        {/* Color buttons */}
+                        {[
+                          { color: '#002771', title: 'Deep blue',  label: 'A' },
+                          { color: '#000000', title: 'Black',      label: 'A' },
+                          { color: '#61667C', title: 'Gray',       label: 'A' },
+                        ].map(c => (
+                          <button
+                            key={c.color}
+                            type="button"
+                            title={c.title}
+                            onClick={() => textareaRef.current && wrapSelection(textareaRef.current, setEditedMarkdown, `<span style="color:${c.color}">`, '</span>')}
+                            className="w-7 h-7 flex items-center justify-center text-xs font-bold rounded hover:bg-white hover:shadow-sm border border-transparent hover:border-gray-200 transition-all"
+                            style={{ color: c.color }}
+                          >
+                            {c.label}
+                          </button>
+                        ))}
+                      </div>
+
                       <textarea
+                        ref={textareaRef}
                         value={editedMarkdown}
                         onChange={e => setEditedMarkdown(e.target.value)}
-                        rows={14}
+                        rows={13}
                         className="w-full text-xs text-gray-700 border border-gray-200 rounded-lg px-3 py-2 outline-none focus:border-blue-400 resize-none font-mono mb-2"
                         spellCheck={false}
                       />
@@ -407,18 +524,8 @@ export default function NewCampaignPage() {
             </div>
 
             {/* ── Right: email preview ── */}
-            <div className="flex-1 rounded-xl overflow-hidden border border-gray-200 shadow-sm bg-white" style={{ height: '860px' }}>
-              {loading && !previewHtml ? (
-                <div className="w-full h-full flex items-center justify-center">
-                  <span className="animate-spin w-6 h-6 border-2 border-blue-400 border-t-transparent rounded-full" />
-                </div>
-              ) : (
-                <iframe
-                  srcDoc={previewHtml}
-                  className="w-full h-full border-0"
-                  title="Email preview"
-                />
-              )}
+            <div className="flex-1 rounded-xl overflow-hidden border border-gray-200 shadow-sm" style={{ height: '860px' }}>
+              <EmailPreview html={previewHtml} loading={loading && !previewHtml} />
             </div>
           </div>
         )}

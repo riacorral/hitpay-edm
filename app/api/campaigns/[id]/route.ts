@@ -15,9 +15,8 @@ export async function GET(_req: NextRequest, { params }: Params) {
   const supabase = createAdminClient();
   const { data, error } = await supabase
     .from('campaigns')
-    .select('*')
+    .select('*, users!user_id(name, email, avatar_url)')
     .eq('id', id)
-    .eq('user_id', user.id)
     .single();
 
   if (error || !data) return NextResponse.json({ error: 'Not found' }, { status: 404 });

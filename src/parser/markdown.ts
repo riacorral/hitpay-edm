@@ -8,10 +8,31 @@ import { EdmFrontmatter, type EdmSection, type ParsedEdm } from '../schema/edm.j
  * Body is parsed into typed sections: headings, paragraphs, bullets,
  * blockquotes (with optional attribution), CTAs, dividers, images, metrics.
  */
+function normalizeKeys(data: Record<string, unknown>): Record<string, unknown> {
+  // Convert snake_case keys to camelCase so AI-generated frontmatter parses cleanly
+  // e.g. preview_text → previewText, cta_url → ctaUrl
+  const snakeToCamel = (s: string) => s.replace(/_([a-z])/g, (_, c: string) => c.toUpperCase());
+  return Object.fromEntries(Object.entries(data).map(([k, v]) => [snakeToCamel(k), v]));
+}
+
+function normalizeNumberedLists(content: string): string {
+  // Split inline numbered lists onto separate lines.
+  // e.g. "1. Item A 2. Item B 3. Item C" → "1. Item A\n2. Item B\n3. Item C"
+  const lines = content.split('\n');
+  const normalized = lines.flatMap(line => {
+    const trimmed = line.trim();
+    if (!/^\d+\.\s+/.test(trimmed)) return [line];
+    if (!/\s\d+\.\s/.test(trimmed)) return [line]; // no inline continuation
+    const parts = trimmed.split(/\s+(?=\d+\.\s)/);
+    return parts.length > 1 ? parts : [line];
+  });
+  return normalized.join('\n');
+}
+
 export function parseEdm(markdown: string): ParsedEdm {
   const { data, content } = matter(markdown);
-  const frontmatter = EdmFrontmatter.parse(data);
-  const sections = parseBody(content);
+  const frontmatter = EdmFrontmatter.parse(normalizeKeys(data));
+  const sections = parseBody(normalizeNumberedLists(content));
   return { frontmatter, sections };
 }
 
@@ -275,6 +296,17 @@ function parseBody(body: string): EdmSection[] {
       continue;
     }
 
+    // Ordered list (1. 2. 3.)
+    if (/^\d+\.\s+/.test(trimmed)) {
+      const items: string[] = [];
+      while (i < lines.length && /^\d+\.\s+/.test(lines[i].trim())) {
+        items.push(lines[i].trim().replace(/^\d+\.\s+/, ''));
+        i++;
+      }
+      sections.push({ type: 'bullets', items, ordered: true });
+      continue;
+    }
+
     // Bullet list (- or *)
     if (/^[-*]\s+/.test(trimmed)) {
       const items: string[] = [];
@@ -322,6 +354,7 @@ function parseBody(body: string): EdmSection[] {
       !/^---+$/.test(lines[i].trim()) &&
       !/^\*\*\*+$/.test(lines[i].trim()) &&
       !/^[-*]\s+/.test(lines[i].trim()) &&
+      !/^\d+\.\s+/.test(lines[i].trim()) &&
       !/^!\[/.test(lines[i].trim()) &&
       !/^\[.+\]\(.+\)\{\.cta\}$/.test(lines[i].trim())
     ) {

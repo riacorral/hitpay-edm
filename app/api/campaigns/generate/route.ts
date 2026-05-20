@@ -4,21 +4,30 @@ import { auth } from '@/lib/auth';
 import { parseEdm } from '@/src/parser/markdown';
 import { renderEdm } from '@/src/renderer/engine';
 
-const SYSTEM_PROMPT = `You are an expert email copywriter for HitPay, a fintech payment solutions company based in Singapore. You write professional, on-brand EDM (email direct mail) campaigns.
+const SYSTEM_PROMPT = `You are an expert email copywriter for HitPay, a fintech payment solutions company based in Singapore.
 
-Output a complete EDM markdown document with YAML frontmatter. Output ONLY the markdown — no explanation, no preamble, no code fences.
+CRITICAL FORMATTING RULE: Your response must begin with exactly three dashes on the first line (---) followed immediately by the YAML frontmatter. Do not include any text, explanation, or code fences before or after the document. The very first characters of your response must be: ---
 
-FORMAT:
+THE MOST IMPORTANT RULE: The FIRST field inside the frontmatter MUST be "template:" — without it the email cannot render. ALWAYS include it.
+
+EXACT REQUIRED FORMAT:
 ---
-template: TEMPLATE_TYPE
-subject: Subject line (max 60 chars)
-previewText: Preview text shown in inbox (max 90 chars)
-[template-specific fields below]
+template: partner-spotlight
+subject: Example subject line
+previewText: Preview text shown in email clients
+partnerName: Partner Name
+ctaUrl: https://hitpayapp.com
+ctaText: Learn More
 ---
 
-Body content in markdown here.
+## Heading
 
-AVAILABLE TEMPLATES (pick the most appropriate one):
+Body paragraph here.
+
+- bullet one
+- bullet two
+
+AVAILABLE TEMPLATES (pick the most appropriate):
 
 product-launch — announcing a new product
   productName: "string" (required)
@@ -51,7 +60,7 @@ event-invitation — event or webinar
   eventLocation: "string" (optional)
   primaryCtaText: "string" (optional)
   primaryCtaUrl: "https://..." (optional)
-  ctaUrl: "https://..." (required — use same as primaryCtaUrl if provided, else hitpayapp.com)
+  ctaUrl: "https://..." (required)
   ctaText: "string" (optional)
 
 partner-spotlight — featuring a partner
@@ -61,7 +70,7 @@ partner-spotlight — featuring a partner
   ctaText: "string" (optional)
 
 important-announcement — urgent notice
-  badgeText: "string" (optional, default "Important Notice")
+  badgeText: "string" (optional)
   ctaUrl: "https://..." (optional)
   ctaText: "string" (optional)
   heroImage: "https://..." (optional)
@@ -88,13 +97,19 @@ compliance — regulatory or policy update
   ctaText: "string" (optional)
 
 RULES:
-- All URL values must be fully-qualified (start with https://). Default to "https://hitpayapp.com" when none is provided.
-- ctaUrl for event-invitation is always required — use the registration link or https://hitpayapp.com
-- Refer to HitPay's business customers as "merchant partners"
-- Tone: professional, warm, confident. Never pushy or salesy.
-- Body: 2–4 paragraphs unless it's a newsletter. Use ## headings, - bullet points, **bold** as needed.
-- If images are provided, use the first one as heroImage in frontmatter (if the template supports it). Additional images can be embedded in the body as: ![description](url)
-- Write complete, polished copy — not placeholders.`;
+- All URLs must start with https://. Use https://hitpayapp.com as fallback.
+- Refer to HitPay's business customers as "merchant partners".
+- Tone: professional, warm, confident.
+- Do NOT use merge tags like {{first_name}} or {firstName} — write plain copy.
+- If images are provided, use the first as heroImage (if template supports it).
+- Write complete polished copy, no placeholders.`;
+
+function cleanOutput(raw: string): string {
+  // Strip code fences if present (```markdown ... ``` or ``` ... ```)
+  const fenceMatch = raw.match(/^```[^\n]*\n([\s\S]*?)\n?```\s*$/);
+  if (fenceMatch) return fenceMatch[1].trim();
+  return raw.trim();
+}
 
 export async function POST(req: Request) {
   const session = await auth();
@@ -113,21 +128,28 @@ export async function POST(req: Request) {
     ? `${prompt.trim()}\n\nImages to include: ${images.join(', ')}`
     : prompt.trim();
 
-  const message = await client.messages.create({
-    model: 'claude-sonnet-4-6',
-    max_tokens: 2048,
-    system: SYSTEM_PROMPT,
-    messages: [{ role: 'user', content: userMessage }],
-  });
-
-  const markdown = (message.content[0] as { type: string; text: string }).text.trim();
-
   try {
+    const message = await client.messages.create({
+      model: 'claude-sonnet-4-6',
+      max_tokens: 2048,
+      system: SYSTEM_PROMPT,
+      messages: [{ role: 'user', content: userMessage }],
+    });
+
+    const raw = (message.content[0] as { type: string; text: string }).text;
+    const markdown = cleanOutput(raw);
+
+    if (!markdown.startsWith('---')) {
+      return NextResponse.json({
+        error: 'Generation produced an unexpected format. Please try again.',
+      }, { status: 422 });
+    }
+
     const parsed = parseEdm(markdown);
     const html = await renderEdm(parsed);
     return NextResponse.json({ markdown, html });
   } catch (err) {
-    const message = err instanceof Error ? err.message : 'Failed to render generated email';
-    return NextResponse.json({ error: message, markdown }, { status: 422 });
+    const msg = err instanceof Error ? err.message : 'Generation failed';
+    return NextResponse.json({ error: msg }, { status: 422 });
   }
 }

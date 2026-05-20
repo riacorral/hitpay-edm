@@ -150,7 +150,7 @@ export type EdmFrontmatter = z.infer<typeof EdmFrontmatter>;
 export const EdmSectionSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('heading'), level: z.number(), text: z.string() }),
   z.object({ type: z.literal('paragraph'), text: z.string() }),
-  z.object({ type: z.literal('bullets'), items: z.array(z.string()) }),
+  z.object({ type: z.literal('bullets'), items: z.array(z.string()), ordered: z.boolean().optional() }),
   z.object({ type: z.literal('blockquote'), text: z.string(), attribution: z.string().optional() }),
   z.object({ type: z.literal('cta'), text: z.string(), url: z.string() }),
   z.object({ type: z.literal('divider') }),

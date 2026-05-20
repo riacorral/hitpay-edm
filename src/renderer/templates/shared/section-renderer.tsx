@@ -58,7 +58,7 @@ export function SectionRenderer({ section }: SectionRendererProps) {
         <Section style={{ padding: `0 ${BRAND.spacing.lg}`, paddingBottom: '16px' }}>
           {section.items.map((item, i) => (
             <Row key={i}>
-              <Column style={{ width: '20px', verticalAlign: 'top', paddingTop: '1px' }}>
+              <Column style={{ width: section.ordered ? '24px' : '20px', verticalAlign: 'top', paddingTop: '1px' }}>
                 <Text
                   style={{
                     fontFamily: BRAND.fonts.body,
@@ -70,10 +70,10 @@ export function SectionRenderer({ section }: SectionRendererProps) {
                     padding: '0',
                   }}
                 >
-                  •
+                  {section.ordered ? `${i + 1}.` : '•'}
                 </Text>
               </Column>
-              <Column style={{ verticalAlign: 'top', paddingLeft: '4px', paddingBottom: i < section.items.length - 1 ? '8px' : '0' }}>
+              <Column style={{ verticalAlign: 'top', paddingLeft: '4px', paddingBottom: i < section.items.length - 1 ? (section.ordered ? '12px' : '8px') : '0' }}>
                 <Text
                   style={{
                     fontFamily: BRAND.fonts.body,
