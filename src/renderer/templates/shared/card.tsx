@@ -36,10 +36,8 @@ export function MetricCard({ value, label, solo }: MetricCardProps) {
         borderRadius: BRAND.email.cardRadius,
         padding: BRAND.spacing.lg,
         textAlign: 'center' as const,
-        display: 'inline-block',
-        width: solo ? '50%' : '44%',
-        verticalAlign: 'top',
-        margin: solo ? '0 auto 12px' : '0 2% 12px',
+        ...(solo ? {} : { display: 'inline-block', width: '44%', verticalAlign: 'top' as const }),
+        margin: solo ? '0 0 12px' : '0 2% 12px',
       }}
     >
       <Text

@@ -1,4 +1,4 @@
-import NextAuth from 'next-auth';
+import NextAuth, { type NextAuthConfig } from 'next-auth';
 import Google from 'next-auth/providers/google';
 import { createClient } from '@supabase/supabase-js';
 
@@ -9,7 +9,7 @@ function getSupabaseAdmin() {
   );
 }
 
-export const { handlers, auth, signIn, signOut } = NextAuth({
+const authConfig: NextAuthConfig = {
   providers: [
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -51,7 +51,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     signIn: '/auth/signin',
     error: '/auth/error',
   },
-});
+};
+
+export const { handlers, auth, signIn, signOut } = NextAuth(authConfig);
 
 declare module 'next-auth' {
   interface Session {

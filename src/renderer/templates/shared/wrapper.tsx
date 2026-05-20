@@ -32,7 +32,7 @@ export function Wrapper({ previewText, children }: WrapperProps) {
 `}</style>
         <Font
           fontFamily="Hauora"
-          fallbackFontFamily={['Manrope', 'Arial', 'Helvetica', 'sans-serif']}
+          fallbackFontFamily={['Arial', 'Helvetica']}
           webFont={{
             url: BRAND.fontUrls.regular,
             format: 'woff2',
@@ -42,7 +42,7 @@ export function Wrapper({ previewText, children }: WrapperProps) {
         />
         <Font
           fontFamily="Hauora"
-          fallbackFontFamily={['Manrope', 'Arial', 'Helvetica', 'sans-serif']}
+          fallbackFontFamily={['Arial', 'Helvetica']}
           webFont={{
             url: BRAND.fontUrls.semibold,
             format: 'woff2',
@@ -52,7 +52,7 @@ export function Wrapper({ previewText, children }: WrapperProps) {
         />
         <Font
           fontFamily="Hauora"
-          fallbackFontFamily={['Manrope', 'Arial', 'Helvetica', 'sans-serif']}
+          fallbackFontFamily={['Arial', 'Helvetica']}
           webFont={{
             url: BRAND.fontUrls.bold,
             format: 'woff2',
