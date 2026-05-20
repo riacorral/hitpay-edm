@@ -118,6 +118,7 @@ function NewCampaignInner() {
   const [error, setError] = useState('');
 
   const fileRef = useRef<HTMLInputElement>(null);
+  const insertImageRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const hasPreview = !!previewHtml;
 
@@ -158,6 +159,36 @@ function NewCampaignInner() {
       else setError(data.error ?? 'Upload failed');
     }
     setImages(prev => [...prev, ...added]);
+    setUploading(false);
+  }
+
+  // ── Insert image into markdown at cursor ─────────────
+  async function handleInsertImage(files: FileList) {
+    setUploading(true);
+    setError('');
+    for (const file of Array.from(files)) {
+      if (!file.type.startsWith('image/')) continue;
+      if (file.size > 25 * 1024 * 1024) { setError(`${file.name} is too large (max 25MB)`); continue; }
+      const compressed = await compressImage(file);
+      const form = new FormData();
+      form.append('file', compressed);
+      const res = await fetch('/api/images/upload', { method: 'POST', body: form });
+      const data = await res.json();
+      if (res.ok && textareaRef.current) {
+        // Insert ![alt](url) at cursor — selected text becomes the alt
+        const { selectionStart: s, selectionEnd: e, value } = textareaRef.current;
+        const alt = value.slice(s, e);
+        const insert = `![${alt}](${data.url})`;
+        const newVal = value.slice(0, s) + insert + value.slice(e);
+        setEditedMarkdown(newVal);
+        setTimeout(() => {
+          textareaRef.current?.focus();
+          textareaRef.current?.setSelectionRange(s + 2, s + 2 + alt.length);
+        }, 0);
+      } else if (!res.ok) {
+        setError(data.error ?? 'Upload failed');
+      }
+    }
     setUploading(false);
   }
 
@@ -480,6 +511,19 @@ function NewCampaignInner() {
                             {c.label}
                           </button>
                         ))}
+
+                        <div className="w-px h-4 bg-gray-200 mx-0.5" />
+
+                        {/* Insert image */}
+                        <button
+                          type="button"
+                          title="Insert image"
+                          disabled={uploading}
+                          onClick={() => insertImageRef.current?.click()}
+                          className="w-7 h-7 flex items-center justify-center text-xs text-gray-600 rounded hover:bg-white hover:shadow-sm border border-transparent hover:border-gray-200 transition-all disabled:opacity-40"
+                        >
+                          {uploading ? <span className="animate-spin inline-block w-3 h-3 border border-gray-400 border-t-transparent rounded-full" /> : '🖼'}
+                        </button>
                       </div>
 
                       <textarea
@@ -619,6 +663,17 @@ function NewCampaignInner() {
         className="hidden"
         onChange={e => {
           if (e.target.files?.length) handleImageUpload(e.target.files);
+          e.target.value = '';
+        }}
+      />
+      <input
+        ref={insertImageRef}
+        type="file"
+        accept="image/*"
+        multiple
+        className="hidden"
+        onChange={e => {
+          if (e.target.files?.length) handleInsertImage(e.target.files);
           e.target.value = '';
         }}
       />
