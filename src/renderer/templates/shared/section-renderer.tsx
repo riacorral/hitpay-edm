@@ -55,21 +55,39 @@ export function SectionRenderer({ section }: SectionRendererProps) {
 
     case 'bullets':
       return (
-        <Section style={{ padding: `0 ${BRAND.spacing.lg}`, marginBottom: '16px' }}>
+        <Section style={{ padding: `0 ${BRAND.spacing.lg}`, paddingBottom: '16px' }}>
           {section.items.map((item, i) => (
-            <Text
-              key={i}
-              style={{
-                fontFamily: BRAND.fonts.body,
-                fontSize: BRAND.fontSizes.bodySmall,
-                color: BRAND.colors.textSecondary,
-                lineHeight: '1.6',
-                margin: '0 0 8px 0',
-                paddingLeft: '16px',
-              }}
-            >
-              {'• '}{renderInlineMarkdown(item)}
-            </Text>
+            <Row key={i}>
+              <Column style={{ width: '20px', verticalAlign: 'top', paddingTop: '1px' }}>
+                <Text
+                  style={{
+                    fontFamily: BRAND.fonts.body,
+                    fontSize: BRAND.fontSizes.bodySmall,
+                    fontWeight: 700,
+                    color: BRAND.colors.actionBlue,
+                    lineHeight: '1.6',
+                    margin: '0',
+                    padding: '0',
+                  }}
+                >
+                  •
+                </Text>
+              </Column>
+              <Column style={{ verticalAlign: 'top', paddingLeft: '4px', paddingBottom: i < section.items.length - 1 ? '8px' : '0' }}>
+                <Text
+                  style={{
+                    fontFamily: BRAND.fonts.body,
+                    fontSize: BRAND.fontSizes.bodySmall,
+                    color: BRAND.colors.textSecondary,
+                    lineHeight: '1.6',
+                    margin: '0',
+                    padding: '0',
+                  }}
+                >
+                  {renderInlineMarkdown(item)}
+                </Text>
+              </Column>
+            </Row>
           ))}
         </Section>
       );
