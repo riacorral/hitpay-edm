@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { Suspense, useState, useRef, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { EmailPreview } from '@/components/email-preview';
 
@@ -90,7 +90,7 @@ import Link from 'next/link';
 
 type EditMode = 'refine' | 'edit' | 'regenerate' | 'brief';
 
-export default function NewCampaignPage() {
+function NewCampaignInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const editId = searchParams.get('edit'); // pre-existing campaign ID when editing
@@ -623,5 +623,13 @@ export default function NewCampaignPage() {
         }}
       />
     </div>
+  );
+}
+
+export default function NewCampaignPage() {
+  return (
+    <Suspense>
+      <NewCampaignInner />
+    </Suspense>
   );
 }
