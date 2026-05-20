@@ -2,14 +2,14 @@ import React from 'react';
 import { Section, Row, Column, Text, Link, Hr, Img } from '@react-email/components';
 import { BRAND } from '../../../brand/hitpay.js';
 
-const APP_BASE = 'https://hitpay-edm.vercel.app';
+const BLOB_BASE = 'https://azjzrc77u6pvsjpm.public.blob.vercel-storage.com/icons';
 
 const SOCIAL_ICONS = [
-  { name: 'Instagram', href: BRAND.social.links.instagram, src: `${APP_BASE}/icons/social-instagram.png` },
-  { name: 'Facebook',  href: BRAND.social.links.facebook,  src: `${APP_BASE}/icons/social-facebook.png`  },
-  { name: 'LinkedIn',  href: BRAND.social.links.linkedin,  src: `${APP_BASE}/icons/social-linkedin.png`  },
-  { name: 'TikTok',   href: BRAND.social.links.tiktok,    src: `${APP_BASE}/icons/social-tiktok.png`    },
-  { name: 'YouTube',  href: BRAND.social.links.youtube,   src: `${APP_BASE}/icons/social-youtube.png`   },
+  { name: 'Instagram', href: BRAND.social.links.instagram, src: `${BLOB_BASE}/social-instagram.png` },
+  { name: 'Facebook',  href: BRAND.social.links.facebook,  src: `${BLOB_BASE}/social-facebook.png`  },
+  { name: 'LinkedIn',  href: BRAND.social.links.linkedin,  src: `${BLOB_BASE}/social-linkedin.png`  },
+  { name: 'TikTok',   href: BRAND.social.links.tiktok,    src: `${BLOB_BASE}/social-tiktok.png`    },
+  { name: 'YouTube',  href: BRAND.social.links.youtube,   src: `${BLOB_BASE}/social-youtube.png`   },
 ];
 
 function SocialIcon({ name, href, src }: { name: string; href: string; src: string }) {

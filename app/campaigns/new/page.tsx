@@ -120,6 +120,8 @@ function NewCampaignInner() {
   const fileRef = useRef<HTMLInputElement>(null);
   const insertImageRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const imageModeRef = useRef<'inline' | 'image-left' | 'image-right'>('inline');
+  const [showImageMenu, setShowImageMenu] = useState(false);
   const hasPreview = !!previewHtml;
 
   // Load existing campaign when ?edit=<id> is present
@@ -164,6 +166,7 @@ function NewCampaignInner() {
 
   // ── Insert image into markdown at cursor ─────────────
   async function handleInsertImage(files: FileList) {
+    const mode = imageModeRef.current;
     setUploading(true);
     setError('');
     for (const file of Array.from(files)) {
@@ -175,15 +178,23 @@ function NewCampaignInner() {
       const res = await fetch('/api/images/upload', { method: 'POST', body: form });
       const data = await res.json();
       if (res.ok && textareaRef.current) {
-        // Insert ![alt](url) at cursor — selected text becomes the alt
         const { selectionStart: s, selectionEnd: e, value } = textareaRef.current;
-        const alt = value.slice(s, e);
-        const insert = `![${alt}](${data.url})`;
+        const alt = value.slice(s, e) || '';
+        let insert: string;
+        if (mode === 'image-left') {
+          insert = `\n::: image-left ${data.url}\n### Heading\nBody text.\n:::\n`;
+        } else if (mode === 'image-right') {
+          insert = `\n::: image-right ${data.url}\n### Heading\nBody text.\n:::\n`;
+        } else {
+          insert = `![${alt}](${data.url})`;
+        }
         const newVal = value.slice(0, s) + insert + value.slice(e);
         setEditedMarkdown(newVal);
         setTimeout(() => {
           textareaRef.current?.focus();
-          textareaRef.current?.setSelectionRange(s + 2, s + 2 + alt.length);
+          if (mode === 'inline') {
+            textareaRef.current?.setSelectionRange(s + 2, s + 2 + alt.length);
+          }
         }, 0);
       } else if (!res.ok) {
         setError(data.error ?? 'Upload failed');
@@ -514,16 +525,44 @@ function NewCampaignInner() {
 
                         <div className="w-px h-4 bg-gray-200 mx-0.5" />
 
-                        {/* Insert image */}
-                        <button
-                          type="button"
-                          title="Insert image"
-                          disabled={uploading}
-                          onClick={() => insertImageRef.current?.click()}
-                          className="w-7 h-7 flex items-center justify-center text-xs text-gray-600 rounded hover:bg-white hover:shadow-sm border border-transparent hover:border-gray-200 transition-all disabled:opacity-40"
-                        >
-                          {uploading ? <span className="animate-spin inline-block w-3 h-3 border border-gray-400 border-t-transparent rounded-full" /> : '🖼'}
-                        </button>
+                        {/* Insert image with placement picker */}
+                        <div className="relative">
+                          <button
+                            type="button"
+                            title="Insert image"
+                            disabled={uploading}
+                            onClick={() => setShowImageMenu(m => !m)}
+                            className="w-7 h-7 flex items-center justify-center text-xs text-gray-600 rounded hover:bg-white hover:shadow-sm border border-transparent hover:border-gray-200 transition-all disabled:opacity-40"
+                          >
+                            {uploading ? <span className="animate-spin inline-block w-3 h-3 border border-gray-400 border-t-transparent rounded-full" /> : '🖼'}
+                          </button>
+                          {showImageMenu && (
+                            <>
+                              <div className="fixed inset-0 z-10" onClick={() => setShowImageMenu(false)} />
+                            <div className="absolute left-0 top-8 bg-white border border-gray-200 rounded-lg shadow-lg z-20 py-1 w-48">
+                              {([
+                                { mode: 'inline'      as const, label: 'Inline image',       hint: '![alt](url)' },
+                                { mode: 'image-left'  as const, label: 'Image + text (left)', hint: '::: image-left' },
+                                { mode: 'image-right' as const, label: 'Image + text (right)', hint: '::: image-right' },
+                              ]).map(opt => (
+                                <button
+                                  key={opt.mode}
+                                  type="button"
+                                  onClick={() => {
+                                    imageModeRef.current = opt.mode;
+                                    setShowImageMenu(false);
+                                    insertImageRef.current?.click();
+                                  }}
+                                  className="w-full text-left px-3 py-2 hover:bg-gray-50"
+                                >
+                                  <p className="text-xs font-medium text-gray-700">{opt.label}</p>
+                                  <p className="text-xs text-gray-400 font-mono">{opt.hint}</p>
+                                </button>
+                              ))}
+                            </div>
+                            </>
+                          )}
+                        </div>
                       </div>
 
                       <textarea

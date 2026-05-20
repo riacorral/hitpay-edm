@@ -55,40 +55,45 @@ export function SectionRenderer({ section }: SectionRendererProps) {
 
     case 'bullets':
       return (
-        <Section style={{ padding: `0 ${BRAND.spacing.lg}`, paddingBottom: '16px' }}>
-          {section.items.map((item, i) => (
-            <Row key={i}>
-              <Column style={{ width: section.ordered ? '24px' : '20px', verticalAlign: 'top', paddingTop: '1px' }}>
-                <Text
-                  style={{
-                    fontFamily: BRAND.fonts.body,
-                    fontSize: BRAND.fontSizes.bodySmall,
-                    fontWeight: 700,
-                    color: BRAND.colors.actionBlue,
-                    lineHeight: '1.6',
-                    margin: '0',
-                    padding: '0',
-                  }}
-                >
-                  {section.ordered ? `${i + 1}.` : '•'}
-                </Text>
-              </Column>
-              <Column style={{ verticalAlign: 'top', paddingLeft: '4px', paddingBottom: i < section.items.length - 1 ? (section.ordered ? '12px' : '8px') : '0' }}>
-                <Text
-                  style={{
-                    fontFamily: BRAND.fonts.body,
-                    fontSize: BRAND.fontSizes.bodySmall,
-                    color: BRAND.colors.textSecondary,
-                    lineHeight: '1.6',
-                    margin: '0',
-                    padding: '0',
-                  }}
-                >
-                  {renderInlineMarkdown(item)}
-                </Text>
-              </Column>
-            </Row>
-          ))}
+        <Section style={{ padding: `0 ${BRAND.spacing.lg} 16px` }}>
+          <table cellPadding={0} cellSpacing={0} width="100%">
+            <tbody>
+              {section.items.map((item, i) => (
+                <tr key={i}>
+                  <td
+                    width={section.ordered ? 28 : 20}
+                    valign="top"
+                    style={{
+                      width: section.ordered ? '28px' : '20px',
+                      paddingTop: '2px',
+                      paddingBottom: i < section.items.length - 1 ? '8px' : '0',
+                      fontFamily: BRAND.fonts.body,
+                      fontSize: BRAND.fontSizes.bodySmall,
+                      fontWeight: 700,
+                      color: BRAND.colors.actionBlue,
+                      lineHeight: '1.6',
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    {section.ordered ? `${i + 1}.` : '•'}
+                  </td>
+                  <td
+                    valign="top"
+                    style={{
+                      paddingLeft: '8px',
+                      paddingBottom: i < section.items.length - 1 ? '8px' : '0',
+                      fontFamily: BRAND.fonts.body,
+                      fontSize: BRAND.fontSizes.bodySmall,
+                      color: BRAND.colors.textSecondary,
+                      lineHeight: '1.6',
+                    }}
+                  >
+                    {renderInlineMarkdown(item)}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </Section>
       );
 
@@ -226,17 +231,44 @@ export function SectionRenderer({ section }: SectionRendererProps) {
     case 'bullet_list':
       return (
         <Section style={{ padding: `0 ${BRAND.spacing.lg}`, marginBottom: '24px' }}>
-          {section.items.map((item, i) => (
-            <Row key={i} style={{ marginBottom: i === section.items.length - 1 ? '0' : '20px' }}>
-              <Column style={{ width: '24px', verticalAlign: 'top' }}>
-                <Text style={{ fontFamily: BRAND.fonts.body, fontSize: BRAND.fontSizes.body, fontWeight: 700, color: BRAND.colors.actionBlue, lineHeight: '1.4', margin: '0' }}>•</Text>
-              </Column>
-              <Column style={{ verticalAlign: 'top', paddingLeft: '4px' }}>
-                <Text style={{ fontFamily: BRAND.fonts.body, fontSize: BRAND.fontSizes.body, fontWeight: 700, color: BRAND.colors.textPrimary, lineHeight: '1.4', margin: '0 0 4px 0' }}>{item.title}</Text>
-                <Text style={{ fontFamily: BRAND.fonts.body, fontSize: BRAND.fontSizes.bodySmall, fontWeight: 400, color: BRAND.colors.textSecondary, lineHeight: '1.6', margin: '0' }}>{item.body}</Text>
-              </Column>
-            </Row>
-          ))}
+          <table cellPadding={0} cellSpacing={0} width="100%">
+            <tbody>
+              {section.items.map((item, i) => (
+                <tr key={i}>
+                  <td
+                    width={20}
+                    valign="top"
+                    style={{
+                      width: '20px',
+                      paddingTop: '2px',
+                      paddingBottom: i === section.items.length - 1 ? '0' : '20px',
+                      fontFamily: BRAND.fonts.body,
+                      fontSize: BRAND.fontSizes.body,
+                      fontWeight: 700,
+                      color: BRAND.colors.actionBlue,
+                      lineHeight: '1.4',
+                    }}
+                  >
+                    •
+                  </td>
+                  <td
+                    valign="top"
+                    style={{
+                      paddingLeft: '8px',
+                      paddingBottom: i === section.items.length - 1 ? '0' : '20px',
+                    }}
+                  >
+                    <p style={{ fontFamily: BRAND.fonts.body, fontSize: BRAND.fontSizes.body, fontWeight: 700, color: BRAND.colors.textPrimary, lineHeight: '1.4', margin: '0 0 4px 0' }}>
+                      {item.title}
+                    </p>
+                    <p style={{ fontFamily: BRAND.fonts.body, fontSize: BRAND.fontSizes.bodySmall, fontWeight: 400, color: BRAND.colors.textSecondary, lineHeight: '1.6', margin: '0' }}>
+                      {item.body}
+                    </p>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </Section>
       );
 
