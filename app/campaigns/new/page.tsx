@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useRef } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useRef, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { EmailPreview } from '@/components/email-preview';
 
 // ── Markdown toolbar helpers ──────────────────────────────────────────────
@@ -92,6 +92,8 @@ type EditMode = 'refine' | 'edit' | 'regenerate' | 'brief';
 
 export default function NewCampaignPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const editId = searchParams.get('edit'); // pre-existing campaign ID when editing
 
   // Brief state
   const [prompt, setPrompt] = useState('');
@@ -100,23 +102,44 @@ export default function NewCampaignPage() {
   // Result state
   const [previewHtml, setPreviewHtml] = useState('');
   const [markdown, setMarkdown] = useState('');
-  const [savedId, setSavedId] = useState<string | null>(null); // set after first save
-  const [isDirty, setIsDirty] = useState(false); // true when unsaved changes exist
+  const [savedId, setSavedId] = useState<string | null>(null);
+  const [isDirty, setIsDirty] = useState(false);
 
   // Edit mode (shown after first generation)
-  const [editMode, setEditMode] = useState<EditMode>('refine');
+  const [editMode, setEditMode] = useState<EditMode>('edit');
   const [refinePrompt, setRefinePrompt] = useState('');
   const [editedMarkdown, setEditedMarkdown] = useState('');
 
   // Loading / error
   const [uploading, setUploading] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [initLoading, setInitLoading] = useState(!!editId);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
 
   const fileRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const hasPreview = !!previewHtml;
+
+  // Load existing campaign when ?edit=<id> is present
+  useEffect(() => {
+    if (!editId) return;
+    setInitLoading(true);
+    fetch(`/api/campaigns/${editId}`)
+      .then(r => r.json())
+      .then(d => {
+        const c = d.campaign;
+        if (c?.markdown) {
+          setMarkdown(c.markdown);
+          setEditedMarkdown(c.markdown);
+          setPreviewHtml(c.html_content ?? '');
+          setSavedId(editId);
+          setEditMode('edit');
+        }
+      })
+      .catch(() => {})
+      .finally(() => setInitLoading(false));
+  }, [editId]);
 
   // ── Image upload ──────────────────────────────────────
   async function handleImageUpload(files: FileList) {
@@ -261,12 +284,21 @@ export default function NewCampaignPage() {
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#F9F9F6' }}>
       <nav className="bg-white border-b border-gray-200 px-6 py-4 flex items-center gap-3">
-        <Link href="/dashboard" className="text-sm text-gray-500 hover:text-gray-700">← Campaigns</Link>
+        {editId
+          ? <Link href={`/campaigns/${editId}`} className="text-sm text-gray-500 hover:text-gray-700">← Back</Link>
+          : <Link href="/dashboard" className="text-sm text-gray-500 hover:text-gray-700">← Campaigns</Link>
+        }
         <span className="text-gray-300">/</span>
-        <span className="text-sm font-medium text-gray-900">New Campaign</span>
+        <span className="text-sm font-medium text-gray-900">{editId ? 'Edit Campaign' : 'New Campaign'}</span>
       </nav>
 
-      <div className={`mx-auto px-4 py-8 transition-all duration-300 ${hasPreview ? 'max-w-6xl' : 'max-w-2xl'}`}>
+      {initLoading && (
+        <div className="flex-1 flex items-center justify-center py-24">
+          <p className="text-sm text-gray-400">Loading campaign…</p>
+        </div>
+      )}
+
+      {!initLoading && <div className={`mx-auto px-4 py-8 transition-all duration-300 ${hasPreview ? 'max-w-6xl' : 'max-w-2xl'}`}>
 
         {/* ══ BRIEF INPUT (before first generation) ══ */}
         {!hasPreview && (
@@ -554,12 +586,21 @@ export default function NewCampaignPage() {
                 {saving ? 'Saving…' : 'Save Campaign'}
               </button>
 
-              <button
-                onClick={handleBackToBrief}
-                className="w-full py-2 text-xs text-gray-400 hover:text-gray-600"
-              >
-                ← Start over
-              </button>
+              {editId ? (
+                <Link
+                  href={`/campaigns/${editId}`}
+                  className="block w-full py-2 text-xs text-gray-400 hover:text-gray-600 text-center"
+                >
+                  ← Back to campaign
+                </Link>
+              ) : (
+                <button
+                  onClick={handleBackToBrief}
+                  className="w-full py-2 text-xs text-gray-400 hover:text-gray-600"
+                >
+                  ← Start over
+                </button>
+              )}
             </div>
 
             {/* ── Right: email preview ── */}
@@ -568,7 +609,7 @@ export default function NewCampaignPage() {
             </div>
           </div>
         )}
-      </div>
+      </div>}
 
       <input
         ref={fileRef}
