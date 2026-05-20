@@ -6,6 +6,10 @@ import { NewsletterEmail } from './templates/newsletter.js';
 import { PromotionalEmail } from './templates/promotional.js';
 import { EventInvitationEmail } from './templates/event-invitation.js';
 import { PartnerSpotlightEmail } from './templates/partner-spotlight.js';
+import { ImportantAnnouncementEmail } from './templates/important-announcement.js';
+import { AppChangesEmail } from './templates/app-changes.js';
+import { RateChangesEmail } from './templates/rate-changes.js';
+import { ComplianceEmail } from './templates/compliance.js';
 import type { ParsedEdm, EdmFrontmatter, EdmSection } from '../schema/edm.js';
 
 /**
@@ -36,5 +40,13 @@ function createEmailElement(
       return React.createElement(EventInvitationEmail, { frontmatter, sections });
     case 'partner-spotlight':
       return React.createElement(PartnerSpotlightEmail, { frontmatter, sections });
+    case 'important-announcement':
+      return React.createElement(ImportantAnnouncementEmail, { frontmatter, sections });
+    case 'app-changes':
+      return React.createElement(AppChangesEmail, { frontmatter, sections });
+    case 'rate-changes':
+      return React.createElement(RateChangesEmail, { frontmatter, sections });
+    case 'compliance':
+      return React.createElement(ComplianceEmail, { frontmatter, sections });
   }
 }

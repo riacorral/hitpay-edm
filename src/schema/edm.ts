@@ -7,6 +7,10 @@ export const TemplateType = z.enum([
   'promotional',
   'event-invitation',
   'partner-spotlight',
+  'important-announcement',
+  'app-changes',
+  'rate-changes',
+  'compliance',
 ]);
 export type TemplateType = z.infer<typeof TemplateType>;
 
@@ -82,12 +86,51 @@ export const PartnerSpotlightFrontmatter = BaseFrontmatter.extend({
   ctaUrl: z.string().url(),
 });
 
+export const ImportantAnnouncementFrontmatter = BaseFrontmatter.extend({
+  template: z.literal('important-announcement'),
+  badgeText: z.string().default('Important Notice'),
+  heroImage: z.string().optional(),
+  ctaText: z.string().default('Learn More'),
+  ctaUrl: z.string().url().optional(),
+});
+
+export const AppChangesFrontmatter = BaseFrontmatter.extend({
+  template: z.literal('app-changes'),
+  versionBadge: z.string().optional(),
+  effectiveDate: z.string().optional(),
+  heroImage: z.string().optional(),
+  ctaText: z.string().default('View Changes'),
+  ctaUrl: z.string().url().optional(),
+});
+
+export const RateChangesFrontmatter = BaseFrontmatter.extend({
+  template: z.literal('rate-changes'),
+  effectiveDate: z.string(),
+  rateDescription: z.string().optional(),
+  heroImage: z.string().optional(),
+  ctaText: z.string().default('View Details'),
+  ctaUrl: z.string().url().optional(),
+});
+
+export const ComplianceFrontmatter = BaseFrontmatter.extend({
+  template: z.literal('compliance'),
+  complianceType: z.string().optional(),
+  effectiveDate: z.string().optional(),
+  requiredAction: z.string().optional(),
+  ctaText: z.string().default('Read Update'),
+  ctaUrl: z.string().url().optional(),
+});
+
 export type ProductLaunchFrontmatter = z.infer<typeof ProductLaunchFrontmatter>;
 export type FeatureUpdateFrontmatter = z.infer<typeof FeatureUpdateFrontmatter>;
 export type NewsletterFrontmatter = z.infer<typeof NewsletterFrontmatter>;
 export type PromotionalFrontmatter = z.infer<typeof PromotionalFrontmatter>;
 export type EventInvitationFrontmatter = z.infer<typeof EventInvitationFrontmatter>;
 export type PartnerSpotlightFrontmatter = z.infer<typeof PartnerSpotlightFrontmatter>;
+export type ImportantAnnouncementFrontmatter = z.infer<typeof ImportantAnnouncementFrontmatter>;
+export type AppChangesFrontmatter = z.infer<typeof AppChangesFrontmatter>;
+export type RateChangesFrontmatter = z.infer<typeof RateChangesFrontmatter>;
+export type ComplianceFrontmatter = z.infer<typeof ComplianceFrontmatter>;
 
 export const EdmFrontmatter = z.discriminatedUnion('template', [
   ProductLaunchFrontmatter,
@@ -96,6 +139,10 @@ export const EdmFrontmatter = z.discriminatedUnion('template', [
   PromotionalFrontmatter,
   EventInvitationFrontmatter,
   PartnerSpotlightFrontmatter,
+  ImportantAnnouncementFrontmatter,
+  AppChangesFrontmatter,
+  RateChangesFrontmatter,
+  ComplianceFrontmatter,
 ]);
 export type EdmFrontmatter = z.infer<typeof EdmFrontmatter>;
 
