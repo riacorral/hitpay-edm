@@ -50,6 +50,19 @@ function numberLines(
   setTimeout(() => { textarea.focus(); }, 0);
 }
 
+// Set or replace a key in the YAML frontmatter block of an EDM markdown string.
+function setFrontmatterField(markdown: string, key: string, value: string): string {
+  const fmMatch = markdown.match(/^(---\n)([\s\S]*?)(\n---)/);
+  if (!fmMatch) return markdown;
+  const [full, open, body, close] = fmMatch;
+  const after = markdown.slice(full.length);
+  const keyRegex = new RegExp(`^${key}:.*$`, 'm');
+  const newBody = keyRegex.test(body)
+    ? body.replace(keyRegex, `${key}: ${value}`)
+    : body + `\n${key}: ${value}`;
+  return open + newBody + close + after;
+}
+
 // Compress an image client-side using Canvas before uploading.
 // Resizes to max 1800px wide and converts to JPEG at 85% quality.
 function compressImage(file: File): Promise<File> {
@@ -120,7 +133,7 @@ function NewCampaignInner() {
   const fileRef = useRef<HTMLInputElement>(null);
   const insertImageRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const imageModeRef = useRef<'inline' | 'image-left' | 'image-right'>('inline');
+  const imageModeRef = useRef<'inline' | 'hero' | 'image-left' | 'image-right'>('inline');
   const [showImageMenu, setShowImageMenu] = useState(false);
   const hasPreview = !!previewHtml;
 
@@ -179,21 +192,26 @@ function NewCampaignInner() {
       const data = await res.json();
       if (res.ok && textareaRef.current) {
         const { selectionStart: s, selectionEnd: e, value } = textareaRef.current;
-        const alt = value.slice(s, e) || '';
-        let insert: string;
-        if (mode === 'image-left') {
-          insert = `\n::: image-left ${data.url}\n### Heading\nBody text.\n:::\n`;
-        } else if (mode === 'image-right') {
-          insert = `\n::: image-right ${data.url}\n### Heading\nBody text.\n:::\n`;
+        if (mode === 'hero') {
+          setEditedMarkdown(setFrontmatterField(value, 'heroImage', data.url));
         } else {
-          insert = `![${alt}](${data.url})`;
+          const alt = value.slice(s, e) || '';
+          let insert: string;
+          if (mode === 'image-left') {
+            insert = `\n::: image-left ${data.url}\n### Heading\nBody text.\n:::\n`;
+          } else if (mode === 'image-right') {
+            insert = `\n::: image-right ${data.url}\n### Heading\nBody text.\n:::\n`;
+          } else {
+            insert = `![${alt}](${data.url})`;
+          }
+          const newVal = value.slice(0, s) + insert + value.slice(e);
+          setEditedMarkdown(newVal);
         }
-        const newVal = value.slice(0, s) + insert + value.slice(e);
-        setEditedMarkdown(newVal);
         setTimeout(() => {
           textareaRef.current?.focus();
           if (mode === 'inline') {
-            textareaRef.current?.setSelectionRange(s + 2, s + 2 + alt.length);
+            const { selectionStart: s, selectionEnd: e, value } = textareaRef.current!;
+            textareaRef.current?.setSelectionRange(s + 2, s + 2 + (value.slice(s, e) || '').length);
           }
         }, 0);
       } else if (!res.ok) {
@@ -541,9 +559,10 @@ function NewCampaignInner() {
                               <div className="fixed inset-0 z-10" onClick={() => setShowImageMenu(false)} />
                             <div className="absolute left-0 top-8 bg-white border border-gray-200 rounded-lg shadow-lg z-20 py-1 w-48">
                               {([
-                                { mode: 'inline'      as const, label: 'Inline image',       hint: '![alt](url)' },
-                                { mode: 'image-left'  as const, label: 'Image + text (left)', hint: '::: image-left' },
-                                { mode: 'image-right' as const, label: 'Image + text (right)', hint: '::: image-right' },
+                                { mode: 'hero'        as const, label: 'Hero / banner',        hint: 'heroImage: url' },
+                                { mode: 'inline'      as const, label: 'Inline image',          hint: '![alt](url)' },
+                                { mode: 'image-left'  as const, label: 'Image + text (left)',   hint: '::: image-left' },
+                                { mode: 'image-right' as const, label: 'Image + text (right)',  hint: '::: image-right' },
                               ]).map(opt => (
                                 <button
                                   key={opt.mode}
