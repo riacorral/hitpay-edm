@@ -12,7 +12,17 @@ function normalizeKeys(data: Record<string, unknown>): Record<string, unknown> {
   // Convert snake_case keys to camelCase so AI-generated frontmatter parses cleanly
   // e.g. preview_text → previewText, cta_url → ctaUrl
   const snakeToCamel = (s: string) => s.replace(/_([a-z])/g, (_, c: string) => c.toUpperCase());
-  return Object.fromEntries(Object.entries(data).map(([k, v]) => [snakeToCamel(k), v]));
+  const normalized = Object.fromEntries(Object.entries(data).map(([k, v]) => [snakeToCamel(k), v]));
+  // Normalize template value: underscores → hyphens, lowercase, trim
+  // e.g. "feature_update" or "Feature Update" → "feature-update"
+  if (typeof normalized.template === 'string') {
+    normalized.template = normalized.template
+      .trim()
+      .toLowerCase()
+      .replace(/\s+/g, '-')
+      .replace(/_/g, '-');
+  }
+  return normalized;
 }
 
 function normalizeNumberedLists(content: string): string {

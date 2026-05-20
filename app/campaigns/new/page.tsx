@@ -49,6 +49,43 @@ function numberLines(
   setValue(newVal);
   setTimeout(() => { textarea.focus(); }, 0);
 }
+
+// Compress an image client-side using Canvas before uploading.
+// Resizes to max 1800px wide and converts to JPEG at 85% quality.
+function compressImage(file: File): Promise<File> {
+  return new Promise((resolve) => {
+    // Non-raster or tiny files: skip compression
+    if (!['image/jpeg', 'image/png', 'image/webp', 'image/bmp'].includes(file.type)) {
+      resolve(file);
+      return;
+    }
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      const MAX = 1800;
+      const ratio = Math.min(MAX / img.width, MAX / img.height, 1);
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.round(img.width * ratio);
+      canvas.height = Math.round(img.height * ratio);
+      const ctx = canvas.getContext('2d')!;
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      canvas.toBlob(
+        (blob) => {
+          if (blob) {
+            resolve(new File([blob], file.name.replace(/\.[^.]+$/, '.jpg'), { type: 'image/jpeg' }));
+          } else {
+            resolve(file);
+          }
+        },
+        'image/jpeg',
+        0.85,
+      );
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); resolve(file); };
+    img.src = url;
+  });
+}
 import Link from 'next/link';
 
 type EditMode = 'refine' | 'edit' | 'regenerate' | 'brief';
@@ -88,12 +125,14 @@ export default function NewCampaignPage() {
     const added: { url: string; name: string }[] = [];
     for (const file of Array.from(files)) {
       if (!file.type.startsWith('image/')) continue;
-      if (file.size > 5 * 1024 * 1024) { setError(`${file.name} is too large (max 5MB)`); continue; }
+      if (file.size > 25 * 1024 * 1024) { setError(`${file.name} is too large (max 25MB)`); continue; }
+      const compressed = await compressImage(file);
       const form = new FormData();
-      form.append('file', file);
+      form.append('file', compressed);
       const res = await fetch('/api/images/upload', { method: 'POST', body: form });
       const data = await res.json();
       if (res.ok) added.push({ url: data.url, name: file.name });
+      else setError(data.error ?? 'Upload failed');
     }
     setImages(prev => [...prev, ...added]);
     setUploading(false);

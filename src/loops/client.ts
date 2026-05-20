@@ -1,5 +1,5 @@
-import { readFileSync, writeFileSync, mkdirSync, rmSync, copyFileSync, existsSync } from 'fs';
-import { execFileSync } from 'child_process';
+import { writeFileSync, mkdirSync, rmSync, copyFileSync, existsSync } from 'fs';
+import AdmZip from 'adm-zip';
 import { join, basename, extname } from 'path';
 import { tmpdir } from 'os';
 
@@ -196,12 +196,10 @@ export async function uploadMjmlAsZip(
   const processedMjml = bundleLocalImages(mjml, join(tmpDir, 'images'));
   writeFileSync(join(tmpDir, 'index.mjml'), processedMjml);
   const hasImages = existsSync(join(tmpDir, 'images'));
-  execFileSync(
-    'zip',
-    hasImages ? ['-r', 'email.zip', 'index.mjml', 'images'] : ['email.zip', 'index.mjml'],
-    { cwd: tmpDir },
-  );
-  const zipBuffer = readFileSync(join(tmpDir, 'email.zip'));
+  const zip = new AdmZip();
+  zip.addLocalFile(join(tmpDir, 'index.mjml'));
+  if (hasImages) zip.addLocalFolder(join(tmpDir, 'images'), 'images');
+  const zipBuffer = zip.toBuffer();
 
   try {
     const trpcRes = await loopsFetch(
@@ -282,12 +280,10 @@ ${bodyContent}
   const processedMjml2 = bundleLocalImages(mjml, join(tmpDir, 'images'));
   writeFileSync(join(tmpDir, 'index.mjml'), processedMjml2);
   const hasImages2 = existsSync(join(tmpDir, 'images'));
-  execFileSync(
-    'zip',
-    hasImages2 ? ['-r', 'email.zip', 'index.mjml', 'images'] : ['email.zip', 'index.mjml'],
-    { cwd: tmpDir },
-  );
-  const zipBuffer = readFileSync(join(tmpDir, 'email.zip'));
+  const zip2 = new AdmZip();
+  zip2.addLocalFile(join(tmpDir, 'index.mjml'));
+  if (hasImages2) zip2.addLocalFolder(join(tmpDir, 'images'), 'images');
+  const zipBuffer = zip2.toBuffer();
 
   try {
     // Get presigned URL via tRPC
