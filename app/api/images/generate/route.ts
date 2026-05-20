@@ -3,8 +3,6 @@ import { put } from '@vercel/blob';
 import { NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-
 export async function POST(req: Request) {
   const session = await auth();
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -12,6 +10,8 @@ export async function POST(req: Request) {
   if (!process.env.OPENAI_API_KEY) {
     return NextResponse.json({ error: 'AI image generation is not configured (missing OPENAI_API_KEY)' }, { status: 503 });
   }
+
+  const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
   const { prompt } = await req.json() as { prompt?: string };
   if (!prompt?.trim()) {
