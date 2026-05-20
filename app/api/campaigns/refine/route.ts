@@ -46,7 +46,9 @@ Rules:
 
     const raw = (message.content[0] as { type: string; text: string }).text;
     const fenceMatch = raw.match(/^```[^\n]*\n([\s\S]*?)\n?```\s*$/);
-    const markdown = (fenceMatch ? fenceMatch[1] : raw).trim();
+    const text = (fenceMatch ? fenceMatch[1] : raw).trim();
+    const fmIdx = text.startsWith('---') ? 0 : text.search(/^---$/m);
+    const markdown = fmIdx > 0 ? text.slice(fmIdx).trim() : text;
 
     const parsed = parseEdm(markdown);
     const html = await renderEdm(parsed);

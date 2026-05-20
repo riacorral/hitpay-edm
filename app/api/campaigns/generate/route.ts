@@ -107,8 +107,16 @@ RULES:
 function cleanOutput(raw: string): string {
   // Strip code fences if present (```markdown ... ``` or ``` ... ```)
   const fenceMatch = raw.match(/^```[^\n]*\n([\s\S]*?)\n?```\s*$/);
-  if (fenceMatch) return fenceMatch[1].trim();
-  return raw.trim();
+  const text = fenceMatch ? fenceMatch[1].trim() : raw.trim();
+
+  // If it already starts with ---, we're done
+  if (text.startsWith('---')) return text;
+
+  // Strip any preamble before the first --- line (model sometimes adds intro text)
+  const fmIdx = text.search(/^---$/m);
+  if (fmIdx !== -1) return text.slice(fmIdx).trim();
+
+  return text;
 }
 
 export async function POST(req: Request) {
