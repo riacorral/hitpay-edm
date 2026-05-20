@@ -27,7 +27,7 @@ type FieldDef = {
   required?: boolean;
   hint?: string;
   type?: 'text' | 'url' | 'number' | 'image';
-  aiPromptSuggestion?: string;
+  searchQuery?: string;
 };
 
 const TEMPLATE_FIELDS: Record<string, FieldDef[]> = {
@@ -35,7 +35,7 @@ const TEMPLATE_FIELDS: Record<string, FieldDef[]> = {
     { key: 'productName',     label: 'Product Name',         placeholder: 'e.g. HitPay QR',          required: true },
     { key: 'ctaUrl',          label: 'Button URL',           placeholder: 'https://hitpayapp.com',   required: true, type: 'url' },
     { key: 'ctaText',         label: 'Button Text',          placeholder: 'Get Started (default)' },
-    { key: 'heroImage',       label: 'Hero Image',           hint: 'Optional', type: 'image', aiPromptSuggestion: 'Sleek product launch hero image, abstract tech background, professional studio lighting' },
+    { key: 'heroImage',       label: 'Hero Image',           hint: 'Optional', type: 'image', searchQuery: 'Sleek product launch hero image, abstract tech background, professional studio lighting' },
     { key: 'secondaryCtaText', label: 'Secondary Button Text', placeholder: 'Learn More' },
     { key: 'secondaryCtaUrl',  label: 'Secondary Button URL',  placeholder: 'https://...', type: 'url' },
   ],
@@ -70,26 +70,26 @@ const TEMPLATE_FIELDS: Record<string, FieldDef[]> = {
   'partner-spotlight': [
     { key: 'partnerName',     label: 'Partner Name',         placeholder: 'e.g. Grab',              required: true },
     { key: 'ctaUrl',          label: 'Button URL',           placeholder: 'https://hitpayapp.com',   required: true, type: 'url' },
-    { key: 'partnerLogo',     label: 'Partner Logo',         hint: 'Optional', type: 'image', aiPromptSuggestion: 'Clean partner company logo on white background, minimal and professional' },
+    { key: 'partnerLogo',     label: 'Partner Logo',         hint: 'Optional', type: 'image', searchQuery: 'Clean partner company logo on white background, minimal and professional' },
     { key: 'ctaText',         label: 'Button Text',          placeholder: 'Read More (default)' },
   ],
   'important-announcement': [
     { key: 'badgeText',       label: 'Badge Label',          placeholder: 'Important Notice (default)' },
-    { key: 'heroImage',       label: 'Header Image',         hint: 'Optional', type: 'image', aiPromptSuggestion: 'Abstract attention-grabbing header image, warm amber and blue tones, professional' },
+    { key: 'heroImage',       label: 'Header Image',         hint: 'Optional', type: 'image', searchQuery: 'Abstract attention-grabbing header image, warm amber and blue tones, professional' },
     { key: 'ctaUrl',          label: 'Button URL',           placeholder: 'https://hitpayapp.com',   type: 'url' },
     { key: 'ctaText',         label: 'Button Text',          placeholder: 'Learn More (default)' },
   ],
   'app-changes': [
     { key: 'versionBadge',    label: 'Version / Period',     placeholder: 'e.g. v3.4 · May 2026' },
     { key: 'effectiveDate',   label: 'Effective Date',       placeholder: 'e.g. 1 June 2026' },
-    { key: 'heroImage',       label: 'App Screenshot',       hint: 'Optional', type: 'image', aiPromptSuggestion: 'Clean mobile app screenshot mockup on a neutral background, fintech payment app UI' },
+    { key: 'heroImage',       label: 'App Screenshot',       hint: 'Optional', type: 'image', searchQuery: 'Clean mobile app screenshot mockup on a neutral background, fintech payment app UI' },
     { key: 'ctaUrl',          label: 'Button URL',           placeholder: 'https://hitpayapp.com',   type: 'url' },
     { key: 'ctaText',         label: 'Button Text',          placeholder: 'View Changes (default)' },
   ],
   'rate-changes': [
     { key: 'effectiveDate',   label: 'Effective Date',       placeholder: 'e.g. 1 July 2026',       required: true },
     { key: 'rateDescription', label: 'What\'s Changing',     placeholder: 'e.g. Transaction Fee Update' },
-    { key: 'heroImage',       label: 'Header Image',         hint: 'Optional', type: 'image', aiPromptSuggestion: 'Abstract financial data visualization, clean blue gradient background, professional' },
+    { key: 'heroImage',       label: 'Header Image',         hint: 'Optional', type: 'image', searchQuery: 'Abstract financial data visualization, clean blue gradient background, professional' },
     { key: 'ctaUrl',          label: 'Button URL',           placeholder: 'https://hitpayapp.com',   type: 'url' },
     { key: 'ctaText',         label: 'Button Text',          placeholder: 'View Details (default)' },
   ],
@@ -361,7 +361,7 @@ export default function NewCampaignPage() {
                           label={f.label}
                           required={f.required}
                           hint={f.hint}
-                          aiPromptSuggestion={f.aiPromptSuggestion}
+                          searchQuery={f.searchQuery}
                         />
                       ) : (
                         <>

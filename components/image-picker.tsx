@@ -5,9 +5,9 @@ import { useState, useRef } from 'react';
 const CDN = 'https://3cse8uwfv1q9zblo.public.blob.vercel-storage.com/hitpay-edm';
 
 const LIBRARY = [
-  { label: 'HitPay Logo (Dark)', url: `${CDN}/logo-dark%402x.png` },
+  { label: 'HitPay Logo (Dark)',  url: `${CDN}/logo-dark%402x.png` },
   { label: 'HitPay Logo (White)', url: `${CDN}/logo-white%402x.png` },
-  { label: 'HitPay Logogram', url: `${CDN}/hitpay-logogram.svg` },
+  { label: 'HitPay Logogram',     url: `${CDN}/hitpay-logogram.svg` },
 ];
 
 interface Props {
@@ -16,14 +16,12 @@ interface Props {
   label: string;
   required?: boolean;
   hint?: string;
-  aiPromptSuggestion?: string;
+  searchQuery?: string; // Pre-filled Google Images search query
 }
 
-export function ImagePicker({ value, onChange, label, required, hint, aiPromptSuggestion }: Props) {
-  const [panel, setPanel] = useState<'none' | 'ai' | 'library' | 'url'>('none');
-  const [aiPrompt, setAiPrompt] = useState('');
+export function ImagePicker({ value, onChange, label, required, hint, searchQuery }: Props) {
+  const [panel, setPanel] = useState<'none' | 'library' | 'url'>('none');
   const [uploading, setUploading] = useState(false);
-  const [generating, setGenerating] = useState(false);
   const [error, setError] = useState('');
   const fileRef = useRef<HTMLInputElement>(null);
 
@@ -45,32 +43,12 @@ export function ImagePicker({ value, onChange, label, required, hint, aiPromptSu
     }
   }
 
-  async function handleGenerate() {
-    if (!aiPrompt.trim()) return;
-    setGenerating(true);
-    setError('');
-    try {
-      const res = await fetch('/api/images/generate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt: aiPrompt }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error ?? 'Generation failed');
-      onChange(data.url);
-      setPanel('none');
-      setAiPrompt('');
-    } catch (e) {
-      setError(e instanceof Error ? e.message : 'Generation failed');
-    } finally {
-      setGenerating(false);
-    }
-  }
-
   function togglePanel(p: typeof panel) {
     setPanel(prev => prev === p ? 'none' : p);
     setError('');
   }
+
+  const googleImagesUrl = `https://www.google.com/search?tbm=isch&q=${encodeURIComponent(searchQuery ?? label)}`;
 
   return (
     <div>
@@ -105,24 +83,21 @@ export function ImagePicker({ value, onChange, label, required, hint, aiPromptSu
               disabled={uploading}
               className="py-2 px-2 rounded-lg border border-gray-200 text-xs font-medium text-gray-600 hover:bg-gray-50 disabled:opacity-50 flex items-center justify-center gap-1"
             >
-              {uploading ? (
-                <span className="animate-spin inline-block w-3 h-3 border border-gray-400 border-t-transparent rounded-full" />
-              ) : (
-                <span>↑</span>
-              )}
+              {uploading
+                ? <span className="animate-spin inline-block w-3 h-3 border border-gray-400 border-t-transparent rounded-full" />
+                : '↑'}
               {uploading ? 'Uploading…' : 'Upload photo'}
             </button>
-            <button
-              type="button"
-              onClick={() => togglePanel('ai')}
-              className={`py-2 px-2 rounded-lg border text-xs font-medium transition-colors flex items-center justify-center gap-1 ${
-                panel === 'ai'
-                  ? 'border-purple-400 bg-purple-50 text-purple-700'
-                  : 'border-gray-200 text-gray-600 hover:bg-gray-50'
-              }`}
+
+            <a
+              href={googleImagesUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="py-2 px-2 rounded-lg border border-gray-200 text-xs font-medium text-gray-600 hover:bg-gray-50 flex items-center justify-center gap-1 no-underline"
             >
-              ✦ AI Generate
-            </button>
+              🔍 Search images
+            </a>
+
             <button
               type="button"
               onClick={() => togglePanel('library')}
@@ -136,7 +111,7 @@ export function ImagePicker({ value, onChange, label, required, hint, aiPromptSu
             </button>
           </div>
 
-          {/* Paste URL toggle */}
+          {/* Paste URL */}
           <button
             type="button"
             onClick={() => togglePanel('url')}
@@ -156,34 +131,6 @@ export function ImagePicker({ value, onChange, label, required, hint, aiPromptSu
             />
           )}
         </>
-      )}
-
-      {/* AI Generate panel */}
-      {panel === 'ai' && (
-        <div className="mt-2 p-3 bg-purple-50 border border-purple-200 rounded-lg">
-          <p className="text-xs font-semibold text-purple-800 mb-2">Describe the image you want</p>
-          <textarea
-            value={aiPrompt}
-            onChange={e => setAiPrompt(e.target.value)}
-            placeholder={aiPromptSuggestion ?? 'e.g. Modern payment terminal on a wooden desk, soft studio lighting'}
-            rows={2}
-            className="w-full px-3 py-2 border border-purple-200 rounded-lg text-sm outline-none focus:border-purple-400 bg-white resize-none mb-2"
-          />
-          <button
-            type="button"
-            onClick={handleGenerate}
-            disabled={generating || !aiPrompt.trim()}
-            className="w-full py-2 rounded-lg text-white text-xs font-semibold disabled:opacity-50 transition-opacity"
-            style={{ backgroundColor: '#7C3AED' }}
-          >
-            {generating ? (
-              <span className="flex items-center justify-center gap-2">
-                <span className="animate-spin inline-block w-3 h-3 border border-white border-t-transparent rounded-full" />
-                Generating… (takes ~15s)
-              </span>
-            ) : 'Generate image'}
-          </button>
-        </div>
       )}
 
       {/* Library panel */}
