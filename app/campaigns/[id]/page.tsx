@@ -181,7 +181,14 @@ export default function CampaignDetailPage() {
             day: 'numeric', month: 'short', year: 'numeric',
           })}
         </span>
-        {uploadError && <p className="text-xs text-red-600 ml-2">{uploadError}</p>}
+        {uploadError && (
+          <p className="text-xs text-red-600 ml-2">
+            {uploadError}{' '}
+            {uploadError.toLowerCase().includes('settings') && (
+              <Link href="/settings" className="underline font-medium">Go to Settings →</Link>
+            )}
+          </p>
+        )}
       </div>
 
       {/* Tabs */}

@@ -336,9 +336,11 @@ export function SectionRenderer({ section }: SectionRendererProps) {
               {section.closingText}
             </Text>
           )}
-          <a href={section.ctaUrl} style={{ fontFamily: BRAND.fonts.body, fontSize: BRAND.fontSizes.body, fontWeight: 600, color: BRAND.colors.actionBlue, textDecoration: 'underline' }}>
-            {section.ctaText}
-          </a>
+          {section.ctaText && section.ctaUrl && (
+            <div style={{ marginTop: '16px' }}>
+              <Button href={section.ctaUrl}>{section.ctaText}</Button>
+            </div>
+          )}
         </Column>
       );
       const imageCol = (

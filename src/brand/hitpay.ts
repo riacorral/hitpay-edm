@@ -61,8 +61,8 @@ export const BRAND = {
   },
 
   logo: {
-    dark: `${CDN}/logo-dark%402x.png`,
-    white: `${CDN}/logo-white%402x.png`,
+    dark:  'https://azjzrc77u6pvsjpm.public.blob.vercel-storage.com/brand/logo-dark.png',
+    white: 'https://azjzrc77u6pvsjpm.public.blob.vercel-storage.com/brand/logo-white.png',
   },
 
   social: {

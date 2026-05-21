@@ -111,10 +111,17 @@ export default function SettingsPage() {
                 placeholder={hasSessionToken ? 'Enter to update…' : 'Enter session token…'}
                 className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-500"
               />
-              <p className="text-xs text-gray-400 mt-1">
-                In Loops app: DevTools → Application → Cookies →{' '}
-                <code className="bg-gray-100 px-1 rounded">__Secure-next-auth.session-token</code>
-              </p>
+              <div className="mt-2 bg-gray-50 border border-gray-200 rounded-lg p-3 text-xs text-gray-600 space-y-1">
+                <p className="font-medium text-gray-700">How to get your session token:</p>
+                <ol className="list-decimal list-inside space-y-1 text-gray-500">
+                  <li>Go to <strong>app.loops.so</strong> and make sure you're logged in</li>
+                  <li>Right-click anywhere → <strong>Inspect</strong> (or Cmd+Option+I)</li>
+                  <li>Click the <strong>Application</strong> tab</li>
+                  <li>In the left sidebar, expand <strong>Cookies</strong> → click <strong>https://app.loops.so</strong></li>
+                  <li>Find <code className="bg-gray-200 px-1 rounded">__Secure-next-auth.session-token</code> — copy the value</li>
+                </ol>
+                <p className="text-gray-400 pt-1">Note: tokens expire periodically — update this if uploads start failing.</p>
+              </div>
             </div>
 
             {error && <p className="text-sm text-red-600">{error}</p>}

@@ -102,7 +102,8 @@ RULES:
 - Tone: professional, warm, confident.
 - Do NOT use merge tags like {{first_name}} or {firstName} — write plain copy.
 - If images are provided, use the first as heroImage (if template supports it).
-- Write complete polished copy, no placeholders.`;
+- Write complete polished copy, no placeholders.
+- NEVER include raw HTML tags (no <div>, <span>, <table>, etc.) in the markdown body. Only use the markdown syntax shown above.`;
 
 function cleanOutput(raw: string): string {
   // Strip code fences if present (```markdown ... ``` or ``` ... ```)
