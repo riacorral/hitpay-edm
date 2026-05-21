@@ -39,7 +39,7 @@ export function PartnerSpotlightEmail({ frontmatter, sections }: Props) {
         ))}
       </Section>
 
-      <Footer />
+      <Footer market={fm.market} />
     </Wrapper>
   );
 }

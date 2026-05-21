@@ -19,6 +19,7 @@ const BaseFrontmatter = z.object({
   template: TemplateType,
   subject: z.string(),
   previewText: z.string().optional(),
+  market: z.enum(['sg', 'my', 'ph', 'global']).default('sg'),
 });
 
 // Template-specific frontmatter

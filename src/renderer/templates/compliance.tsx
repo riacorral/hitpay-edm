@@ -104,7 +104,7 @@ export function ComplianceEmail({ frontmatter, sections }: Props) {
         </Section>
       )}
 
-      <Footer />
+      <Footer market={fm.market} />
     </Wrapper>
   );
 }

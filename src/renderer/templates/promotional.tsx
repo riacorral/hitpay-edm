@@ -91,7 +91,7 @@ export function PromotionalEmail({ frontmatter, sections }: Props) {
         <Button href={fm.ctaUrl}>{fm.ctaText}</Button>
       </Section>
 
-      <Footer />
+      <Footer market={fm.market} />
     </Wrapper>
   );
 }

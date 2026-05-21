@@ -107,7 +107,7 @@ export function ProductLaunchEmail({ frontmatter, sections }: Props) {
         )}
       </Section>
 
-      <Footer />
+      <Footer market={fm.market} />
     </Wrapper>
   );
 }

@@ -110,6 +110,7 @@ function NewCampaignInner() {
 
   // Brief state
   const [prompt, setPrompt] = useState('');
+  const [market, setMarket] = useState<'sg' | 'my' | 'ph' | 'global'>('sg');
   const [images, setImages] = useState<{ url: string; name: string }[]>([]);
 
   // Result state
@@ -230,7 +231,7 @@ function NewCampaignInner() {
       const res = await fetch('/api/campaigns/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt, images: images.map(i => i.url) }),
+        body: JSON.stringify({ prompt, images: images.map(i => i.url), market }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? 'Generation failed');
@@ -383,6 +384,32 @@ function NewCampaignInner() {
                   className="w-full text-sm text-gray-800 outline-none resize-none placeholder-gray-400 leading-relaxed"
                   autoFocus
                 />
+              </div>
+
+              {/* Market picker */}
+              <div className="bg-white rounded-xl border border-gray-200 p-5">
+                <p className="text-sm font-medium text-gray-700 mb-3">Market</p>
+                <div className="flex gap-2">
+                  {([
+                    { value: 'sg',     label: '🇸🇬 SG' },
+                    { value: 'my',     label: '🇲🇾 MY' },
+                    { value: 'ph',     label: '🇵🇭 PH' },
+                    { value: 'global', label: '🌏 Global' },
+                  ] as const).map(m => (
+                    <button
+                      key={m.value}
+                      type="button"
+                      onClick={() => setMarket(m.value)}
+                      className={`flex-1 py-2 rounded-lg text-sm font-medium border transition-colors ${
+                        market === m.value
+                          ? 'border-blue-500 bg-blue-50 text-blue-700'
+                          : 'border-gray-200 text-gray-600 hover:bg-gray-50'
+                      }`}
+                    >
+                      {m.label}
+                    </button>
+                  ))}
+                </div>
               </div>
 
               {/* Images */}

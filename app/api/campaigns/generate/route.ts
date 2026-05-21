@@ -15,6 +15,7 @@ EXACT REQUIRED FORMAT:
 template: partner-spotlight
 subject: Example subject line
 previewText: Preview text shown in email clients
+market: sg
 partnerName: Partner Name
 ctaUrl: https://hitpayapp.com
 ctaText: Learn More
@@ -103,7 +104,10 @@ RULES:
 - Do NOT use merge tags like {{first_name}} or {firstName} — write plain copy.
 - If images are provided, use the first as heroImage (if template supports it).
 - Write complete polished copy, no placeholders.
-- NEVER include raw HTML tags (no <div>, <span>, <table>, etc.) in the markdown body. Only use the markdown syntax shown above.`;
+- NEVER include raw HTML tags (no <div>, <span>, <table>, etc.) in the markdown body. Only use the markdown syntax shown above.
+- Always include market: sg/my/ph/global in frontmatter. Use the target market specified in the user message.
+
+MARKET FIELD VALUES: sg (Singapore), my (Malaysia), ph (Philippines), global (all others)`;
 
 function cleanOutput(raw: string): string {
   // Strip code fences if present (```markdown ... ``` or ``` ... ```)
@@ -128,14 +132,20 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'AI generation not configured (missing ANTHROPIC_API_KEY)' }, { status: 503 });
   }
 
-  const { prompt, images } = await req.json() as { prompt?: string; images?: string[] };
+  const { prompt, images, market } = await req.json() as { prompt?: string; images?: string[]; market?: string };
   if (!prompt?.trim()) return NextResponse.json({ error: 'Prompt is required' }, { status: 400 });
 
   const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
-  const userMessage = images?.length
-    ? `${prompt.trim()}\n\nImages to include: ${images.join(', ')}`
-    : prompt.trim();
+  const marketNote = market && market !== 'sg'
+    ? `\n\nTarget market: ${market.toUpperCase()} — include market: ${market} in the frontmatter.`
+    : '\n\nTarget market: SG — include market: sg in the frontmatter.';
+
+  const userMessage = [
+    prompt.trim(),
+    images?.length ? `Images to include: ${images.join(', ')}` : '',
+    marketNote,
+  ].filter(Boolean).join('\n\n');
 
   try {
     const message = await client.messages.create({

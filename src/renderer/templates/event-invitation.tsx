@@ -328,7 +328,7 @@ export function EventInvitationEmail({ frontmatter, sections }: Props) {
         </Section>
       )}
 
-      <Footer />
+      <Footer market={fm.market} />
     </Wrapper>
   );
 }
