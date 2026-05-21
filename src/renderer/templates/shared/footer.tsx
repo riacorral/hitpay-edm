@@ -52,6 +52,22 @@ export function Footer({ market = 'sg' }: { market?: string }) {
             </tbody>
           </table>
 
+          {/* Market cross-sell banner */}
+          <table width="100%" cellPadding={0} cellSpacing={0} style={{ marginBottom: '16px' }}>
+            <tbody>
+              <tr>
+                <td style={{ padding: '0' }}>
+                  <Img
+                    src={bannerSrc}
+                    alt="HitPay"
+                    width="600"
+                    style={{ display: 'block', width: '100%', maxWidth: '600px' }}
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
           <Hr style={{ borderColor: BRAND.colors.neutral200, margin: '0 0 12px 0' }} />
 
           {/* Company name */}
@@ -85,18 +101,6 @@ export function Footer({ market = 'sg' }: { market?: string }) {
               Unsubscribe
             </Link>
           </Text>
-        </Column>
-      </Row>
-
-      {/* Market cross-sell banner */}
-      <Row>
-        <Column style={{ padding: '0' }}>
-          <Img
-            src={bannerSrc}
-            alt="HitPay"
-            width="600"
-            style={{ display: 'block', width: '100%', maxWidth: '600px' }}
-          />
         </Column>
       </Row>
     </Section>
