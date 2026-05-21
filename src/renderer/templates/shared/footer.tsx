@@ -34,18 +34,6 @@ export function Footer({ market = 'sg' }: { market?: string }) {
   const bannerSrc = FOOTER_BANNERS[market] ?? FOOTER_BANNERS.global;
   return (
     <Section>
-      {/* Market cross-sell banner */}
-      <Row>
-        <Column style={{ padding: '0' }}>
-          <Img
-            src={bannerSrc}
-            alt="HitPay"
-            width="600"
-            style={{ display: 'block', width: '100%', maxWidth: '600px' }}
-          />
-        </Column>
-      </Row>
-
       <Row>
         <Column
           style={{
@@ -97,6 +85,18 @@ export function Footer({ market = 'sg' }: { market?: string }) {
               Unsubscribe
             </Link>
           </Text>
+        </Column>
+      </Row>
+
+      {/* Market cross-sell banner */}
+      <Row>
+        <Column style={{ padding: '0' }}>
+          <Img
+            src={bannerSrc}
+            alt="HitPay"
+            width="600"
+            style={{ display: 'block', width: '100%', maxWidth: '600px' }}
+          />
         </Column>
       </Row>
     </Section>
