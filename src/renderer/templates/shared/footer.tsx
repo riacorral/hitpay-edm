@@ -34,15 +34,10 @@ export function Footer({ market = 'sg' }: { market?: string }) {
   const bannerSrc = FOOTER_BANNERS[market] ?? FOOTER_BANNERS.global;
   return (
     <Section>
+      {/* Social icons */}
       <Row>
-        <Column
-          style={{
-            backgroundColor: BRAND.colors.beige,
-            padding: `${BRAND.spacing.lg} ${BRAND.spacing.xl}`,
-          }}
-        >
-          {/* Social icons */}
-          <table cellPadding={0} cellSpacing={0} style={{ margin: '0 auto', paddingBottom: '16px' }}>
+        <Column style={{ backgroundColor: BRAND.colors.beige, padding: `${BRAND.spacing.lg} ${BRAND.spacing.xl} 16px` }}>
+          <table cellPadding={0} cellSpacing={0} style={{ margin: '0 auto' }}>
             <tbody>
               <tr>
                 {SOCIAL_ICONS.map(s => (
@@ -51,52 +46,31 @@ export function Footer({ market = 'sg' }: { market?: string }) {
               </tr>
             </tbody>
           </table>
+        </Column>
+      </Row>
 
-          {/* Market cross-sell banner */}
-          <table width="100%" cellPadding={0} cellSpacing={0} style={{ marginBottom: '16px' }}>
-            <tbody>
-              <tr>
-                <td style={{ padding: '0' }}>
-                  <Img
-                    src={bannerSrc}
-                    alt="HitPay"
-                    width="600"
-                    style={{ display: 'block', width: '100%', maxWidth: '600px' }}
-                  />
-                </td>
-              </tr>
-            </tbody>
-          </table>
+      {/* Market cross-sell banner — full bleed, no padding */}
+      <Row>
+        <Column style={{ padding: '0', lineHeight: '0', fontSize: '0' }}>
+          <Img
+            src={bannerSrc}
+            alt="HitPay"
+            width="600"
+            style={{ display: 'block', width: '100%', maxWidth: '600px' }}
+          />
+        </Column>
+      </Row>
 
+      {/* Company name + unsubscribe */}
+      <Row>
+        <Column style={{ backgroundColor: BRAND.colors.beige, padding: `12px ${BRAND.spacing.xl} ${BRAND.spacing.lg}` }}>
           <Hr style={{ borderColor: BRAND.colors.neutral200, margin: '0 0 12px 0' }} />
-
-          {/* Company name */}
-          <Text
-            style={{
-              fontFamily: BRAND.fonts.body,
-              fontSize: '11px',
-              color: BRAND.colors.textTertiary,
-              lineHeight: '16px',
-              margin: '0 0 4px 0',
-              textAlign: 'center' as const,
-            }}
-          >
+          <Text style={{ fontFamily: BRAND.fonts.body, fontSize: '11px', color: BRAND.colors.textTertiary, lineHeight: '16px', margin: '0 0 4px 0', textAlign: 'center' as const }}>
             <Link href={BRAND.defaults.website} style={{ color: BRAND.colors.textTertiary, textDecoration: 'none' }}>
               HitPay Payment Solutions Pte Ltd
             </Link>
           </Text>
-
-          {/* Unsubscribe */}
-          <Text
-            style={{
-              fontFamily: BRAND.fonts.body,
-              fontSize: '10px',
-              color: BRAND.colors.neutral400,
-              lineHeight: '14px',
-              margin: '4px 0 0 0',
-              textAlign: 'center' as const,
-            }}
-          >
+          <Text style={{ fontFamily: BRAND.fonts.body, fontSize: '10px', color: BRAND.colors.neutral400, lineHeight: '14px', margin: '4px 0 0 0', textAlign: 'center' as const }}>
             <Link href="{unsubscribe_link}" style={{ color: BRAND.colors.neutral400, textDecoration: 'underline', fontSize: '10px' }}>
               Unsubscribe
             </Link>
