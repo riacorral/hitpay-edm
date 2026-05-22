@@ -1,6 +1,6 @@
 import type { ParsedEdm, EdmSection } from '../schema/edm.js';
 
-const CDN = 'https://3cse8uwfv1q9zblo.public.blob.vercel-storage.com/hitpay-edm';
+const CDN = 'https://azjzrc77u6pvsjpm.public.blob.vercel-storage.com/hitpay-edm';
 
 const B = {
   deepBlue: '#002771',
@@ -209,7 +209,7 @@ export function generateMjml(edm: ParsedEdm): string {
 
   const preview = fm.previewText ? `\n    <mj-preview>${esc(fm.previewText)}</mj-preview>` : '';
 
-  const hitpayWhiteLogo = 'https://3cse8uwfv1q9zblo.public.blob.vercel-storage.com/hitpay-edm/logo-white%402x.png';
+  const hitpayWhiteLogo = 'https://azjzrc77u6pvsjpm.public.blob.vercel-storage.com/brand/logo-white.png';
 
   let heroSection = '';
   let cobrandFooterSection = '';
@@ -227,7 +227,7 @@ export function generateMjml(edm: ParsedEdm): string {
   }
 
   if (fm.template === 'newsletter') {
-    const hitpayDarkLogo = 'https://3cse8uwfv1q9zblo.public.blob.vercel-storage.com/hitpay-edm/logo-dark%402x.png';
+    const hitpayDarkLogo = 'https://azjzrc77u6pvsjpm.public.blob.vercel-storage.com/brand/logo-dark.png';
     heroSection = `
   <mj-section background-color="${B.white}" padding="16px 32px">
     <mj-column>
