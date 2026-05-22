@@ -335,6 +335,16 @@ export function generateMjml(edm: ParsedEdm): string {
   ${closingMjml}`;
   }
 
+  // Default blue header for templates that don't define their own heroSection
+  if (!heroSection) {
+    heroSection = `
+  <mj-section background-color="${B.deepBlue}" padding="24px 32px">
+    <mj-column>
+      <mj-image src="${hitpayWhiteLogo}" alt="HitPay" width="120px" align="left" padding="0" />
+    </mj-column>
+  </mj-section>`;
+  }
+
   const bodyMjml = edm.sections.map(sectionToMjml).join('');
 
   const versionBadgeMjml = fm.template === 'feature-update' && fm.versionBadge
