@@ -301,21 +301,36 @@ function NewCampaignInner() {
     try {
       let campaignId = savedId;
 
+      // Use editedMarkdown (current textarea value) — falls back to markdown if no edits made
+      const markdownToSave = editedMarkdown || markdown;
+
       if (savedId) {
-        // Already saved — update in place
-        const res = await fetch(`/api/campaigns/${savedId}`, {
+        // Try to update existing campaign
+        const patchRes = await fetch(`/api/campaigns/${savedId}`, {
           method: 'PATCH',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ markdown }),
+          body: JSON.stringify({ markdown: markdownToSave }),
         });
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error ?? 'Save failed');
+        if (patchRes.ok) {
+          // Updated successfully — stay on same id
+        } else {
+          // Campaign not found or forbidden — save as new copy
+          const postRes = await fetch('/api/campaigns', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ markdown: markdownToSave }),
+          });
+          const postData = await postRes.json();
+          if (!postRes.ok) throw new Error(postData.error ?? 'Save failed');
+          campaignId = postData.campaign.id;
+          setSavedId(campaignId);
+        }
       } else {
         // First save — create new
         const res = await fetch('/api/campaigns', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ markdown }),
+          body: JSON.stringify({ markdown: markdownToSave }),
         });
         const data = await res.json();
         if (!res.ok) throw new Error(data.error ?? 'Save failed');

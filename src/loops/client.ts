@@ -133,6 +133,57 @@ export async function createDraftCampaign(
   return { campaignId, emailMessageId, url };
 }
 
+export async function updateDraftCampaign(
+  sessionToken: string,
+  campaignId: string,
+  subject: string,
+  previewText: string,
+  content: string,
+  useMjml: boolean,
+  onRefresh?: (newToken: string) => void,
+): Promise<CreateDraftResult> {
+  activeSession = sessionToken;
+
+  // Step 1: Get emailMessageId from existing campaign
+  const campRes = await loopsFetch(`/api/campaigns/${campaignId}`, 'GET');
+  if (!campRes.ok) {
+    throw new Error(`Failed to get campaign: ${campRes.status}`);
+  }
+  const campData = (await campRes.json()) as {
+    campaign: { emailMessage: { id: string } };
+  };
+  const emailMessageId = campData.campaign.emailMessage.id;
+
+  // Step 2: Update subject and preview text
+  const updateRes = await loopsFetch(
+    `/api/emailMessages/${emailMessageId}/update`,
+    'PUT',
+    { subject, previewText, editorType: 'MJML' },
+  );
+  if (!updateRes.ok) {
+    throw new Error(`Failed to update email: ${updateRes.status}`);
+  }
+
+  // Step 3: Upload new content
+  if (useMjml) {
+    await uploadMjmlAsZip(emailMessageId, content);
+  } else {
+    await uploadHtmlAsZip(emailMessageId, content);
+  }
+
+  // Step 4: Update campaign name
+  await loopsFetch(`/api/campaigns/${campaignId}`, 'PUT', {
+    name: `[EDM] ${subject}`,
+  });
+
+  if (onRefresh && activeSession !== sessionToken) {
+    onRefresh(activeSession);
+  }
+
+  const url = `${BASE_URL}/campaigns/${campaignId}/compose`;
+  return { campaignId, emailMessageId, url };
+}
+
 export async function getCampaign(
   sessionToken: string,
   campaignId: string,

@@ -4,6 +4,11 @@ import './globals.css';
 export const metadata: Metadata = {
   title: 'HitPay EDM',
   description: 'HitPay email campaign creator',
+  icons: {
+    icon: '/favicon.jpg',
+    shortcut: '/favicon.jpg',
+    apple: '/favicon.jpg',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

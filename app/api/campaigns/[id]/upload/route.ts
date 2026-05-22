@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getCurrentUser } from '@/lib/get-user';
 import { createAdminClient } from '@/lib/supabase';
 import { decrypt } from '@/lib/encryption';
-import { createDraftCampaign } from '@/src/loops/client';
+import { createDraftCampaign, updateDraftCampaign } from '@/src/loops/client';
 
 type Params = { params: Promise<{ id: string }> };
 
@@ -15,12 +15,11 @@ export async function POST(_req: NextRequest, { params }: Params) {
   const { id } = await params;
   const supabase = createAdminClient();
 
-  // Fetch campaign
+  // Fetch campaign (no user_id filter — any team member can upload)
   const { data: campaign, error: campErr } = await supabase
     .from('campaigns')
     .select('*')
     .eq('id', id)
-    .eq('user_id', user.id)
     .single();
 
   if (campErr || !campaign) {
@@ -49,14 +48,24 @@ export async function POST(_req: NextRequest, { params }: Params) {
   let refreshedToken: string | null = null;
 
   try {
-    const result = await createDraftCampaign(
-      sessionToken,
-      campaign.subject,
-      campaign.preview_text ?? '',
-      campaign.mjml_content,
-      true,
-      (newToken) => { refreshedToken = newToken; }
-    );
+    const result = campaign.loops_campaign_id
+      ? await updateDraftCampaign(
+          sessionToken,
+          campaign.loops_campaign_id,
+          campaign.subject,
+          campaign.preview_text ?? '',
+          campaign.mjml_content,
+          true,
+          (newToken) => { refreshedToken = newToken; }
+        )
+      : await createDraftCampaign(
+          sessionToken,
+          campaign.subject,
+          campaign.preview_text ?? '',
+          campaign.mjml_content,
+          true,
+          (newToken) => { refreshedToken = newToken; }
+        );
 
     // Save refreshed session token if it changed
     if (refreshedToken && refreshedToken !== sessionToken) {
@@ -67,13 +76,30 @@ export async function POST(_req: NextRequest, { params }: Params) {
         .eq('user_id', user.id);
     }
 
-    // Update campaign with Loops info
+    // Fetch existing upload history
+    const { data: existing } = await supabase
+      .from('campaigns')
+      .select('loops_uploads')
+      .eq('id', id)
+      .single();
+
+    const prevUploads: { url: string; uploaded_at: string; uploaded_by: string }[] =
+      Array.isArray(existing?.loops_uploads) ? existing.loops_uploads : [];
+
+    const newEntry = {
+      url: result.url,
+      uploaded_at: new Date().toISOString(),
+      uploaded_by: user.email,
+    };
+
+    // Update campaign with Loops info — latest URL always at top
     await supabase
       .from('campaigns')
       .update({
         loops_campaign_id: result.campaignId,
         loops_campaign_url: result.url,
         status: 'uploaded',
+        loops_uploads: [newEntry, ...prevUploads],
       })
       .eq('id', id);
 

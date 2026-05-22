@@ -39,6 +39,7 @@ export async function PATCH(req: NextRequest, { params }: Params) {
     ]);
 
     const supabase = createAdminClient();
+
     const { data, error } = await supabase
       .from('campaigns')
       .update({
@@ -49,13 +50,15 @@ export async function PATCH(req: NextRequest, { params }: Params) {
         template: parsed.frontmatter.template,
         html_content: html,
         mjml_content: mjml,
+        last_updated_by: user.email,
       })
       .eq('id', id)
-      .eq('user_id', user.id)
       .select()
       .single();
 
-    if (error || !data) return NextResponse.json({ error: 'Not found or update failed' }, { status: 404 });
+    if (error || !data) {
+      return NextResponse.json({ error: error?.message ?? 'Campaign not found' }, { status: 404 });
+    }
     return NextResponse.json({ campaign: data });
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Render failed';
@@ -72,8 +75,7 @@ export async function DELETE(_req: NextRequest, { params }: Params) {
   const { error } = await supabase
     .from('campaigns')
     .delete()
-    .eq('id', id)
-    .eq('user_id', user.id);
+    .eq('id', id);
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   return NextResponse.json({ success: true });

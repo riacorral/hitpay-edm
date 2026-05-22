@@ -1,4 +1,5 @@
-const CDN = 'https://3cse8uwfv1q9zblo.public.blob.vercel-storage.com/hitpay-edm';
+const CDN = 'https://azjzrc77u6pvsjpm.public.blob.vercel-storage.com/hitpay-edm';
+const FONT_CDN = 'https://3cse8uwfv1q9zblo.public.blob.vercel-storage.com/hitpay-edm';
 
 export const BRAND = {
   colors: {
@@ -28,9 +29,9 @@ export const BRAND = {
   },
 
   fontUrls: {
-    regular: `${CDN}/Hauora-Regular.woff2`,
-    semibold: `${CDN}/Hauora-SemiBold.woff2`,
-    bold: `${CDN}/Hauora-Bold.woff2`,
+    regular: `${FONT_CDN}/Hauora-Regular.woff2`,
+    semibold: `${FONT_CDN}/Hauora-SemiBold.woff2`,
+    bold: `${FONT_CDN}/Hauora-Bold.woff2`,
   },
 
   fontSizes: {
