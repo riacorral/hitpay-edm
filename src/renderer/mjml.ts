@@ -444,7 +444,7 @@ export function generateMjml(edm: ParsedEdm): string {
     <mj-column>
       <mj-divider border-color="${B.neutral200}" border-width="1px" padding="0 0 12px" />
       <mj-text align="center" font-size="11px" color="${B.textTertiary}" line-height="16px" padding="0 0 4px">HitPay Payment Solutions Pte Ltd</mj-text>
-      <mj-text align="center" font-size="10px" color="${B.neutral400}" line-height="14px" padding="0"><a href="{unsubscribe_link}" style="color:${B.neutral400};text-decoration:underline;font-size:10px;">Unsubscribe</a></mj-text>
+      <mj-text align="center" font-size="9px" color="${B.neutral200}" line-height="14px" padding="0"><a href="{unsubscribe_link}" style="color:${B.neutral200};text-decoration:none;font-size:9px;">Unsubscribe</a></mj-text>
     </mj-column>
   </mj-section>
   </mj-body>
