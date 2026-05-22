@@ -1,6 +1,7 @@
 import type { ParsedEdm, EdmSection } from '../schema/edm.js';
 
 const CDN = 'https://azjzrc77u6pvsjpm.public.blob.vercel-storage.com/hitpay-edm';
+const BRAND_CDN = 'https://azjzrc77u6pvsjpm.public.blob.vercel-storage.com/brand';
 
 const B = {
   deepBlue: '#002771',
@@ -392,45 +393,48 @@ export function generateMjml(edm: ParsedEdm): string {
     ${ctaSection}
   ${cobrandFooterSection}
   <!-- Footer -->
-  <mj-section background-color="${B.beige}" padding="32px 32px 24px">
+  <mj-section background-color="${B.beige}" padding="24px 32px 16px">
     <mj-column>
-      <!-- Social row: logogram | icons | hitpayapp.com -->
-      <mj-table padding="0 0 16px">
+      <!-- Social icons row -->
+      <mj-table padding="0">
         <tr>
           <td align="center">
             <table cellpadding="0" cellspacing="0" style="margin:0 auto;">
               <tr>
-                <td style="vertical-align:middle;padding-right:10px;">
-                  <img src="${CDN}/hitpay-logogram.svg" width="22" height="22" alt="HitPay" style="display:block;" />
+                <td style="vertical-align:middle;padding:0 5px;">
+                  <a href="https://www.instagram.com/hitpayapp"><img src="${CDN}/social-instagram.png" width="24" height="24" alt="Instagram" style="display:block;border-radius:50%;" /></a>
                 </td>
-                <td style="vertical-align:middle;color:${B.neutral200};font-size:18px;line-height:1;padding-right:10px;">|</td>
-                <td style="vertical-align:middle;padding:0 3px;">
-                  <a href="https://www.instagram.com/hitpayapp"><img src="${CDN}/social-instagram.png" width="26" height="26" alt="Instagram" style="display:block;" /></a>
+                <td style="vertical-align:middle;padding:0 5px;">
+                  <a href="https://www.facebook.com/hitpayapp"><img src="${CDN}/social-facebook.png" width="24" height="24" alt="Facebook" style="display:block;border-radius:50%;" /></a>
                 </td>
-                <td style="vertical-align:middle;padding:0 3px;">
-                  <a href="https://www.facebook.com/hitpayapp"><img src="${CDN}/social-facebook.png" width="26" height="26" alt="Facebook" style="display:block;" /></a>
+                <td style="vertical-align:middle;padding:0 5px;">
+                  <a href="https://www.linkedin.com/company/hit-pay/"><img src="${CDN}/social-linkedin.png" width="24" height="24" alt="LinkedIn" style="display:block;border-radius:50%;" /></a>
                 </td>
-                <td style="vertical-align:middle;padding:0 3px;">
-                  <a href="https://www.linkedin.com/company/hit-pay/"><img src="${CDN}/social-linkedin.png" width="26" height="26" alt="LinkedIn" style="display:block;" /></a>
+                <td style="vertical-align:middle;padding:0 5px;">
+                  <a href="https://www.tiktok.com/@hitpayapp"><img src="${CDN}/social-tiktok.png" width="24" height="24" alt="TikTok" style="display:block;border-radius:50%;" /></a>
                 </td>
-                <td style="vertical-align:middle;padding:0 3px;">
-                  <a href="https://www.tiktok.com/@hitpayapp"><img src="${CDN}/social-tiktok.png" width="26" height="26" alt="TikTok" style="display:block;" /></a>
-                </td>
-                <td style="vertical-align:middle;padding:0 3px;">
-                  <a href="https://www.youtube.com/@hitpayapp"><img src="${CDN}/social-youtube.png" width="26" height="26" alt="YouTube" style="display:block;" /></a>
-                </td>
-                <td style="vertical-align:middle;color:${B.neutral200};font-size:18px;line-height:1;padding-left:10px;padding-right:10px;">|</td>
-                <td style="vertical-align:middle;">
-                  <a href="https://www.hitpayapp.com" style="font-family:${B.font};font-size:14px;color:${B.textSecondary};text-decoration:none;">hitpayapp.com</a>
+                <td style="vertical-align:middle;padding:0 5px;">
+                  <a href="https://www.youtube.com/@hitpayapp"><img src="${CDN}/social-youtube.png" width="24" height="24" alt="YouTube" style="display:block;border-radius:50%;" /></a>
                 </td>
               </tr>
             </table>
           </td>
         </tr>
       </mj-table>
-      <mj-text align="center" font-size="14px" color="${B.textSecondary}" line-height="20px" padding="0 0 16px">Enabling growing businesses to get paid with confidence</mj-text>
-      <mj-divider border-color="${B.neutral200}" border-width="1px" padding="0 0 16px" />
-      <mj-text align="center" font-size="12px" color="${B.textTertiary}" line-height="18px" padding="0">HitPay Payment Solutions Pte Ltd, Singapore<br /><a href="{unsubscribe_link}" style="color:${B.textTertiary};text-decoration:none;font-size:5px;">Unsubscribe</a></mj-text>
+    </mj-column>
+  </mj-section>
+  <!-- Footer banner -->
+  <mj-section padding="0">
+    <mj-column padding="0">
+      <mj-image src="${BRAND_CDN}/footer-banner-${fm.market ?? 'sg'}.png" alt="HitPay" width="600px" padding="0" />
+    </mj-column>
+  </mj-section>
+  <!-- Footer text -->
+  <mj-section background-color="${B.beige}" padding="12px 32px 24px">
+    <mj-column>
+      <mj-divider border-color="${B.neutral200}" border-width="1px" padding="0 0 12px" />
+      <mj-text align="center" font-size="11px" color="${B.textTertiary}" line-height="16px" padding="0 0 4px">HitPay Payment Solutions Pte Ltd</mj-text>
+      <mj-text align="center" font-size="10px" color="${B.neutral400}" line-height="14px" padding="0"><a href="{unsubscribe_link}" style="color:${B.neutral400};text-decoration:underline;font-size:10px;">Unsubscribe</a></mj-text>
     </mj-column>
   </mj-section>
   </mj-body>
