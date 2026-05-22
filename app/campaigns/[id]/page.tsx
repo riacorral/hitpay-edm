@@ -415,7 +415,7 @@ function CampaignPageInner() {
                 <p className="text-xs text-gray-400">Created by <span className="text-gray-600">{creatorName}</span></p>
               )}
               {campaign.last_updated_by && (
-                <p className="text-xs text-gray-400">Last edited by <span className="text-gray-600">{campaign.last_updated_by.split('@')[0]}</span></p>
+                <p className="text-xs text-gray-400">Last edited by <span className="text-gray-600">{campaign.last_updated_by.split('@')[0]}</span> {fmtTime(campaign.updated_at)}</p>
               )}
               {uploads.length > 0 && (
                 <p className="text-xs text-gray-400">Pushed to Loops {fmtTime(uploads[0].uploaded_at)}{uploads[0].uploaded_by ? <> by <span className="text-gray-600">{uploads[0].uploaded_by.split('@')[0]}</span></> : ''}</p>
