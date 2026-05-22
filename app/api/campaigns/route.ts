@@ -51,6 +51,7 @@ export async function POST(req: NextRequest) {
         html_content: html,
         mjml_content: mjml,
         status: 'draft',
+        last_updated_by: user.email,
       })
       .select()
       .single();
