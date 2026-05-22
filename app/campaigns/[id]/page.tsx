@@ -409,31 +409,17 @@ function CampaignPageInner() {
               </a>
             )}
 
-            {/* Info */}
-            <div className="space-y-1.5 px-1">
-              <div className="flex items-center gap-1.5 flex-wrap">
-                <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-50 text-blue-700">
-                  {TEMPLATE_LABELS[campaign.template] ?? campaign.template}
-                </span>
-                {campaign.status === 'uploaded'
-                  ? <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-green-50 text-green-700"><span className="w-1.5 h-1.5 rounded-full bg-green-500 inline-block" />In Loops</span>
-                  : <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-amber-50 text-amber-700"><span className="w-1.5 h-1.5 rounded-full bg-amber-400 inline-block" />Draft</span>
-                }
-              </div>
+            {/* History */}
+            <div className="space-y-1 px-1 pt-1">
               {creatorName && (
-                <div className="flex items-center gap-1.5">
-                  {creator?.avatar_url
-                    // eslint-disable-next-line @next/next/no-img-element
-                    ? <img src={creator.avatar_url} alt={creatorName} className="w-5 h-5 rounded-full object-cover" />
-                    : <div className="w-5 h-5 rounded-full flex items-center justify-center text-white font-semibold shrink-0" style={{ fontSize: 9, backgroundColor: '#2465DE' }}>{creatorName[0].toUpperCase()}</div>
-                  }
-                  <span className="text-xs text-gray-500">Created by {creatorName}</span>
-                </div>
+                <p className="text-xs text-gray-400">Created by <span className="text-gray-600">{creatorName}</span></p>
               )}
               {campaign.last_updated_by && (
                 <p className="text-xs text-gray-400">Last edited by <span className="text-gray-600">{campaign.last_updated_by.split('@')[0]}</span></p>
               )}
-              <p className="text-xs text-gray-400">{new Date(campaign.updated_at).toLocaleDateString('en-SG', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
+              {uploads.length > 0 && (
+                <p className="text-xs text-gray-400">Pushed to Loops {fmtTime(uploads[0].uploaded_at)}{uploads[0].uploaded_by ? <> by <span className="text-gray-600">{uploads[0].uploaded_by.split('@')[0]}</span></> : ''}</p>
+              )}
             </div>
 
           </div>
