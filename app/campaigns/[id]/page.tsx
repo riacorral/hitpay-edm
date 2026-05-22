@@ -401,24 +401,12 @@ function CampaignPageInner() {
               </p>
             )}
 
-            {/* Upload history */}
-            {uploads.length > 0 && (
-              <div className="bg-white rounded-xl border border-gray-200 p-4 space-y-2">
-                <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide">Upload history</p>
-                {uploads.map((u, i) => (
-                  <div key={u.uploaded_at + i} className={`rounded-lg p-2.5 ${i === 0 ? 'bg-blue-50 border border-blue-100' : 'bg-gray-50 border border-gray-100'}`}>
-                    <div className="flex items-center justify-between gap-1 mb-1">
-                      {i === 0 && <span className="text-xs font-semibold text-blue-600">Latest</span>}
-                      <a href={u.url} target="_blank" rel="noopener noreferrer"
-                        className="text-xs font-medium hover:underline ml-auto" style={{ color: '#2465DE' }}>
-                        View in Loops ↗
-                      </a>
-                    </div>
-                    <p className="text-xs text-gray-500">{fmtTime(u.uploaded_at)}</p>
-                    {u.uploaded_by && <p className="text-xs text-gray-400">{u.uploaded_by.split('@')[0]}</p>}
-                  </div>
-                ))}
-              </div>
+            {/* View in Loops */}
+            {campaign.loops_campaign_url && (
+              <a href={campaign.loops_campaign_url} target="_blank" rel="noopener noreferrer"
+                className="block w-full py-2 rounded-lg border border-gray-200 bg-white text-center text-xs font-medium text-gray-600 hover:bg-gray-50 transition-colors">
+                View in Loops ↗
+              </a>
             )}
 
             {/* Info */}
