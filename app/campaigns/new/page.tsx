@@ -136,6 +136,9 @@ function NewCampaignInner() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const imageModeRef = useRef<'inline' | 'hero' | 'image-left' | 'image-right'>('inline');
   const [showImageMenu, setShowImageMenu] = useState(false);
+  const [showCtaMenu, setShowCtaMenu] = useState(false);
+  const [ctaText, setCtaText] = useState('');
+  const [ctaUrl, setCtaUrl] = useState('');
   const hasPreview = !!previewHtml;
 
   // Load existing campaign when ?edit=<id> is present
@@ -621,6 +624,65 @@ function NewCampaignInner() {
                                 </button>
                               ))}
                             </div>
+                            </>
+                          )}
+                        </div>
+                        {/* CTA button inserter */}
+                        <div className="relative">
+                          <button type="button" title="Insert CTA button"
+                            onClick={() => {
+                              const sel = textareaRef.current ? textareaRef.current.value.slice(textareaRef.current.selectionStart, textareaRef.current.selectionEnd) : '';
+                              setCtaText(sel || '');
+                              setCtaUrl('');
+                              setShowCtaMenu(m => !m);
+                            }}
+                            className="w-7 h-7 flex items-center justify-center text-gray-600 rounded hover:bg-white hover:shadow-sm border border-transparent hover:border-gray-200">
+                            <svg width="14" height="10" viewBox="0 0 14 10" fill="none" stroke="currentColor" strokeWidth="1.2">
+                              <rect x="0.6" y="0.6" width="12.8" height="8.8" rx="2.4"/>
+                              <line x1="3.5" y1="5" x2="10.5" y2="5" strokeLinecap="round"/>
+                            </svg>
+                          </button>
+                          {showCtaMenu && (
+                            <>
+                              <div className="fixed inset-0 z-10" onClick={() => setShowCtaMenu(false)} />
+                              <div className="absolute left-0 top-8 bg-white border border-gray-200 rounded-lg shadow-lg z-20 p-3 w-56">
+                                <p className="text-xs font-medium text-gray-700 mb-1">Button text</p>
+                                <input
+                                  autoFocus
+                                  type="text"
+                                  value={ctaText}
+                                  onChange={e => setCtaText(e.target.value)}
+                                  placeholder="e.g. Get started"
+                                  className="w-full text-xs border border-gray-200 rounded px-2 py-1.5 mb-2 outline-none focus:border-blue-400"
+                                />
+                                <p className="text-xs font-medium text-gray-700 mb-1">Link URL</p>
+                                <input
+                                  type="url"
+                                  value={ctaUrl}
+                                  onChange={e => setCtaUrl(e.target.value)}
+                                  onKeyDown={e => {
+                                    if (e.key === 'Enter' && ctaText.trim() && ctaUrl.trim() && textareaRef.current) {
+                                      const { selectionStart: s, value } = textareaRef.current;
+                                      setEditedMarkdown(value.slice(0, s) + `\n[${ctaText.trim()}](${ctaUrl.trim()}){.cta}\n` + value.slice(s));
+                                      setShowCtaMenu(false); setCtaText(''); setCtaUrl('');
+                                    }
+                                  }}
+                                  placeholder="https://"
+                                  className="w-full text-xs border border-gray-200 rounded px-2 py-1.5 mb-3 outline-none focus:border-blue-400"
+                                />
+                                <button
+                                  type="button"
+                                  disabled={!ctaText.trim() || !ctaUrl.trim()}
+                                  onClick={() => {
+                                    if (!textareaRef.current) return;
+                                    const { selectionStart: s, value } = textareaRef.current;
+                                    setEditedMarkdown(value.slice(0, s) + `\n[${ctaText.trim()}](${ctaUrl.trim()}){.cta}\n` + value.slice(s));
+                                    setShowCtaMenu(false); setCtaText(''); setCtaUrl('');
+                                  }}
+                                  className="w-full py-1.5 rounded text-white text-xs font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity"
+                                  style={{ backgroundColor: '#2465DE' }}
+                                >Insert button</button>
+                              </div>
                             </>
                           )}
                         </div>

@@ -103,6 +103,7 @@ RULES:
 - Tone: professional, warm, confident.
 - Do NOT use merge tags like {{first_name}} or {firstName} — write plain copy.
 - If images are provided, use the first as heroImage (if template supports it).
+- Subject lines must use Title Case (capitalise the first letter of every major word). Example: "Meet Bukku - HitPay's New Accounting Integration" not "Meet Bukku - HitPay's new accounting integration".
 - Write complete polished copy, no placeholders.
 - NEVER include raw HTML tags (no <div>, <span>, <table>, etc.) in the markdown body. Only use the markdown syntax shown above.
 - Always include market: sg/my/ph/global in frontmatter. Use the target market specified in the user message.
