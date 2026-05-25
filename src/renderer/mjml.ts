@@ -345,6 +345,17 @@ export function generateMjml(edm: ParsedEdm): string {
   </mj-section>`;
   }
 
+  // Append full-width hero image for templates that support it but handle their own heroSection above
+  // (product-launch and event-invitation already embed heroImage inside their heroSection)
+  if (fm.heroImage && fm.template !== 'product-launch' && fm.template !== 'event-invitation') {
+    heroSection += `
+  <mj-section padding="0">
+    <mj-column padding="0">
+      <mj-image src="${esc(fm.heroImage)}" alt="" width="600px" padding="0" fluid-on-mobile="true" />
+    </mj-column>
+  </mj-section>`;
+  }
+
   const bodyMjml = edm.sections.map(sectionToMjml).join('');
 
   const versionBadgeMjml = fm.template === 'feature-update' && fm.versionBadge
