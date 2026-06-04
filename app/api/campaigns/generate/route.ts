@@ -107,6 +107,14 @@ RULES:
 - YAML values that contain a colon must ALWAYS be wrapped in double quotes. Example: subject: "Exclusive Offer: Save on Card Payments" — never write subject: Exclusive Offer: Save on Card Payments (unquoted).
 - Write complete polished copy, no placeholders.
 - NEVER include raw HTML tags (no <div>, <span>, <table>, etc.) in the markdown body. Only use the markdown syntax shown above.
+- For stat/metric grids (e.g. 4 numbers side by side), use the :::columns block syntax:
+  :::columns
+  ::column 🛒 **900M**
+  People use ChatGPT every week looking for things to buy
+  ::column 📈 **42%**
+  Higher conversion from AI-referred shoppers
+  :::
+  Each ::column line has: optional emoji, then the stat in **bold**. Description follows on the next line(s). Close the block with :::.
 - Always include market: sg/my/ph/global in frontmatter. Use the target market specified in the user message.
 
 MARKET FIELD VALUES: sg (Singapore), my (Malaysia), ph (Philippines), global (all others)`;

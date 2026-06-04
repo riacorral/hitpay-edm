@@ -80,6 +80,34 @@ function parseBody(body: string): EdmSection[] {
       continue;
     }
 
+    // HTML table block → columns section
+    // AI sometimes generates <table><thead><th>emoji stat</th>...</thead><tbody><td>desc</td>...</tbody></table>
+    // We convert this to a columns section automatically.
+    if (/^<table[\s>]/.test(trimmed) || trimmed === '<table>') {
+      const tableLines: string[] = [line];
+      i++;
+      while (i < lines.length && !lines[i].includes('</table>')) {
+        tableLines.push(lines[i]);
+        i++;
+      }
+      if (i < lines.length) { tableLines.push(lines[i]); i++; } // include </table> line
+      const tableHtml = tableLines.join('\n');
+      const thMatches = [...tableHtml.matchAll(/<th[^>]*>([\s\S]*?)<\/th>/g)];
+      const tdMatches = [...tableHtml.matchAll(/<td[^>]*>([\s\S]*?)<\/td>/g)];
+      const headers = thMatches.map(m => m[1].replace(/<[^>]+>/g, '').trim());
+      const descriptions = tdMatches.map(m => m[1].replace(/<[^>]+>/g, '').trim());
+      if (headers.length > 0) {
+        const items = headers.map((header, idx) => {
+          const spaceIdx = header.indexOf(' ');
+          const icon = spaceIdx !== -1 ? header.slice(0, spaceIdx).trim() : undefined;
+          const stat = spaceIdx !== -1 ? header.slice(spaceIdx + 1).trim() : header;
+          return { icon: icon || undefined, stat: stat || undefined, text: descriptions[idx] ?? '' };
+        });
+        sections.push({ type: 'columns', items });
+      }
+      continue;
+    }
+
     // Columns block: :::columns
     // Format:
     //   :::columns

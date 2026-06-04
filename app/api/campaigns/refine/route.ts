@@ -25,18 +25,26 @@ export async function POST(req: Request) {
   try {
     const message = await client.messages.create({
       model: 'claude-sonnet-4-6',
-      max_tokens: 2048,
+      max_tokens: 4096,
       system: `You are editing an existing HitPay email campaign. Apply the requested changes.
 
 CRITICAL: Your response must begin with exactly --- on the first line (the YAML frontmatter). No explanation, no preamble, no code fences.
 
 Rules:
-- Keep all unchanged sections exactly as they are
-- Preserve all valid URLs and required frontmatter fields
+- Output the COMPLETE email from --- to the last line. Never truncate or omit sections.
+- Keep all unchanged sections exactly as they are — including images, image URLs, :::columns blocks, ::: image-left blocks, and any other special syntax.
+- Preserve ALL frontmatter fields exactly, including long URLs with UTM parameters.
 - The frontmatter template field must remain one of: product-launch, feature-update, newsletter, promotional, event-invitation, partner-spotlight, important-announcement, app-changes, rate-changes, compliance
 - All ctaUrl values must be valid https:// URLs
 - Do NOT use merge tags like {{first_name}} — use plain copy
-- YAML values containing a colon MUST be wrapped in double quotes, e.g. subject: "Exclusive Offer: Save on Card Payments"`,
+- YAML values containing a colon MUST be wrapped in double quotes, e.g. subject: "Exclusive Offer: Save on Card Payments"
+- NEVER use raw HTML tags. For stat grids use :::columns blocks:
+  :::columns
+  ::column 🛒 **900M**
+  Description text here
+  ::column 📈 **42%**
+  Another description
+  :::`,
       messages: [
         {
           role: 'user',
