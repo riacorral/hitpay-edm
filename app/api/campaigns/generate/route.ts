@@ -104,25 +104,47 @@ RULES:
 - Do NOT use merge tags like {{first_name}} or {firstName} — write plain copy.
 - If images are provided, use the first as heroImage (if template supports it).
 - Subject lines must use Title Case (capitalise the first letter of every major word). Example: "Meet Bukku - HitPay's New Accounting Integration" not "Meet Bukku - HitPay's new accounting integration".
+- YAML values that contain a colon must ALWAYS be wrapped in double quotes. Example: subject: "Exclusive Offer: Save on Card Payments" — never write subject: Exclusive Offer: Save on Card Payments (unquoted).
 - Write complete polished copy, no placeholders.
 - NEVER include raw HTML tags (no <div>, <span>, <table>, etc.) in the markdown body. Only use the markdown syntax shown above.
 - Always include market: sg/my/ph/global in frontmatter. Use the target market specified in the user message.
 
 MARKET FIELD VALUES: sg (Singapore), my (Malaysia), ph (Philippines), global (all others)`;
 
+// Quote any YAML frontmatter values that contain ": " (colon + space), which would
+// otherwise break the js-yaml parser used by gray-matter. Skips URLs and already-quoted values.
+function sanitizeFrontmatterColons(markdown: string): string {
+  const fmMatch = markdown.match(/^(---\n)([\s\S]*?)(\n---)/);
+  if (!fmMatch) return markdown;
+  const [full, open, body, close] = fmMatch;
+  const after = markdown.slice(full.length);
+  const sanitized = body.replace(
+    /^([a-zA-Z][a-zA-Z0-9]*:\s*)(.+)$/gm,
+    (line, keyPart, valuePart) => {
+      const v = valuePart.trim();
+      if ((v.startsWith('"') && v.endsWith('"')) || (v.startsWith("'") && v.endsWith("'"))) return line;
+      if (/^https?:\/\//.test(v)) return line;
+      if (v.includes(': ') || v.endsWith(':')) {
+        return `${keyPart}"${v.replace(/"/g, '\\"')}"`;
+      }
+      return line;
+    },
+  );
+  return open + sanitized + close + after;
+}
+
 function cleanOutput(raw: string): string {
   // Strip code fences if present (```markdown ... ``` or ``` ... ```)
   const fenceMatch = raw.match(/^```[^\n]*\n([\s\S]*?)\n?```\s*$/);
   const text = fenceMatch ? fenceMatch[1].trim() : raw.trim();
 
-  // If it already starts with ---, we're done
-  if (text.startsWith('---')) return text;
-
   // Strip any preamble before the first --- line (model sometimes adds intro text)
-  const fmIdx = text.search(/^---$/m);
-  if (fmIdx !== -1) return text.slice(fmIdx).trim();
+  const cleaned = text.startsWith('---') ? text : (() => {
+    const fmIdx = text.search(/^---$/m);
+    return fmIdx !== -1 ? text.slice(fmIdx).trim() : text;
+  })();
 
-  return text;
+  return sanitizeFrontmatterColons(cleaned);
 }
 
 export async function POST(req: Request) {

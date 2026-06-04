@@ -307,6 +307,44 @@ export function SectionRenderer({ section }: SectionRendererProps) {
       );
     }
 
+    case 'columns': {
+      const n = section.items.length;
+      const colWidth = `${Math.floor(100 / n)}%`;
+      return (
+        <Section style={{ padding: `0 ${BRAND.spacing.lg}`, marginBottom: '24px' }}>
+          <Row>
+            {section.items.map((item, i) => (
+              <Column
+                key={i}
+                style={{
+                  width: colWidth,
+                  verticalAlign: 'top',
+                  paddingLeft: i > 0 ? '6px' : '0',
+                  paddingRight: i < n - 1 ? '6px' : '0',
+                }}
+              >
+                <table width="100%" cellPadding={0} cellSpacing={0} style={{ backgroundColor: BRAND.colors.paleBlue, borderRadius: '8px' }}>
+                  <tbody>
+                    <tr>
+                      <td style={{ padding: '16px 12px', verticalAlign: 'top' }}>
+                        {item.icon && (
+                          <p style={{ margin: '0 0 4px 0', fontSize: '20px', lineHeight: '1.2', fontFamily: BRAND.fonts.body }}>{item.icon}</p>
+                        )}
+                        {item.stat && (
+                          <p style={{ margin: '0 0 6px 0', fontFamily: BRAND.fonts.headline, fontSize: '22px', fontWeight: 700, color: BRAND.colors.deepBlue, lineHeight: '1.1' }}>{item.stat}</p>
+                        )}
+                        <p style={{ margin: '0', fontFamily: BRAND.fonts.body, fontSize: '12px', color: BRAND.colors.textSecondary, lineHeight: '1.5' }}>{item.text}</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </Column>
+            ))}
+          </Row>
+        </Section>
+      );
+    }
+
     case 'feature_card': {
       const isLeft = section.imagePosition === 'left';
       const textCol = (

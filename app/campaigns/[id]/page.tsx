@@ -99,6 +99,12 @@ function CampaignPageInner() {
   const [ctaText, setCtaText] = useState('');
   const [ctaUrl, setCtaUrl] = useState('');
 
+  // Autosave
+  const [autoSaving, setAutoSaving] = useState(false);
+  const [autoSaved, setAutoSaved] = useState(false);
+  const autoSaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const lastSavedMdRef = useRef<string>('');
+
   // Actions
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState('');
@@ -115,10 +121,36 @@ function CampaignPageInner() {
       .then(d => {
         const c = d.campaign as Campaign;
         setCampaign(c);
-        if (c?.markdown) setEditedMd(c.markdown);
+        if (c?.markdown) {
+          lastSavedMdRef.current = c.markdown;
+          setEditedMd(c.markdown);
+        }
       })
       .finally(() => setLoading(false));
   }, [id]);
+
+  // Autosave — debounced 2s after any markdown change
+  useEffect(() => {
+    if (editedMd === lastSavedMdRef.current) return;
+    if (!campaign) return;
+    if (autoSaveTimer.current) clearTimeout(autoSaveTimer.current);
+    autoSaveTimer.current = setTimeout(async () => {
+      setAutoSaving(true);
+      try {
+        const res = await fetch(`/api/campaigns/${id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ markdown: editedMd }) });
+        const data = await res.json();
+        if (res.ok) {
+          lastSavedMdRef.current = editedMd;
+          setCampaign(c => c ? { ...c, ...data.campaign } : data.campaign);
+          setLiveHtml(data.campaign.html_content);
+          setAutoSaved(true);
+          setTimeout(() => setAutoSaved(false), 2500);
+        }
+      } catch { /* silent */ }
+      finally { setAutoSaving(false); }
+    }, 2000);
+    return () => { if (autoSaveTimer.current) clearTimeout(autoSaveTimer.current); };
+  }, [editedMd, campaign, id]);
 
   async function handleInsertImage(files: FileList) {
     setImgUploading(true);
@@ -365,14 +397,21 @@ function CampaignPageInner() {
                         </button>
                         {showCtaMenu && (
                           <>
-                            <div className="fixed inset-0 z-10" onClick={() => setShowCtaMenu(false)} />
+                            {/* Backdrop: only close if inputs are empty (prevents losing pasted content on window switch) */}
+                            <div className="fixed inset-0 z-10" onClick={() => { if (!ctaText.trim() && !ctaUrl.trim()) setShowCtaMenu(false); }} />
                             <div className="absolute left-0 top-8 bg-white border border-gray-200 rounded-lg shadow-lg z-20 p-3 w-56">
+                              <div className="flex items-center justify-between mb-2">
+                                <p className="text-xs font-medium text-gray-700">Insert button</p>
+                                <button type="button" onClick={() => { setShowCtaMenu(false); setCtaText(''); setCtaUrl(''); }}
+                                  className="text-gray-400 hover:text-gray-600 text-xs leading-none">✕</button>
+                              </div>
                               <p className="text-xs font-medium text-gray-700 mb-1">Button text</p>
                               <input
                                 autoFocus
                                 type="text"
                                 value={ctaText}
                                 onChange={e => setCtaText(e.target.value)}
+                                onKeyDown={e => { if (e.key === 'Escape') { setShowCtaMenu(false); setCtaText(''); setCtaUrl(''); } }}
                                 placeholder="e.g. Get started"
                                 className="w-full text-xs border border-gray-200 rounded px-2 py-1.5 mb-2 outline-none focus:border-blue-400"
                               />
@@ -382,6 +421,7 @@ function CampaignPageInner() {
                                 value={ctaUrl}
                                 onChange={e => setCtaUrl(e.target.value)}
                                 onKeyDown={e => {
+                                  if (e.key === 'Escape') { setShowCtaMenu(false); setCtaText(''); setCtaUrl(''); }
                                   if (e.key === 'Enter' && ctaText.trim() && ctaUrl.trim() && taRef.current) {
                                     const { selectionStart: s, value } = taRef.current;
                                     setEditedMd(value.slice(0, s) + `\n[${ctaText.trim()}](${ctaUrl.trim()}){.cta}\n` + value.slice(s));
@@ -442,11 +482,16 @@ function CampaignPageInner() {
             )}
 
             {/* Save */}
-            <button onClick={handleSave} disabled={saving}
-              className="w-full py-2 rounded-lg text-white text-xs font-semibold hover:opacity-90 disabled:opacity-50 transition-opacity"
-              style={{ backgroundColor: '#002771' }}>
-              {saving ? 'Saving…' : 'Save Campaign'}
-            </button>
+            <div className="relative">
+              <button onClick={handleSave} disabled={saving || autoSaving}
+                className="w-full py-2 rounded-lg text-white text-xs font-semibold hover:opacity-90 disabled:opacity-50 transition-opacity"
+                style={{ backgroundColor: '#002771' }}>
+                {saving || autoSaving ? 'Saving…' : 'Save Campaign'}
+              </button>
+              {autoSaved && (
+                <p className="text-center text-xs text-green-600 mt-1">✓ Autosaved</p>
+              )}
+            </div>
 
             {/* Upload to Loops */}
             <button onClick={handleUpload} disabled={uploading}

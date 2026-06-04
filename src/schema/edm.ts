@@ -189,6 +189,14 @@ export const EdmSectionSchema = z.discriminatedUnion('type', [
     type: z.literal('image_row'),
     images: z.array(z.object({ src: z.string(), alt: z.string().optional() })),
   }),
+  z.object({
+    type: z.literal('columns'),
+    items: z.array(z.object({
+      icon: z.string().optional(),
+      stat: z.string().optional(),
+      text: z.string(),
+    })),
+  }),
 ]);
 export type EdmSection = z.infer<typeof EdmSectionSchema>;
 

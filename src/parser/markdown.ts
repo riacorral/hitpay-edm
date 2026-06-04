@@ -80,6 +80,55 @@ function parseBody(body: string): EdmSection[] {
       continue;
     }
 
+    // Columns block: :::columns
+    // Format:
+    //   :::columns
+    //   ::column 🛒 **900M**
+    //   Description text here
+    //   ::column 🛍️ **50M+**
+    //   Another description
+    //   :::
+    if (trimmed === ':::columns') {
+      i++;
+      const blockLines: string[] = [];
+      while (i < lines.length && lines[i].trim() !== ':::') {
+        blockLines.push(lines[i]);
+        i++;
+      }
+      i++; // skip closing :::
+
+      const items: { icon?: string; stat?: string; text: string }[] = [];
+      let currentIcon: string | undefined;
+      let currentStat: string | undefined;
+      let currentTextLines: string[] = [];
+
+      const flushColumn = () => {
+        const text = currentTextLines.join(' ').replace(/\s*::\s*$/, '').trim();
+        if (currentIcon || currentStat || text) {
+          items.push({ icon: currentIcon || undefined, stat: currentStat || undefined, text });
+        }
+        currentIcon = undefined; currentStat = undefined; currentTextLines = [];
+      };
+
+      for (const blockLine of blockLines) {
+        const bt = blockLine.trim();
+        if (!bt) continue;
+        if (bt.startsWith('::column')) {
+          flushColumn();
+          const headerContent = bt.replace(/^::column\s*/, '');
+          const statMatch = headerContent.match(/^(.*?)\s*\*\*(.+?)\*\*\s*$/);
+          currentIcon = statMatch ? (statMatch[1].trim() || undefined) : (headerContent.trim() || undefined);
+          currentStat = statMatch ? statMatch[2] : undefined;
+        } else {
+          currentTextLines.push(bt);
+        }
+      }
+      flushColumn();
+
+      if (items.length > 0) sections.push({ type: 'columns', items });
+      continue;
+    }
+
     // Bullet-list block: ::: bullets
     // Format:
     //   ::: bullets
@@ -386,7 +435,8 @@ function parseBody(body: string): EdmSection[] {
       !/^\d+\.\s+/.test(lines[i].trim()) &&
       !/^!\[/.test(lines[i].trim()) &&
       !/^\[.+\]\(.+\)\{\.cta\}$/.test(lines[i].trim()) &&
-      !/^<\/?[a-zA-Z][^>]*>\s*$/.test(lines[i].trim())
+      !/^<\/?[a-zA-Z][^>]*>\s*$/.test(lines[i].trim()) &&
+      !lines[i].trim().startsWith(':::')
     ) {
       paraLines.push(lines[i].trim());
       i++;

@@ -35,7 +35,8 @@ Rules:
 - Preserve all valid URLs and required frontmatter fields
 - The frontmatter template field must remain one of: product-launch, feature-update, newsletter, promotional, event-invitation, partner-spotlight, important-announcement, app-changes, rate-changes, compliance
 - All ctaUrl values must be valid https:// URLs
-- Do NOT use merge tags like {{first_name}} — use plain copy`,
+- Do NOT use merge tags like {{first_name}} — use plain copy
+- YAML values containing a colon MUST be wrapped in double quotes, e.g. subject: "Exclusive Offer: Save on Card Payments"`,
       messages: [
         {
           role: 'user',
@@ -48,7 +49,24 @@ Rules:
     const fenceMatch = raw.match(/^```[^\n]*\n([\s\S]*?)\n?```\s*$/);
     const text = (fenceMatch ? fenceMatch[1] : raw).trim();
     const fmIdx = text.startsWith('---') ? 0 : text.search(/^---$/m);
-    const markdown = fmIdx > 0 ? text.slice(fmIdx).trim() : text;
+    const cleaned = fmIdx > 0 ? text.slice(fmIdx).trim() : text;
+    // Quote any YAML values containing ": " to prevent gray-matter parse errors
+    const markdown = cleaned.replace(
+      /^(---\n)([\s\S]*?)(\n---)/m,
+      (_, open, body, close) => {
+        const sanitized = body.replace(
+          /^([a-zA-Z][a-zA-Z0-9]*:\s*)(.+)$/gm,
+          (line: string, keyPart: string, valuePart: string) => {
+            const v = valuePart.trim();
+            if ((v.startsWith('"') && v.endsWith('"')) || (v.startsWith("'") && v.endsWith("'"))) return line;
+            if (/^https?:\/\//.test(v)) return line;
+            if (v.includes(': ') || v.endsWith(':')) return `${keyPart}"${v.replace(/"/g, '\\"')}"`;
+            return line;
+          },
+        );
+        return open + sanitized + close;
+      },
+    );
 
     const parsed = parseEdm(markdown);
     const html = await renderEdm(parsed);

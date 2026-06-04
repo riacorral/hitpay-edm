@@ -170,6 +170,19 @@ function sectionToMjml(section: EdmSection): string {
       return `\n  <mj-section padding="0 0 16px">${cols}\n  </mj-section>`;
     }
 
+    case 'columns': {
+      const n = section.items.length;
+      const colPct = `${Math.floor(100 / n)}%`;
+      const cols = section.items.map(item => {
+        const iconHtml = item.icon ? `<mj-text font-size="20px" line-height="1.2" padding="0 0 4px">${esc(item.icon)}</mj-text>\n      ` : '';
+        const statHtml = item.stat ? `<mj-text font-family="${B.font}" font-size="22px" font-weight="700" color="${B.deepBlue}" line-height="1.1" padding="0 0 6px">${esc(item.stat)}</mj-text>\n      ` : '';
+        return `\n    <mj-column width="${colPct}" vertical-align="top" background-color="${B.paleBlue}" border-radius="8px" padding="16px 12px">
+      ${iconHtml}${statHtml}<mj-text font-size="12px" color="${B.textSecondary}" line-height="1.5" padding="0">${esc(item.text)}</mj-text>
+    </mj-column>`;
+      }).join('');
+      return `\n  <mj-section padding="0 32px 24px" column-class-name="columns-item">${cols}\n  </mj-section>`;
+    }
+
     case 'feature_card': {
       const paragraphsHtml = section.paragraphs
         .map(p => `\n      <mj-text font-size="14px" color="${B.textSecondary}" line-height="1.6" padding="0 0 10px">${inlineMd(p)}</mj-text>`)
