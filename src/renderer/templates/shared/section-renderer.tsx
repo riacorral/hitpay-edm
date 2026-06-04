@@ -309,38 +309,40 @@ export function SectionRenderer({ section }: SectionRendererProps) {
 
     case 'columns': {
       const n = section.items.length;
-      const colWidth = `${Math.floor(100 / n)}%`;
+      // ~2% per spacer gap, remaining split evenly across cards
+      const colPct = `${Math.floor((100 - (n - 1) * 2) / n)}%`;
+      const cols: React.ReactNode[] = [];
+      section.items.forEach((item, i) => {
+        if (i > 0) {
+          // Spacer column for gap — no background, just breathing room
+          cols.push(<Column key={`sp-${i}`} style={{ width: '8px' }} />);
+        }
+        // Apply backgroundColor directly to Column (td) so the card stretches
+        // to the full row height automatically — equal heights across all cards.
+        cols.push(
+          <Column
+            key={i}
+            style={{
+              width: colPct,
+              backgroundColor: BRAND.colors.paleBlue,
+              borderRadius: '8px',
+              verticalAlign: 'top',
+              padding: '16px 12px',
+            }}
+          >
+            {item.icon && (
+              <p style={{ fontFamily: BRAND.fonts.body, fontSize: '20px', lineHeight: '1.2', margin: '0 0 4px 0', textAlign: 'center' as const }}>{item.icon}</p>
+            )}
+            {item.stat && (
+              <p style={{ fontFamily: BRAND.fonts.headline, fontSize: '22px', fontWeight: 700, color: BRAND.colors.deepBlue, lineHeight: '1.1', margin: '0 0 8px 0', textAlign: 'center' as const }}>{item.stat}</p>
+            )}
+            <p style={{ fontFamily: BRAND.fonts.body, fontSize: '12px', color: BRAND.colors.textSecondary, lineHeight: '1.5', margin: '0', textAlign: 'left' as const }}>{item.text}</p>
+          </Column>
+        );
+      });
       return (
         <Section style={{ padding: `0 ${BRAND.spacing.lg}`, marginBottom: '24px' }}>
-          <Row>
-            {section.items.map((item, i) => (
-              <Column
-                key={i}
-                style={{
-                  width: colWidth,
-                  verticalAlign: 'top',
-                  paddingLeft: i > 0 ? '6px' : '0',
-                  paddingRight: i < n - 1 ? '6px' : '0',
-                }}
-              >
-                <table width="100%" cellPadding={0} cellSpacing={0} style={{ backgroundColor: BRAND.colors.paleBlue, borderRadius: '8px' }}>
-                  <tbody>
-                    <tr>
-                      <td style={{ padding: '16px 12px', verticalAlign: 'top' }}>
-                        {item.icon && (
-                          <p style={{ margin: '0 0 4px 0', fontSize: '20px', lineHeight: '1.2', fontFamily: BRAND.fonts.body }}>{item.icon}</p>
-                        )}
-                        {item.stat && (
-                          <p style={{ margin: '0 0 6px 0', fontFamily: BRAND.fonts.headline, fontSize: '22px', fontWeight: 700, color: BRAND.colors.deepBlue, lineHeight: '1.1' }}>{item.stat}</p>
-                        )}
-                        <p style={{ margin: '0', fontFamily: BRAND.fonts.body, fontSize: '12px', color: BRAND.colors.textSecondary, lineHeight: '1.5' }}>{item.text}</p>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </Column>
-            ))}
-          </Row>
+          <Row>{cols}</Row>
         </Section>
       );
     }

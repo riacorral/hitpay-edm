@@ -174,13 +174,13 @@ function sectionToMjml(section: EdmSection): string {
       const n = section.items.length;
       const colPct = `${Math.floor(100 / n)}%`;
       const cols = section.items.map(item => {
-        const iconHtml = item.icon ? `<mj-text font-size="20px" line-height="1.2" padding="0 0 4px">${esc(item.icon)}</mj-text>\n      ` : '';
-        const statHtml = item.stat ? `<mj-text font-family="${B.font}" font-size="22px" font-weight="700" color="${B.deepBlue}" line-height="1.1" padding="0 0 6px">${esc(item.stat)}</mj-text>\n      ` : '';
+        const iconHtml = item.icon ? `<mj-text align="center" font-size="20px" line-height="1.2" padding="0 0 4px 0">${esc(item.icon)}</mj-text>\n      ` : '';
+        const statHtml = item.stat ? `<mj-text align="center" font-family="${B.font}" font-size="22px" font-weight="700" color="${B.deepBlue}" line-height="1.1" padding="0 0 8px 0">${esc(item.stat)}</mj-text>\n      ` : '';
         return `\n    <mj-column width="${colPct}" vertical-align="top" background-color="${B.paleBlue}" border-radius="8px" padding="16px 12px">
-      ${iconHtml}${statHtml}<mj-text font-size="12px" color="${B.textSecondary}" line-height="1.5" padding="0">${esc(item.text)}</mj-text>
+      ${iconHtml}${statHtml}<mj-text align="left" font-size="12px" color="${B.textSecondary}" line-height="1.5" padding="0">${esc(item.text)}</mj-text>
     </mj-column>`;
       }).join('');
-      return `\n  <mj-section padding="0 32px 24px" column-class-name="columns-item">${cols}\n  </mj-section>`;
+      return `\n  <mj-section padding="0 32px 24px">${cols}\n  </mj-section>`;
     }
 
     case 'feature_card': {
