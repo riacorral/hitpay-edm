@@ -15,6 +15,7 @@ interface Props {
 
 export function FeatureUpdateEmail({ frontmatter, sections }: Props) {
   const fm = frontmatter;
+  const bodyHasCta = sections.some(s => s.type === 'cta');
 
   return (
     <Wrapper previewText={fm.previewText}>
@@ -48,8 +49,8 @@ export function FeatureUpdateEmail({ frontmatter, sections }: Props) {
         ))}
       </Section>
 
-      {/* Primary CTA */}
-      {fm.ctaUrl && (
+      {/* Primary CTA — skipped if body already has a {.cta} link */}
+      {fm.ctaUrl && !bodyHasCta && (
         <Section
           style={{
             textAlign: 'center' as const,

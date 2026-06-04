@@ -15,6 +15,7 @@ interface Props {
 
 export function RateChangesEmail({ frontmatter, sections }: Props) {
   const fm = frontmatter;
+  const bodyHasCta = sections.some(s => s.type === 'cta');
 
   return (
     <Wrapper previewText={fm.previewText}>
@@ -105,7 +106,7 @@ export function RateChangesEmail({ frontmatter, sections }: Props) {
       </Section>
 
       {/* Optional CTA */}
-      {fm.ctaUrl && (
+      {fm.ctaUrl && !bodyHasCta && (
         <Section
           style={{
             textAlign: 'center' as const,

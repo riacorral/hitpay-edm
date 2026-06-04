@@ -15,6 +15,7 @@ interface Props {
 
 export function PromotionalEmail({ frontmatter, sections }: Props) {
   const fm = frontmatter;
+  const bodyHasCta = sections.some(s => s.type === 'cta');
 
   return (
     <Wrapper previewText={fm.previewText}>
@@ -81,15 +82,17 @@ export function PromotionalEmail({ frontmatter, sections }: Props) {
         ))}
       </Section>
 
-      {/* Primary CTA */}
-      <Section
-        style={{
-          textAlign: 'center' as const,
-          padding: `0 ${BRAND.spacing.xl} ${BRAND.spacing.xl}`,
-        }}
-      >
-        <Button href={fm.ctaUrl}>{fm.ctaText}</Button>
-      </Section>
+      {/* Primary CTA — skipped if body already has a {.cta} link */}
+      {!bodyHasCta && (
+        <Section
+          style={{
+            textAlign: 'center' as const,
+            padding: `0 ${BRAND.spacing.xl} ${BRAND.spacing.xl}`,
+          }}
+        >
+          <Button href={fm.ctaUrl}>{fm.ctaText}</Button>
+        </Section>
+      )}
 
       <Footer market={fm.market} />
     </Wrapper>
