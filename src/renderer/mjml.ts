@@ -172,21 +172,28 @@ function sectionToMjml(section: EdmSection): string {
 
     case 'columns': {
       const n = section.items.length;
-      // 600px email - 64px outer padding = 536px inner width; 8px gaps between n cards
+      // 600px email - 64px outer padding = 536px inner width; 8px gaps between cards
       const cardWidthPx = Math.floor((536 - (n - 1) * 8) / n);
-      const parts: string[] = [];
-      section.items.forEach((item, i) => {
-        if (i > 0) {
-          // Spacer column — invisible, just creates visual gap between cards
-          parts.push(`\n    <mj-column width="8px" padding="0"><mj-text font-size="1px" color="transparent" padding="0"> </mj-text></mj-column>`);
-        }
-        const iconHtml = item.icon ? `<mj-text align="center" font-size="20px" line-height="1.2" padding="0 0 4px 0">${esc(item.icon)}</mj-text>\n      ` : '';
-        const statHtml = item.stat ? `<mj-text align="center" font-family="${B.font}" font-size="22px" font-weight="700" color="${B.deepBlue}" line-height="1.1" padding="0 0 8px 0">${esc(item.stat)}</mj-text>\n      ` : '';
-        parts.push(`\n    <mj-column width="${cardWidthPx}px" vertical-align="top" background-color="${B.paleBlue}" border-radius="8px" padding="16px 12px">
-      ${iconHtml}${statHtml}<mj-text align="left" font-size="12px" color="${B.textSecondary}" line-height="1.5" padding="0">${esc(item.text)}</mj-text>
-    </mj-column>`);
-      });
-      return `\n  <mj-section padding="0 32px 24px">${parts.join('')}\n  </mj-section>`;
+      // Use mj-raw with a real <table><tr><td> so background fills to equal height
+      // (mj-column background is on a <div>, not a <td>, so it won't equalise)
+      const tds = section.items.map((item, i) => {
+        const iconHtml = item.icon
+          ? `<p style="text-align:center;font-size:20px;line-height:1.2;margin:0 0 4px 0;font-family:${B.font};">${esc(item.icon)}</p>`
+          : '';
+        const statHtml = item.stat
+          ? `<p style="text-align:center;font-size:22px;font-weight:700;color:${B.deepBlue};line-height:1.1;margin:0 0 8px 0;font-family:${B.font};">${esc(item.stat)}</p>`
+          : '';
+        const spacer = i > 0 ? `<td width="8" style="width:8px;font-size:0;line-height:0;"> </td>` : '';
+        return `${spacer}<td width="${cardWidthPx}" valign="top" bgcolor="${B.paleBlue}" style="background-color:${B.paleBlue};border-radius:8px;padding:16px 12px;width:${cardWidthPx}px;">
+          ${iconHtml}${statHtml}<p style="text-align:left;font-size:12px;color:${B.textSecondary};line-height:1.5;margin:0;font-family:${B.font};">${esc(item.text)}</p>
+        </td>`;
+      }).join('');
+      return `
+  <mj-section padding="0 32px 24px">
+    <mj-column padding="0">
+      <mj-raw><table width="100%" cellpadding="0" cellspacing="0" border="0" role="presentation"><tbody><tr>${tds}</tr></tbody></table></mj-raw>
+    </mj-column>
+  </mj-section>`;
     }
 
     case 'feature_card': {
