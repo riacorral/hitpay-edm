@@ -28,8 +28,10 @@ function setFrontmatterField(md: string, key: string, val: string): string {
   const m = md.match(/^(---\n)([\s\S]*?)(\n---)/);
   if (!m) return md;
   const [full, open, body, close] = m;
-  const re = new RegExp(`^${key}:.*$`, 'm');
-  return open + (re.test(body) ? body.replace(re, `${key}: ${val}`) : body + `\n${key}: ${val}`) + close + md.slice(full.length);
+  // Match "key: value" OR "key:\nvalue" (AI sometimes puts URLs on the next line)
+  const re = new RegExp(`^${key}:[^\n]*(?:\n(?![\\w-]+:)[^\n]+)?`, 'm');
+  const newBody = re.test(body) ? body.replace(re, `${key}: ${val}`) : body + `\n${key}: ${val}`;
+  return open + newBody + close + md.slice(full.length);
 }
 function compressImage(file: File): Promise<File> {
   return new Promise(resolve => {

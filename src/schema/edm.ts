@@ -36,6 +36,7 @@ export const ProductLaunchFrontmatter = BaseFrontmatter.extend({
 export const FeatureUpdateFrontmatter = BaseFrontmatter.extend({
   template: z.literal('feature-update'),
   versionBadge: z.string().optional(),
+  heroImage: z.string().optional(),
   ctaText: z.string().default('Learn More'),
   ctaUrl: z.string().url().optional(),
 });
@@ -46,6 +47,7 @@ export const NewsletterFrontmatter = BaseFrontmatter.extend({
   date: z.string().optional(),
   title: z.string().optional(),
   subtitle: z.string().optional(),
+  heroImage: z.string().optional(),
 });
 
 export const PromotionalFrontmatter = BaseFrontmatter.extend({

@@ -373,11 +373,12 @@ export function generateMjml(edm: ParsedEdm): string {
 
   // Append full-width hero image for templates that support it but handle their own heroSection above
   // (product-launch and event-invitation already embed heroImage inside their heroSection)
-  if (fm.heroImage && fm.template !== 'product-launch' && fm.template !== 'event-invitation') {
+  const heroImageUrl = (fm as Record<string, unknown>).heroImage as string | undefined;
+  if (heroImageUrl && fm.template !== 'product-launch' && fm.template !== 'event-invitation') {
     heroSection += `
   <mj-section padding="0">
     <mj-column padding="0">
-      <mj-image src="${esc(fm.heroImage)}" alt="" width="600px" padding="0" fluid-on-mobile="true" />
+      <mj-image src="${esc(heroImageUrl)}" alt="" width="600px" padding="0" fluid-on-mobile="true" />
     </mj-column>
   </mj-section>`;
   }

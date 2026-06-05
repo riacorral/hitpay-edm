@@ -1,5 +1,5 @@
 import React from 'react';
-import { Section, Text } from '@react-email/components';
+import { Section, Text, Img } from '@react-email/components';
 import { BRAND } from '../../brand/hitpay.js';
 import { Wrapper } from './shared/wrapper.js';
 import { Header } from './shared/header.js';
@@ -20,6 +20,13 @@ export function FeatureUpdateEmail({ frontmatter, sections }: Props) {
   return (
     <Wrapper previewText={fm.previewText}>
       <Header />
+
+      {/* Hero image */}
+      {fm.heroImage && (
+        <Section style={{ padding: '0', margin: '0' }}>
+          <Img src={fm.heroImage} alt="" width="100%" style={{ display: 'block', maxWidth: '100%' }} />
+        </Section>
+      )}
 
       {/* Version badge + headline */}
       <Section style={{ padding: `${BRAND.spacing.xl} ${BRAND.spacing.xl} 0` }}>
