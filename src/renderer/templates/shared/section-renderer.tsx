@@ -331,10 +331,10 @@ export function SectionRenderer({ section }: SectionRendererProps) {
             }}
           >
             {item.icon && (
-              <p style={{ fontFamily: BRAND.fonts.body, fontSize: '20px', lineHeight: '1.2', margin: '0 0 4px 0', textAlign: 'center' as const }}>{item.icon}</p>
+              <p style={{ fontFamily: BRAND.fonts.body, fontSize: '20px', lineHeight: '1.2', margin: '0 0 10px 0', textAlign: 'center' as const }}>{item.icon}</p>
             )}
             {item.stat && (
-              <p style={{ fontFamily: BRAND.fonts.headline, fontSize: '22px', fontWeight: 700, color: BRAND.colors.deepBlue, lineHeight: '1.1', margin: '0 0 8px 0', textAlign: 'center' as const }}>{item.stat}</p>
+              <p style={{ fontFamily: BRAND.fonts.headline, fontSize: '22px', fontWeight: 700, color: BRAND.colors.deepBlue, lineHeight: '1.1', margin: '0 0 12px 0', textAlign: 'center' as const }}>{item.stat}</p>
             )}
             <p style={{ fontFamily: BRAND.fonts.body, fontSize: '12px', color: BRAND.colors.textSecondary, lineHeight: '1.5', margin: '0', textAlign: 'left' as const }}>{item.text}</p>
           </Column>
