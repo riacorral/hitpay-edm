@@ -172,15 +172,21 @@ function sectionToMjml(section: EdmSection): string {
 
     case 'columns': {
       const n = section.items.length;
-      const colPct = `${Math.floor(100 / n)}%`;
-      const cols = section.items.map(item => {
+      // 600px email - 64px outer padding = 536px inner width; 8px gaps between n cards
+      const cardWidthPx = Math.floor((536 - (n - 1) * 8) / n);
+      const parts: string[] = [];
+      section.items.forEach((item, i) => {
+        if (i > 0) {
+          // Spacer column — invisible, just creates visual gap between cards
+          parts.push(`\n    <mj-column width="8px" padding="0"><mj-text font-size="1px" color="transparent" padding="0"> </mj-text></mj-column>`);
+        }
         const iconHtml = item.icon ? `<mj-text align="center" font-size="20px" line-height="1.2" padding="0 0 4px 0">${esc(item.icon)}</mj-text>\n      ` : '';
         const statHtml = item.stat ? `<mj-text align="center" font-family="${B.font}" font-size="22px" font-weight="700" color="${B.deepBlue}" line-height="1.1" padding="0 0 8px 0">${esc(item.stat)}</mj-text>\n      ` : '';
-        return `\n    <mj-column width="${colPct}" vertical-align="top" background-color="${B.paleBlue}" border-radius="8px" padding="16px 12px">
+        parts.push(`\n    <mj-column width="${cardWidthPx}px" vertical-align="top" background-color="${B.paleBlue}" border-radius="8px" padding="16px 12px">
       ${iconHtml}${statHtml}<mj-text align="left" font-size="12px" color="${B.textSecondary}" line-height="1.5" padding="0">${esc(item.text)}</mj-text>
-    </mj-column>`;
-      }).join('');
-      return `\n  <mj-section padding="0 32px 24px">${cols}\n  </mj-section>`;
+    </mj-column>`);
+      });
+      return `\n  <mj-section padding="0 32px 24px">${parts.join('')}\n  </mj-section>`;
     }
 
     case 'feature_card': {
