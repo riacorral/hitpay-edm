@@ -40,7 +40,15 @@ function normalizeNumberedLists(content: string): string {
 }
 
 export function parseEdm(markdown: string): ParsedEdm {
-  const { data, content } = matter(markdown);
+  // Fix "key:\nhttps://url" patterns where AI puts the URL on the next line (invalid YAML)
+  const sanitized = markdown.replace(
+    /^(---\n)([\s\S]*?)(\n---)/m,
+    (_, open, body, close) => {
+      const fixed = body.replace(/^([a-zA-Z][a-zA-Z0-9]*):\n(https?:\/\/[^\n]+)/gm, '$1: $2');
+      return open + fixed + close;
+    },
+  );
+  const { data, content } = matter(sanitized);
   const frontmatter = EdmFrontmatter.parse(normalizeKeys(data));
   const sections = parseBody(normalizeNumberedLists(content));
   return { frontmatter, sections };

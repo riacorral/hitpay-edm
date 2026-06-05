@@ -39,6 +39,7 @@ Rules:
 - Do NOT use merge tags like {{first_name}} — use plain copy
 - YAML values containing a colon MUST be wrapped in double quotes, e.g. subject: "Exclusive Offer: Save on Card Payments"
 - To set a hero banner image, add heroImage to the frontmatter on the SAME LINE as the key: heroImage: https://image-url. NEVER put the URL on the next line. All these templates support heroImage: product-launch, feature-update, newsletter, important-announcement, app-changes, rate-changes, partner-spotlight, event-invitation.
+- When converting an inline image (![](url) in the body) into a hero banner: ADD heroImage: url to the frontmatter AND REMOVE the ![](url) line from the body — do NOT keep both.
 - NEVER use raw HTML tags. For stat grids use :::columns blocks:
   :::columns
   ::column 🛒 **900M**
