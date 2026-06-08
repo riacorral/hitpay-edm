@@ -264,6 +264,10 @@ function parseBody(body: string): EdmSection[] {
         }
       }
 
+      const orderedItems = blockLines
+        .filter(l => /^\d+\.\s+/.test(l.trim()))
+        .map(l => l.trim().replace(/^\d+\.\s+/, ''));
+
       sections.push({
         type: 'image_text',
         src,
@@ -271,7 +275,9 @@ function parseBody(body: string): EdmSection[] {
         heading,
         ...(items.length > 0
           ? { items }
-          : { text: blockLines.filter(Boolean).join(' ') }),
+          : orderedItems.length > 0
+            ? { orderedItems }
+            : { text: blockLines.filter(Boolean).join(' ') }),
       });
       continue;
     }

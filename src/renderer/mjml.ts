@@ -32,6 +32,20 @@ function inlineMd(text: string): string {
     .replace(/\*\*(.+?)\*\*/g, `<b style="color:${B.textPrimary};">$1</b>`);
 }
 
+function numberedItemsTable(items: string[]): string {
+  return items
+    .map(
+      (item, i, arr) => `
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:${i === arr.length - 1 ? '0' : '12px'};">
+  <tr>
+    <td width="24" valign="top" style="font-family:${B.font};font-size:14px;font-weight:700;color:${B.actionBlue};line-height:1.6;padding:0;white-space:nowrap;">${i + 1}.</td>
+    <td valign="top" style="font-family:${B.font};font-size:14px;color:${B.textSecondary};line-height:1.6;padding:0 0 0 8px;">${inlineMd(item)}</td>
+  </tr>
+</table>`,
+    )
+    .join('');
+}
+
 function bulletItemsTable(items: { title: string; body: string }[]): string {
   return items
     .map(
@@ -71,6 +85,14 @@ function sectionToMjml(section: EdmSection): string {
     }
 
     case 'bullets':
+      if (section.ordered) {
+        return `
+  <mj-section padding="0">
+    <mj-column padding="0 32px 16px">
+      <mj-raw>${numberedItemsTable(section.items)}</mj-raw>
+    </mj-column>
+  </mj-section>`;
+      }
       return `
   <mj-section padding="0">
     <mj-column padding="0 32px 16px">
@@ -142,7 +164,9 @@ function sectionToMjml(section: EdmSection): string {
       const textColContent =
         section.items && section.items.length > 0
           ? `<mj-raw>${bulletItemsTable(section.items)}</mj-raw>`
-          : `<mj-text font-size="14px" color="${B.textSecondary}" line-height="1.6" padding="0">${inlineMd(section.text || '')}</mj-text>`;
+          : section.orderedItems && section.orderedItems.length > 0
+            ? `<mj-raw>${numberedItemsTable(section.orderedItems)}</mj-raw>`
+            : `<mj-text font-size="14px" color="${B.textSecondary}" line-height="1.6" padding="0">${inlineMd(section.text || '')}</mj-text>`;
 
       const headingContent = section.heading
         ? `<mj-text font-size="16px" font-weight="700" color="${B.textPrimary}" line-height="1.3" padding="0 0 12px">${esc(section.heading)}</mj-text>\n      `

@@ -210,11 +210,51 @@ export function SectionRenderer({ section }: SectionRendererProps) {
                   </Column>
                 </Row>
               ))
-            : (
-              <Text style={{ fontFamily: BRAND.fonts.body, fontSize: BRAND.fontSizes.body, color: BRAND.colors.textSecondary, lineHeight: '1.6', margin: '0' }}>
-                {section.text}
-              </Text>
-            )
+            : section.orderedItems && section.orderedItems.length > 0
+              ? (
+                <table cellPadding={0} cellSpacing={0} width="100%">
+                  <tbody>
+                    {section.orderedItems.map((item, i) => (
+                      <tr key={i}>
+                        <td
+                          width={24}
+                          valign="top"
+                          style={{
+                            width: '24px',
+                            paddingBottom: i < section.orderedItems!.length - 1 ? '10px' : '0',
+                            fontFamily: BRAND.fonts.body,
+                            fontSize: BRAND.fontSizes.bodySmall,
+                            fontWeight: 700,
+                            color: BRAND.colors.actionBlue,
+                            lineHeight: '1.6',
+                            whiteSpace: 'nowrap',
+                          }}
+                        >
+                          {i + 1}.
+                        </td>
+                        <td
+                          valign="top"
+                          style={{
+                            paddingLeft: '8px',
+                            paddingBottom: i < section.orderedItems!.length - 1 ? '10px' : '0',
+                            fontFamily: BRAND.fonts.body,
+                            fontSize: BRAND.fontSizes.bodySmall,
+                            color: BRAND.colors.textSecondary,
+                            lineHeight: '1.6',
+                          }}
+                        >
+                          {renderInlineMarkdown(item)}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )
+              : (
+                <Text style={{ fontFamily: BRAND.fonts.body, fontSize: BRAND.fontSizes.body, color: BRAND.colors.textSecondary, lineHeight: '1.6', margin: '0' }}>
+                  {section.text}
+                </Text>
+              )
           }
         </Column>
       );

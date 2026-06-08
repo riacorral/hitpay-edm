@@ -174,6 +174,7 @@ export const EdmSectionSchema = z.discriminatedUnion('type', [
     heading: z.string().optional(),
     text: z.string().optional(),
     items: z.array(z.object({ title: z.string(), body: z.string() })).optional(),
+    orderedItems: z.array(z.string()).optional(),
   }),
   z.object({
     type: z.literal('feature_card'),

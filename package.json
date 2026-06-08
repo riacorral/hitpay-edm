@@ -10,7 +10,7 @@
     "dev": "next dev",
     "dev:cli": "tsx src/cli.ts",
     "build": "next build",
-    "build:cli": "tsc -p tsconfig.cli.json",
+    "build:cli": "tsc -p tsconfig.cli.json --noEmit false --noEmitOnError false",
     "start": "next start",
     "test": "vitest run --exclude test/e2e.test.ts",
     "test:e2e": "vitest run test/e2e.test.ts",
