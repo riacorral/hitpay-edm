@@ -202,14 +202,14 @@ function sectionToMjml(section: EdmSection): string {
       // (mj-column background is on a <div>, not a <td>, so it won't equalise)
       const tds = section.items.map((item, i) => {
         const iconHtml = item.icon
-          ? `<p style="text-align:center;font-size:20px;line-height:1.2;margin:0 0 10px 0;font-family:${B.font};">${esc(item.icon)}</p>`
+          ? `<p style="text-align:center;font-size:20px;line-height:1.2;margin:0 0 6px 0;font-family:${B.font};">${esc(item.icon)}</p>`
           : '';
         const statHtml = item.stat
-          ? `<p style="text-align:center;font-size:22px;font-weight:700;color:${B.deepBlue};line-height:1.1;margin:0 0 12px 0;font-family:${B.font};">${esc(item.stat)}</p>`
+          ? `<p style="text-align:center;font-size:22px;font-weight:700;color:${B.deepBlue};line-height:1.1;margin:0 0 10px 0;font-family:${B.font};">${esc(item.stat)}</p>`
           : '';
         const spacer = i > 0 ? `<td width="8" style="width:8px;font-size:0;line-height:0;"> </td>` : '';
         return `${spacer}<td width="${cardWidthPx}" valign="top" bgcolor="${B.paleBlue}" style="background-color:${B.paleBlue};border-radius:8px;padding:16px 12px;width:${cardWidthPx}px;">
-          ${iconHtml}${statHtml}<p style="text-align:left;font-size:12px;color:${B.textSecondary};line-height:1.5;margin:0;font-family:${B.font};">${esc(item.text)}</p>
+          ${iconHtml}${statHtml}<p style="text-align:left;font-size:12px;color:${B.textSecondary};line-height:1.6;margin:6px 0 0 0;font-family:${B.font};">${esc(item.text)}</p>
         </td>`;
       }).join('');
       return `
