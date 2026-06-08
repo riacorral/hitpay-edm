@@ -195,7 +195,7 @@ export function SectionRenderer({ section }: SectionRendererProps) {
         </Column>
       );
       const textCol = (
-        <Column style={{ width: '58%', verticalAlign: 'top' }}>
+        <Column style={{ width: '58%', verticalAlign: 'middle' }}>
           {section.heading && (
             <Text style={{ fontFamily: BRAND.fonts.headline, fontSize: BRAND.fontSizes.body, fontWeight: 700, color: BRAND.colors.textPrimary, lineHeight: '1.3', margin: '0 0 12px 0' }}>
               {section.heading}

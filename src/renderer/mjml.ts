@@ -173,7 +173,7 @@ function sectionToMjml(section: EdmSection): string {
         : '';
 
       const textCol = `
-    <mj-column width="58%" vertical-align="top" padding="0">
+    <mj-column width="58%" vertical-align="middle" padding="0">
       ${headingContent}${textColContent}
     </mj-column>`;
 
