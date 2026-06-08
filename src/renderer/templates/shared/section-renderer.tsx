@@ -190,7 +190,7 @@ export function SectionRenderer({ section }: SectionRendererProps) {
             src={section.src}
             alt={section.alt || ''}
             width="100%"
-            style={{ display: 'block', borderRadius: BRAND.email.cardRadius, objectFit: 'cover' as const }}
+            style={{ display: 'block', objectFit: 'cover' as const }}
           />
         </Column>
       );

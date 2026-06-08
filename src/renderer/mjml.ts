@@ -158,7 +158,7 @@ function sectionToMjml(section: EdmSection): string {
     case 'image_text': {
       const imgCol = `
     <mj-column width="42%" vertical-align="middle" padding="0 16px 0 0">
-      <mj-image src="${esc(section.src)}" alt="${esc(section.alt || '')}" border-radius="8px" padding="0" />
+      <mj-image src="${esc(section.src)}" alt="${esc(section.alt || '')}" padding="0" />
     </mj-column>`;
 
       const textColContent =
