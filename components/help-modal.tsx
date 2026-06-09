@@ -124,6 +124,55 @@ export function HelpButton() {
                 </p>
               </div>
 
+              <div className="border-t border-gray-100" />
+
+              {/* Markdown shortcuts */}
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="text-base">⌨️</span>
+                  <p className="text-sm font-semibold text-gray-800">Markdown shortcuts</p>
+                  <span className="text-xs text-gray-400">type directly in Edit text</span>
+                </div>
+                <p className="text-xs text-gray-500 mb-3 leading-relaxed">
+                  The AI generates these automatically, but you can also write or edit them by hand.
+                </p>
+                <div className="space-y-3">
+                  {[
+                    {
+                      label: 'Stat / columns grid',
+                      syntax: ':::columns\n::column 📈 **42%**\nDescription here\n::column 🛒 **900M**\nDescription here\n:::',
+                      desc: 'Side-by-side stat cards. Each ::column line takes an optional emoji, a bold number, then description on the next line. Use 2–4 columns.',
+                    },
+                    {
+                      label: 'Image + text block',
+                      syntax: '::: image-left https://your-image-url.jpg\n### Heading\nBody text here.\n:::',
+                      desc: 'Photo on the left with text on the right. Use image-right to flip it. Replace the URL and edit the heading/body as needed.',
+                    },
+                    {
+                      label: 'CTA button',
+                      syntax: '[Get started](https://hitpayapp.com){.cta}',
+                      desc: 'Renders as a full-width blue button. The {.cta} tag is what turns the link into a button — don\'t leave it out.',
+                    },
+                    {
+                      label: 'Pull quote / blockquote',
+                      syntax: '> "Quote text here."\n> — Attribution name',
+                      desc: 'Renders as a styled pull quote with a blue left border. Good for testimonials or highlighted statements.',
+                    },
+                    {
+                      label: 'Divider',
+                      syntax: '---',
+                      desc: 'Inserts a horizontal rule to separate sections visually.',
+                    },
+                  ].map(item => (
+                    <div key={item.label} className="bg-gray-50 rounded-lg px-3 py-2.5">
+                      <p className="text-xs font-semibold text-gray-700 mb-1.5">{item.label}</p>
+                      <pre className="text-xs font-mono text-blue-700 bg-blue-50 rounded px-2 py-1.5 whitespace-pre mb-1.5 overflow-x-auto">{item.syntax}</pre>
+                      <p className="text-xs text-gray-500 leading-relaxed">{item.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
