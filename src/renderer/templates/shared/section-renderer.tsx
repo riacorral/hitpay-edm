@@ -458,10 +458,10 @@ function renderInlineMarkdown(text: string): React.ReactNode[] {
     // Link: [text](url)
     const linkMatch = remaining.match(/^(.*?)\[([^\]]+)\]\(([^)]+)\)(.*)/s);
     if (linkMatch) {
-      if (linkMatch[1]) parts.push(<React.Fragment key={key++}>{linkMatch[1]}</React.Fragment>);
+      if (linkMatch[1]) renderInlineMarkdown(linkMatch[1]).forEach(node => parts.push(node));
       parts.push(
         <a key={key++} href={linkMatch[3]} style={{ color: BRAND.colors.actionBlue, textDecoration: 'underline' }}>
-          {linkMatch[2]}
+          {linkMatch[2].replace(/\*\*/g, '').replace(/(?<!\*)\*(?!\*)/g, '')}
         </a>,
       );
       remaining = linkMatch[4];
