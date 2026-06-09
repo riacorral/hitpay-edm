@@ -157,7 +157,7 @@ function sectionToMjml(section: EdmSection): string {
 
     case 'image_text': {
       const imgCol = `
-    <mj-column width="42%" vertical-align="middle" padding="0 16px 0 0">
+    <mj-column width="42%" vertical-align="middle" padding="0 16px 0 0" css-class="img-col">
       <mj-image src="${esc(section.src)}" alt="${esc(section.alt || '')}" padding="0" />
     </mj-column>`;
 
@@ -207,15 +207,15 @@ function sectionToMjml(section: EdmSection): string {
         const statHtml = item.stat
           ? `<p style="text-align:center;font-size:22px;font-weight:700;color:${B.deepBlue};line-height:1.1;margin:0 0 10px 0;font-family:${B.font};">${esc(item.stat)}</p>`
           : '';
-        const spacer = i > 0 ? `<td width="8" style="width:8px;font-size:0;line-height:0;"> </td>` : '';
-        return `${spacer}<td width="${cardWidthPx}" valign="top" bgcolor="${B.paleBlue}" style="background-color:${B.paleBlue};border-radius:8px;padding:16px 12px;width:${cardWidthPx}px;">
+        const spacer = i > 0 ? `<td width="8" class="col-spacer" style="width:8px;font-size:0;line-height:0;"> </td>` : '';
+        return `${spacer}<td width="${cardWidthPx}" class="col-card" valign="top" bgcolor="${B.paleBlue}" style="background-color:${B.paleBlue};border-radius:8px;padding:16px 12px;width:${cardWidthPx}px;">
           ${iconHtml}${statHtml}<p style="text-align:left;font-size:12px;color:${B.textSecondary};line-height:1.6;margin:6px 0 0 0;font-family:${B.font};">${esc(item.text)}</p>
         </td>`;
       }).join('');
       return `
   <mj-section padding="0 32px 24px">
     <mj-column padding="0">
-      <mj-raw><table width="100%" cellpadding="0" cellspacing="0" border="0" role="presentation"><tbody><tr>${tds}</tr></tbody></table></mj-raw>
+      <mj-raw><table class="col-wrap" width="100%" cellpadding="0" cellspacing="0" border="0" role="presentation"><tbody><tr>${tds}</tr></tbody></table></mj-raw>
     </mj-column>
   </mj-section>`;
     }
@@ -457,6 +457,14 @@ export function generateMjml(edm: ParsedEdm): string {
     <mj-style>
       a { color: inherit; text-decoration: none; }
       p { margin: 0 !important; }
+      @media only screen and (max-width:480px) {
+        /* Add gap below image when image+text block stacks on mobile */
+        .img-col { padding-bottom: 20px !important; }
+        /* Stack stat/column cards vertically on mobile */
+        table.col-wrap tr { display: block !important; }
+        td.col-card { display: block !important; width: 100% !important; max-width: 100% !important; box-sizing: border-box !important; margin-bottom: 8px !important; }
+        td.col-spacer { display: none !important; width: 0 !important; }
+      }
     </mj-style>
   </mj-head>
   <mj-body background-color="${B.neutral100}" width="600px">
