@@ -100,6 +100,7 @@ function compressImage(file: File): Promise<File> {
   });
 }
 import Link from 'next/link';
+import { HelpButton } from '@/components/help-modal';
 
 type EditMode = 'refine' | 'edit' | 'regenerate' | 'brief';
 
@@ -374,6 +375,9 @@ function NewCampaignInner() {
         }
         <span className="text-gray-300">/</span>
         <span className="text-sm font-medium text-gray-900">{editId ? 'Edit Campaign' : 'New Campaign'}</span>
+        <div className="ml-auto">
+          <HelpButton />
+        </div>
       </nav>
 
       {initLoading && (
