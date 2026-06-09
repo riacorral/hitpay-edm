@@ -69,6 +69,51 @@ export default async function DashboardPage() {
           </div>
         </div>
 
+        {/* How to use */}
+        <div className="bg-white rounded-xl border border-gray-200 p-6 mb-8">
+          <h2 className="text-sm font-semibold text-gray-700 mb-4">How to use</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+            {[
+              {
+                step: '1',
+                title: 'Write a brief',
+                desc: 'Describe the email — type, audience, key info, links, promo codes. Attach images if needed.',
+              },
+              {
+                step: '2',
+                title: 'AI generates it',
+                desc: 'Claude writes the full email copy and picks the right template automatically.',
+              },
+              {
+                step: '3',
+                title: 'Edit & refine',
+                desc: 'Use plain-English instructions to refine, or edit the markdown directly. Re-render to preview.',
+              },
+              {
+                step: '4',
+                title: 'Push to Loops',
+                desc: 'Save the campaign, then push it to Loops as a draft. Send from Loops as usual.',
+              },
+            ].map((item, i, arr) => (
+              <div key={item.step} className="flex gap-3">
+                <div
+                  className="w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0 mt-0.5"
+                  style={{ backgroundColor: '#2465DE' }}
+                >
+                  {item.step}
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm font-semibold text-gray-800 mb-0.5">{item.title}</p>
+                  <p className="text-xs text-gray-500 leading-relaxed">{item.desc}</p>
+                </div>
+                {i < arr.length - 1 && (
+                  <div className="hidden sm:flex items-start pt-2 text-gray-200 text-lg font-light select-none">→</div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+
         {!campaigns || campaigns.length === 0 ? (
           <div className="bg-white rounded-xl border border-gray-200 p-16 text-center">
             <p className="text-gray-400 text-sm mb-4">No campaigns yet</p>
