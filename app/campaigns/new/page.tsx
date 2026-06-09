@@ -155,6 +155,9 @@ function NewCampaignInner() {
           setPreviewHtml(c.html_content ?? '');
           setSavedId(editId);
           setEditMode('edit');
+          if (Array.isArray(c.brief_images) && c.brief_images.length > 0) {
+            setImages(c.brief_images.map((url: string) => ({ url, name: url.split('/').pop() ?? 'image' })));
+          }
         }
       })
       .catch(() => {})
@@ -307,12 +310,14 @@ function NewCampaignInner() {
       // Use editedMarkdown (current textarea value) — falls back to markdown if no edits made
       const markdownToSave = editedMarkdown || markdown;
 
+      const briefImages = images.map(i => i.url);
+
       if (savedId) {
         // Try to update existing campaign
         const patchRes = await fetch(`/api/campaigns/${savedId}`, {
           method: 'PATCH',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ markdown: markdownToSave }),
+          body: JSON.stringify({ markdown: markdownToSave, brief_images: briefImages }),
         });
         if (patchRes.ok) {
           // Updated successfully — stay on same id
@@ -321,7 +326,7 @@ function NewCampaignInner() {
           const postRes = await fetch('/api/campaigns', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ markdown: markdownToSave }),
+            body: JSON.stringify({ markdown: markdownToSave, brief_images: briefImages }),
           });
           const postData = await postRes.json();
           if (!postRes.ok) throw new Error(postData.error ?? 'Save failed');
@@ -333,7 +338,7 @@ function NewCampaignInner() {
         const res = await fetch('/api/campaigns', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ markdown: markdownToSave }),
+          body: JSON.stringify({ markdown: markdownToSave, brief_images: briefImages }),
         });
         const data = await res.json();
         if (!res.ok) throw new Error(data.error ?? 'Save failed');

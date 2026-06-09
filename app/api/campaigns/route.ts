@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
   const user = await getCurrentUser();
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-  const { markdown } = await req.json();
+  const { markdown, brief_images } = await req.json();
   if (!markdown) return NextResponse.json({ error: 'markdown is required' }, { status: 400 });
 
   try {
@@ -50,6 +50,7 @@ export async function POST(req: NextRequest) {
         markdown: markdown as string,
         html_content: html,
         mjml_content: mjml,
+        brief_images: Array.isArray(brief_images) ? brief_images : [],
         status: 'draft',
         last_updated_by: user.email,
       })

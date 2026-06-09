@@ -28,7 +28,7 @@ export async function PATCH(req: NextRequest, { params }: Params) {
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const { id } = await params;
-  const { markdown } = await req.json();
+  const { markdown, brief_images } = await req.json();
   if (!markdown) return NextResponse.json({ error: 'markdown is required' }, { status: 400 });
 
   try {
@@ -50,6 +50,7 @@ export async function PATCH(req: NextRequest, { params }: Params) {
         template: parsed.frontmatter.template,
         html_content: html,
         mjml_content: mjml,
+        ...(Array.isArray(brief_images) && { brief_images }),
         last_updated_by: user.email,
       })
       .eq('id', id)
