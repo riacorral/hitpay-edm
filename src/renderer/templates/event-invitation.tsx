@@ -291,6 +291,61 @@ export function EventInvitationEmail({ frontmatter, sections }: Props) {
         </Section>
       )}
 
+      {/* 9. Gallery image — previous event photos */}
+      {fm.galleryImage && (
+        <>
+          <Spacer height={32} />
+          {fm.galleryLabel && (
+            <Section>
+              <Row>
+                <Column style={{ padding: `0 ${BRAND.spacing.lg} 12px` }}>
+                  <Text
+                    style={{
+                      fontFamily: BRAND.fonts.body,
+                      fontSize: '10px',
+                      fontWeight: 600,
+                      color: BRAND.colors.textTertiary,
+                      letterSpacing: '1.2px',
+                      textTransform: 'uppercase' as const,
+                      margin: '0',
+                      textAlign: 'center' as const,
+                    }}
+                  >
+                    {fm.galleryLabel}
+                  </Text>
+                </Column>
+              </Row>
+            </Section>
+          )}
+          <Section style={{ padding: '0' }}>
+            <Row>
+              <Column>
+                <Img
+                  src={fm.galleryImage}
+                  alt="From our previous workshop"
+                  width="600"
+                  style={{ display: 'block', width: '100%' }}
+                />
+              </Column>
+            </Row>
+          </Section>
+          {fm.galleryImage2 && (
+            <Section style={{ padding: '0' }}>
+              <Row>
+                <Column>
+                  <Img
+                    src={fm.galleryImage2}
+                    alt="From our previous workshop"
+                    width="600"
+                    style={{ display: 'block', width: '100%' }}
+                  />
+                </Column>
+              </Row>
+            </Section>
+          )}
+        </>
+      )}
+
       <Spacer height={24} />
 
       {/* Official venue partner */}

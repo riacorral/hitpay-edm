@@ -354,6 +354,23 @@ export function generateMjml(edm: ParsedEdm): string {
     const mainMjml = mainSects.map(sectionToMjml).join('');
     const closingMjml = closingSects.map(sectionToMjml).join('');
 
+    const galleryMjml = fm.galleryImage ? `
+  ${fm.galleryLabel ? `<mj-section background-color="${B.white}" padding="24px 32px 0">
+    <mj-column>
+      <mj-text align="center" font-size="10px" font-weight="600" color="${B.textTertiary}" letter-spacing="1.2px" text-transform="uppercase" padding="0">${esc(fm.galleryLabel)}</mj-text>
+    </mj-column>
+  </mj-section>` : ''}
+  <mj-section background-color="${B.white}" padding="16px 0 0">
+    <mj-column>
+      <mj-image src="${esc(fm.galleryImage)}" alt="From our previous workshop" padding="0" fluid-on-mobile="true" />
+    </mj-column>
+  </mj-section>${fm.galleryImage2 ? `
+  <mj-section background-color="${B.white}" padding="4px 0 0">
+    <mj-column>
+      <mj-image src="${esc(fm.galleryImage2)}" alt="From our previous workshop" padding="0" fluid-on-mobile="true" />
+    </mj-column>
+  </mj-section>` : ''}` : '';
+
     heroSection = `
   <mj-section background-color="${B.deepBlue}" padding="48px 32px 0">
     <mj-column>
@@ -382,7 +399,8 @@ export function generateMjml(edm: ParsedEdm): string {
   ${fm.testimonialTopImage ? `<mj-section padding="0">\n    <mj-column>\n      <mj-image src="${esc(fm.testimonialTopImage)}" alt="What attendees said" padding="0" fluid-on-mobile="true" />\n    </mj-column>\n  </mj-section>` : ''}${primaryCtaMjml}
   ${mainMjml}
   ${testimonialBottomMjml}${secondaryCtaMjml}
-  ${closingMjml}`;
+  ${closingMjml}
+  ${galleryMjml}`;
   }
 
   // Default blue header for templates that don't define their own heroSection
