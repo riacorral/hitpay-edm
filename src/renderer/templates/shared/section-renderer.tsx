@@ -185,7 +185,7 @@ export function SectionRenderer({ section }: SectionRendererProps) {
     case 'image_text': {
       const isLeft = section.imagePosition === 'left';
       const imgCol = (
-        <Column style={{ width: '42%', verticalAlign: 'middle', paddingRight: isLeft ? '16px' : '0', paddingLeft: isLeft ? '0' : '16px' }}>
+        <Column className="m-block" style={{ width: '42%', verticalAlign: 'middle', paddingRight: isLeft ? '16px' : '0', paddingLeft: isLeft ? '0' : '16px' }}>
           <Img
             src={section.src}
             alt={section.alt || ''}
@@ -195,7 +195,7 @@ export function SectionRenderer({ section }: SectionRendererProps) {
         </Column>
       );
       const textCol = (
-        <Column style={{ width: '58%', verticalAlign: 'middle' }}>
+        <Column className="m-block" style={{ width: '58%', verticalAlign: 'middle' }}>
           {section.heading && (
             <Text style={{ fontFamily: BRAND.fonts.headline, fontSize: BRAND.fontSizes.body, fontWeight: 700, color: BRAND.colors.textPrimary, lineHeight: '1.3', margin: '0 0 12px 0' }}>
               {section.heading}
@@ -353,13 +353,14 @@ export function SectionRenderer({ section }: SectionRendererProps) {
       const cols: React.ReactNode[] = [];
       section.items.forEach((item, i) => {
         if (i > 0) {
-          // Spacer column for gap — no background, just breathing room
-          cols.push(<Column key={`sp-${i}`} style={{ width: '8px' }} />);
+          // Spacer column for gap — hidden on mobile when cards stack
+          cols.push(<Column className="m-hide" key={`sp-${i}`} style={{ width: '8px' }} />);
         }
         // Apply backgroundColor directly to Column (td) so the card stretches
         // to the full row height automatically — equal heights across all cards.
         cols.push(
           <Column
+            className="m-block"
             key={i}
             style={{
               width: colPct,
@@ -389,7 +390,7 @@ export function SectionRenderer({ section }: SectionRendererProps) {
     case 'feature_card': {
       const isLeft = section.imagePosition === 'left';
       const textCol = (
-        <Column style={{ width: '62%', verticalAlign: 'top', paddingRight: isLeft ? '0' : '20px', paddingLeft: isLeft ? '20px' : '0' }}>
+        <Column className="m-block" style={{ width: '62%', verticalAlign: 'top', paddingRight: isLeft ? '0' : '20px', paddingLeft: isLeft ? '20px' : '0' }}>
           <Text style={{ fontFamily: BRAND.fonts.headline, fontSize: BRAND.fontSizes.body, fontWeight: 700, color: BRAND.colors.textPrimary, lineHeight: '1.3', margin: '0 0 12px 0' }}>
             {section.heading}
           </Text>
@@ -423,7 +424,7 @@ export function SectionRenderer({ section }: SectionRendererProps) {
         </Column>
       );
       const imageCol = (
-        <Column style={{ width: '38%', verticalAlign: 'middle', backgroundColor: BRAND.colors.paleBlue, borderRadius: '12px', padding: '12px' }}>
+        <Column className="m-block" style={{ width: '38%', verticalAlign: 'middle', backgroundColor: BRAND.colors.paleBlue, borderRadius: '12px', padding: '12px' }}>
           <Img
             src={section.src}
             alt={section.alt || ''}

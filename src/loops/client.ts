@@ -316,9 +316,10 @@ export async function uploadHtmlAsZip(
     <mj-font name="Manrope" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap" />
     <mj-raw>
       ${stylesWithoutImport}
+      <style>p { margin: 0; } img { height: auto; }</style>
     </mj-raw>
   </mj-head>
-  <mj-body background-color="#F0F2F5">
+  <mj-body>
     <mj-raw>
 ${bodyContent}
     </mj-raw>

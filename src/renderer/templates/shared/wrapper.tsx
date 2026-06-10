@@ -26,8 +26,10 @@ export function Wrapper({ previewText, children }: WrapperProps) {
         <style>{`@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap');`}</style>
         {/* Mobile responsiveness */}
         <style>{`
-  @media only screen and (max-width: 480px) {
+  @media only screen and (max-width: 600px) {
     img { max-width: 100% !important; height: auto !important; }
+    .m-block { display: block !important; width: 100% !important; box-sizing: border-box !important; padding-left: 0 !important; padding-right: 0 !important; }
+    .m-hide { display: none !important; max-height: 0 !important; overflow: hidden !important; }
   }
 `}</style>
         <Font
