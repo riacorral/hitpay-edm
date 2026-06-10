@@ -440,8 +440,9 @@ export function generateMjml(edm: ParsedEdm): string {
   </mj-section>`
     : '';
 
+  const bodyHasCta = edm.sections.some(s => s.type === 'cta');
   let ctaSection = '';
-  if (fm.template === 'product-launch' && fm.ctaUrl) {
+  if (fm.template === 'product-launch' && fm.ctaUrl && !bodyHasCta) {
     if (fm.secondaryCtaText && fm.secondaryCtaUrl) {
       ctaSection = `
   <mj-section padding="0 32px 48px">
