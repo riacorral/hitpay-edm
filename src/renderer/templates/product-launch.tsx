@@ -77,8 +77,8 @@ export function ProductLaunchEmail({ frontmatter, sections }: Props) {
         ))}
       </Section>
 
-      {/* Primary CTA + optional secondary CTA — skipped if body already has a {.cta} link */}
-      {!bodyHasCta && <Section
+      {/* Primary CTA + optional secondary CTA — skipped if body already has a {.cta} link or no ctaUrl */}
+      {!bodyHasCta && fm.ctaUrl && <Section
         style={{
           textAlign: 'center' as const,
           padding: `0 ${BRAND.spacing.xl} ${BRAND.spacing.xxl}`,

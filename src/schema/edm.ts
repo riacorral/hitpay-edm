@@ -28,7 +28,7 @@ export const ProductLaunchFrontmatter = BaseFrontmatter.extend({
   productName: z.string(),
   heroImage: z.string().optional(),
   ctaText: z.string().default('Get Started'),
-  ctaUrl: z.string().url(),
+  ctaUrl: z.string().url().optional(),
   secondaryCtaText: z.string().optional(),
   secondaryCtaUrl: z.string().optional(),
 });
@@ -74,6 +74,9 @@ export const EventInvitationFrontmatter = BaseFrontmatter.extend({
   primaryCtaUrl: z.string().optional(),
   testimonialTopImage: z.string().optional(),
   testimonialBottomImage: z.string().optional(),
+  galleryImage: z.string().optional(),
+  galleryImage2: z.string().optional(),
+  galleryLabel: z.string().optional(),
   secondaryCtaText: z.string().optional(),
   secondaryCtaUrl: z.string().optional(),
   ctaText: z.string().default('Register Now'),

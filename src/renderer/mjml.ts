@@ -54,8 +54,8 @@ function bulletItemsTable(items: { title: string; body: string }[]): string {
   <tr>
     <td width="24" valign="top" style="font-family:${B.font};font-size:16px;font-weight:700;color:${B.actionBlue};line-height:1.4;padding:0;white-space:nowrap;">•</td>
     <td valign="top" style="font-family:${B.font};padding:0 0 0 4px;">
-      <p style="font-family:${B.font};font-size:16px;font-weight:700;color:${B.textPrimary};line-height:1.4;margin:0 0 4px 0;">${esc(item.title)}</p>
-      <p style="font-family:${B.font};font-size:14px;font-weight:400;color:${B.textSecondary};line-height:1.6;margin:0;">${esc(item.body)}</p>
+      <div style="font-family:${B.font};font-size:16px;font-weight:700;color:${B.textPrimary};line-height:1.4;margin:0 0 4px 0;">${esc(item.title)}</div>
+      <div style="font-family:${B.font};font-size:14px;font-weight:400;color:${B.textSecondary};line-height:1.6;">${esc(item.body)}</div>
     </td>
   </tr>
 </table>`,
@@ -67,8 +67,8 @@ function sectionToMjml(section: EdmSection): string {
   switch (section.type) {
     case 'heading':
       return `
-  <mj-section padding="0">
-    <mj-column padding="${section.level <= 2 ? '0 32px 16px' : '16px 32px 24px'}">
+  <mj-section padding="${section.level <= 2 ? '0 32px 16px' : '16px 32px 24px'}">
+    <mj-column>
       <mj-text font-size="${section.level <= 2 ? '24px' : '16px'}" font-weight="700" color="${B.deepBlue}" line-height="1.3" padding="0">${esc(section.text)}</mj-text>
     </mj-column>
   </mj-section>`;
@@ -77,8 +77,8 @@ function sectionToMjml(section: EdmSection): string {
       const isCentered = section.text.endsWith('{.center}');
       const paraText = isCentered ? section.text.slice(0, -'{.center}'.length).trim() : section.text;
       return `
-  <mj-section padding="0">
-    <mj-column padding="0 32px 16px">
+  <mj-section padding="0 32px 16px">
+    <mj-column>
       <mj-text font-size="14px" color="${B.textSecondary}" line-height="1.6" padding="0"${isCentered ? ' align="center"' : ''}>${inlineMd(paraText)}</mj-text>
     </mj-column>
   </mj-section>`;
@@ -87,23 +87,23 @@ function sectionToMjml(section: EdmSection): string {
     case 'bullets':
       if (section.ordered) {
         return `
-  <mj-section padding="0">
-    <mj-column padding="0 32px 16px">
+  <mj-section padding="0 32px 16px">
+    <mj-column>
       <mj-raw>${numberedItemsTable(section.items)}</mj-raw>
     </mj-column>
   </mj-section>`;
       }
       return `
-  <mj-section padding="0">
-    <mj-column padding="0 32px 16px">
+  <mj-section padding="0 32px 16px">
+    <mj-column>
       ${section.items.map(item => `<mj-text font-size="14px" color="${B.textSecondary}" line-height="1.6" padding="0 0 8px 0">• ${inlineMd(item)}</mj-text>`).join('\n      ')}
     </mj-column>
   </mj-section>`;
 
     case 'bullet_list':
       return `
-  <mj-section padding="0">
-    <mj-column padding="0 32px 16px">
+  <mj-section padding="0 32px 16px">
+    <mj-column>
       <mj-raw>${bulletItemsTable(section.items)}</mj-raw>
     </mj-column>
   </mj-section>`;
@@ -135,7 +135,7 @@ function sectionToMjml(section: EdmSection): string {
 
     case 'image':
       return `
-  <mj-section padding="0 32px 16px">
+  <mj-section padding="16px 32px 16px">
     <mj-column>
       <mj-image src="${esc(section.src)}" alt="${esc(section.alt || '')}" border-radius="8px" padding="0"${section.width ? ` width="${section.width}px" align="center"` : ''} />
     </mj-column>
@@ -178,7 +178,7 @@ function sectionToMjml(section: EdmSection): string {
     </mj-column>`;
 
       return `
-  <mj-section padding="8px 32px 24px">
+  <mj-section padding="16px 32px 24px">
     ${section.imagePosition === 'left' ? imgCol + textCol : textCol + imgCol}
   </mj-section>`;
     }
@@ -191,7 +191,7 @@ function sectionToMjml(section: EdmSection): string {
             `\n    <mj-column width="${colWidth}" padding="0">\n      <mj-image src="${esc(img.src)}" alt="${esc(img.alt || '')}" border-radius="0" padding="0" />\n    </mj-column>`,
         )
         .join('');
-      return `\n  <mj-section padding="0 0 16px">${cols}\n  </mj-section>`;
+      return `\n  <mj-section padding="12px 0 16px">${cols}\n  </mj-section>`;
     }
 
     case 'columns': {
@@ -202,14 +202,14 @@ function sectionToMjml(section: EdmSection): string {
       // (mj-column background is on a <div>, not a <td>, so it won't equalise)
       const tds = section.items.map((item, i) => {
         const iconHtml = item.icon
-          ? `<p style="text-align:center;font-size:20px;line-height:1.2;margin:0 0 6px 0;font-family:${B.font};">${esc(item.icon)}</p>`
+          ? `<div style="text-align:center;font-size:20px;line-height:1.2;margin:0 0 6px 0;font-family:${B.font};">${esc(item.icon)}</div>`
           : '';
         const statHtml = item.stat
-          ? `<p style="text-align:center;font-size:22px;font-weight:700;color:${B.deepBlue};line-height:1.1;margin:0 0 10px 0;font-family:${B.font};">${esc(item.stat)}</p>`
+          ? `<div style="text-align:center;font-size:22px;font-weight:700;color:${B.deepBlue};line-height:1.1;margin:0 0 10px 0;font-family:${B.font};">${esc(item.stat)}</div>`
           : '';
         const spacer = i > 0 ? `<td width="8" class="col-spacer" style="width:8px;font-size:0;line-height:0;"> </td>` : '';
         return `${spacer}<td width="${cardWidthPx}" class="col-card" valign="top" bgcolor="${B.paleBlue}" style="background-color:${B.paleBlue};border-radius:8px;padding:16px 12px;width:${cardWidthPx}px;">
-          ${iconHtml}${statHtml}<p style="text-align:left;font-size:12px;color:${B.textSecondary};line-height:1.6;margin:6px 0 0 0;font-family:${B.font};">${esc(item.text)}</p>
+          ${iconHtml}${statHtml}<div style="text-align:left;font-size:12px;color:${B.textSecondary};line-height:1.6;margin:6px 0 0 0;font-family:${B.font};">${esc(item.text)}</div>
         </td>`;
       }).join('');
       return `
@@ -245,7 +245,7 @@ function sectionToMjml(section: EdmSection): string {
     </mj-column>`;
 
       return `
-  <mj-section padding="0 32px 40px">
+  <mj-section padding="16px 32px 40px">
     ${section.imagePosition === 'left' ? imageCol + textCol : textCol + imageCol}
   </mj-section>`;
     }
@@ -423,7 +423,7 @@ export function generateMjml(edm: ParsedEdm): string {
     : '';
 
   let ctaSection = '';
-  if (fm.template === 'product-launch') {
+  if (fm.template === 'product-launch' && fm.ctaUrl) {
     if (fm.secondaryCtaText && fm.secondaryCtaUrl) {
       ctaSection = `
   <mj-section padding="0 32px 48px">
