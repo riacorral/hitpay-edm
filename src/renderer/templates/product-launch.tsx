@@ -70,18 +70,22 @@ export function ProductLaunchEmail({ frontmatter, sections }: Props) {
         )}
       </Section>
 
-      {/* Body sections */}
-      <Section style={{ padding: `${BRAND.spacing.xl} 0` }}>
-        {sections.map((section, i) => (
-          <SectionRenderer key={i} section={section} />
-        ))}
+      {/* Body sections — Column wrapper ensures paddingTop is on a <td>, not a <table> (Gmail strips table margins) */}
+      <Section>
+        <Row>
+          <Column style={{ paddingTop: BRAND.spacing.xl }}>
+            {sections.map((section, i) => (
+              <SectionRenderer key={i} section={section} />
+            ))}
+          </Column>
+        </Row>
       </Section>
 
       {/* Primary CTA + optional secondary CTA — skipped if body already has a {.cta} link or no ctaUrl */}
       {!bodyHasCta && fm.ctaUrl && <Section
         style={{
           textAlign: 'center' as const,
-          padding: `0 ${BRAND.spacing.xl} ${BRAND.spacing.xxl}`,
+          padding: `${BRAND.spacing.lg} ${BRAND.spacing.xl} ${BRAND.spacing.xxl}`,
         }}
       >
         {fm.secondaryCtaText && fm.secondaryCtaUrl ? (

@@ -34,12 +34,17 @@ export function Footer({ market = 'sg' }: { market?: string }) {
   const bannerSrc = FOOTER_BANNERS[market] ?? FOOTER_BANNERS.global;
   return (
     <Section>
-      {/* Social icons */}
+      {/* Logo + social icons */}
       <Row>
         <Column style={{ backgroundColor: BRAND.colors.beige, padding: `${BRAND.spacing.lg} ${BRAND.spacing.xl} 16px` }}>
           <table cellPadding={0} cellSpacing={0} style={{ margin: '0 auto' }}>
             <tbody>
               <tr>
+                <td style={{ paddingRight: '16px', verticalAlign: 'middle' }}>
+                  <Link href={BRAND.defaults.website} style={{ textDecoration: 'none' }}>
+                    <Img src={BRAND.logo.dark} alt="HitPay" width={70} style={{ display: 'block' }} />
+                  </Link>
+                </td>
                 {SOCIAL_ICONS.map(s => (
                   <SocialIcon key={s.name} {...s} />
                 ))}
@@ -70,8 +75,8 @@ export function Footer({ market = 'sg' }: { market?: string }) {
               HitPay Payment Solutions Pte Ltd
             </Link>
           </Text>
-          <Text style={{ fontFamily: BRAND.fonts.body, fontSize: '10px', color: BRAND.colors.neutral400, lineHeight: '14px', margin: '4px 0 0 0', textAlign: 'center' as const }}>
-            <Link href="{unsubscribe_link}" style={{ color: BRAND.colors.neutral400, textDecoration: 'underline', fontSize: '10px' }}>
+          <Text style={{ fontFamily: BRAND.fonts.body, fontSize: '9px', color: BRAND.colors.neutral200, lineHeight: '14px', margin: '4px 0 0 0', textAlign: 'center' as const }}>
+            <Link href="{unsubscribe_link}" style={{ color: BRAND.colors.neutral200, textDecoration: 'none', fontSize: '9px' }}>
               Unsubscribe
             </Link>
           </Text>

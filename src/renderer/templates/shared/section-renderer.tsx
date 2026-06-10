@@ -167,7 +167,7 @@ export function SectionRenderer({ section }: SectionRendererProps) {
 
     case 'image':
       return (
-        <Section style={{ padding: `0 ${BRAND.spacing.lg}`, marginBottom: '16px', textAlign: section.width ? 'center' as const : undefined }}>
+        <Section style={{ padding: `16px ${BRAND.spacing.lg} 16px`, textAlign: section.width ? 'center' as const : undefined }}>
           <Img
             src={section.src}
             alt={section.alt || ''}
@@ -259,7 +259,7 @@ export function SectionRenderer({ section }: SectionRendererProps) {
         </Column>
       );
       return (
-        <Section style={{ padding: `0 ${BRAND.spacing.lg}`, marginBottom: '24px', marginTop: '8px' }}>
+        <Section style={{ padding: `16px ${BRAND.spacing.lg} 24px` }}>
           <Row style={{ width: '100%' }}>
             {isLeft ? imgCol : textCol}
             {isLeft ? textCol : imgCol}
@@ -270,7 +270,7 @@ export function SectionRenderer({ section }: SectionRendererProps) {
 
     case 'bullet_list':
       return (
-        <Section style={{ padding: `0 ${BRAND.spacing.lg}`, marginBottom: '24px' }}>
+        <Section style={{ padding: `0 ${BRAND.spacing.lg} 24px` }}>
           <table cellPadding={0} cellSpacing={0} width="100%">
             <tbody>
               {section.items.map((item, i) => (
@@ -316,8 +316,7 @@ export function SectionRenderer({ section }: SectionRendererProps) {
       return (
         <Section
           style={{
-            padding: `0 ${BRAND.spacing.lg}`,
-            marginBottom: '16px',
+            padding: `0 ${BRAND.spacing.lg} 16px`,
             textAlign: 'center' as const,
           }}
         >
@@ -330,7 +329,7 @@ export function SectionRenderer({ section }: SectionRendererProps) {
     case 'image_row': {
       const colWidth = `${Math.floor(100 / section.images.length)}%`;
       return (
-        <Section style={{ padding: '0', marginBottom: '16px' }}>
+        <Section style={{ padding: '12px 0 16px' }}>
           <Row style={{ width: '100%' }}>
             {section.images.map((img, i) => (
               <Column key={i} style={{ width: colWidth, verticalAlign: 'top' }}>
@@ -381,7 +380,7 @@ export function SectionRenderer({ section }: SectionRendererProps) {
         );
       });
       return (
-        <Section style={{ padding: `0 ${BRAND.spacing.lg}`, marginBottom: '24px' }}>
+        <Section style={{ padding: `0 ${BRAND.spacing.lg} 24px` }}>
           <Row>{cols}</Row>
         </Section>
       );
@@ -434,7 +433,7 @@ export function SectionRenderer({ section }: SectionRendererProps) {
         </Column>
       );
       return (
-        <Section style={{ padding: `0 ${BRAND.spacing.lg}`, marginBottom: '40px' }}>
+        <Section style={{ padding: `0 ${BRAND.spacing.lg} 40px` }}>
           <Row style={{ width: '100%' }}>
             {isLeft ? imageCol : textCol}
             {isLeft ? textCol : imageCol}
