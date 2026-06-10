@@ -493,32 +493,22 @@ export function generateMjml(edm: ParsedEdm): string {
   <!-- Footer -->
   <mj-section background-color="${B.beige}" padding="24px 32px 16px">
     <mj-column>
-      <!-- Social icons row -->
-      <mj-table padding="0">
-        <tr>
-          <td align="center">
-            <table cellpadding="0" cellspacing="0" style="margin:0 auto;">
-              <tr>
-                <td style="vertical-align:middle;padding:0 5px;">
-                  <a href="https://www.instagram.com/hitpayapp"><img src="${CDN}/social-instagram.png" width="24" height="24" alt="Instagram" style="display:block;border-radius:50%;" /></a>
-                </td>
-                <td style="vertical-align:middle;padding:0 5px;">
-                  <a href="https://www.facebook.com/hitpayapp"><img src="${CDN}/social-facebook.png" width="24" height="24" alt="Facebook" style="display:block;border-radius:50%;" /></a>
-                </td>
-                <td style="vertical-align:middle;padding:0 5px;">
-                  <a href="https://www.linkedin.com/company/hit-pay/"><img src="${CDN}/social-linkedin.png" width="24" height="24" alt="LinkedIn" style="display:block;border-radius:50%;" /></a>
-                </td>
-                <td style="vertical-align:middle;padding:0 5px;">
-                  <a href="https://www.tiktok.com/@hitpayapp"><img src="${CDN}/social-tiktok.png" width="24" height="24" alt="TikTok" style="display:block;border-radius:50%;" /></a>
-                </td>
-                <td style="vertical-align:middle;padding:0 5px;">
-                  <a href="https://www.youtube.com/@hitpayapp"><img src="${CDN}/social-youtube.png" width="24" height="24" alt="YouTube" style="display:block;border-radius:50%;" /></a>
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-      </mj-table>
+      <mj-raw>
+        <table cellpadding="0" cellspacing="0" style="margin:0 auto;">
+          <tr>
+            <td style="padding-right:16px;vertical-align:middle;">
+              <a href="https://www.hitpayapp.com" style="text-decoration:none;">
+                <img src="${BRAND_CDN}/logo-dark.png" alt="HitPay" width="70" style="display:block;" />
+              </a>
+            </td>
+            <td style="vertical-align:middle;padding:0 5px;"><a href="https://www.instagram.com/hitpayapp"><img src="${CDN}/social-instagram.png" width="24" height="24" alt="Instagram" style="display:block;border-radius:50%;" /></a></td>
+            <td style="vertical-align:middle;padding:0 5px;"><a href="https://www.facebook.com/hitpayapp"><img src="${CDN}/social-facebook.png" width="24" height="24" alt="Facebook" style="display:block;border-radius:50%;" /></a></td>
+            <td style="vertical-align:middle;padding:0 5px;"><a href="https://www.linkedin.com/company/hit-pay/"><img src="${CDN}/social-linkedin.png" width="24" height="24" alt="LinkedIn" style="display:block;border-radius:50%;" /></a></td>
+            <td style="vertical-align:middle;padding:0 5px;"><a href="https://www.tiktok.com/@hitpayapp"><img src="${CDN}/social-tiktok.png" width="24" height="24" alt="TikTok" style="display:block;border-radius:50%;" /></a></td>
+            <td style="vertical-align:middle;padding:0 5px;"><a href="https://www.youtube.com/@hitpayapp"><img src="${CDN}/social-youtube.png" width="24" height="24" alt="YouTube" style="display:block;border-radius:50%;" /></a></td>
+          </tr>
+        </table>
+      </mj-raw>
     </mj-column>
   </mj-section>
   <!-- Footer banner -->

@@ -26,7 +26,7 @@ export async function POST(_req: NextRequest, { params }: Params) {
     return NextResponse.json({ error: 'Campaign not found' }, { status: 404 });
   }
 
-  if (!campaign.html_content) {
+  if (!campaign.mjml_content) {
     return NextResponse.json({ error: 'Campaign has no rendered content' }, { status: 400 });
   }
 
@@ -54,16 +54,16 @@ export async function POST(_req: NextRequest, { params }: Params) {
           campaign.loops_campaign_id,
           campaign.subject,
           campaign.preview_text ?? '',
-          campaign.html_content,
-          false,
+          campaign.mjml_content,
+          true,
           (newToken) => { refreshedToken = newToken; }
         )
       : await createDraftCampaign(
           sessionToken,
           campaign.subject,
           campaign.preview_text ?? '',
-          campaign.html_content,
-          false,
+          campaign.mjml_content,
+          true,
           (newToken) => { refreshedToken = newToken; }
         );
 
