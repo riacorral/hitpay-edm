@@ -12,6 +12,12 @@ export interface CreateDraftResult {
   emailMessageId: string;
   url: string;
   bundledBlobUrls: string[];
+  bundledSupabasePaths: string[];
+}
+
+interface ZipUploadResult {
+  bundledBlobUrls: string[];
+  bundledSupabasePaths: string[];
 }
 
 export interface LoopsCampaign {
@@ -115,7 +121,7 @@ export async function createDraftCampaign(
   }
 
   // Step 4: Upload content as MJML zip
-  const bundledBlobUrls = useMjml
+  const zipResult = useMjml
     ? await uploadMjmlAsZip(emailMessageId, content)
     : await uploadHtmlAsZip(emailMessageId, content);
 
@@ -129,7 +135,7 @@ export async function createDraftCampaign(
   }
 
   const url = `${BASE_URL}/campaigns/${campaignId}/compose`;
-  return { campaignId, emailMessageId, url, bundledBlobUrls };
+  return { campaignId, emailMessageId, url, bundledBlobUrls: zipResult.bundledBlobUrls, bundledSupabasePaths: zipResult.bundledSupabasePaths };
 }
 
 export async function updateDraftCampaign(
@@ -164,7 +170,7 @@ export async function updateDraftCampaign(
   }
 
   // Step 3: Upload new content
-  const bundledBlobUrls = useMjml
+  const zipResult = useMjml
     ? await uploadMjmlAsZip(emailMessageId, content)
     : await uploadHtmlAsZip(emailMessageId, content);
 
@@ -178,7 +184,7 @@ export async function updateDraftCampaign(
   }
 
   const url = `${BASE_URL}/campaigns/${campaignId}/compose`;
-  return { campaignId, emailMessageId, url, bundledBlobUrls };
+  return { campaignId, emailMessageId, url, bundledBlobUrls: zipResult.bundledBlobUrls, bundledSupabasePaths: zipResult.bundledSupabasePaths };
 }
 
 export async function getCampaign(
@@ -206,6 +212,8 @@ export async function deleteCampaign(
 const LOCAL_IMG_PATTERN = /src="((?!https?:\/\/)[^"]+\.(?:jpg|jpeg|png|gif|webp|svg))"/gi;
 // Matches only the user-upload bucket — brand CDN images are left as remote URLs
 const BLOB_UPLOAD_PATTERN = /src="(https:\/\/[a-z0-9]+\.public\.blob\.vercel-storage\.com\/edm-uploads\/[^"]+)"/gi;
+// Matches Supabase campaign-images uploads (not the brand CDN bucket)
+const SUPABASE_IMG_PATTERN = /src="(https:\/\/[a-z0-9]+\.supabase\.co\/storage\/v1\/object\/public\/campaign-images\/[^"]+)"/gi;
 
 async function bundleVercelBlobImages(
   content: string,
@@ -249,6 +257,50 @@ async function bundleVercelBlobImages(
   return { processed: result, bundledUrls };
 }
 
+async function bundleSupabaseImages(
+  content: string,
+  imagesDir: string,
+): Promise<{ processed: string; bundledPaths: string[] }> {
+  const matches = [...content.matchAll(SUPABASE_IMG_PATTERN)];
+  const uniqueUrls = [...new Set(matches.map(m => m[1]))];
+  if (uniqueUrls.length === 0) return { processed: content, bundledPaths: [] };
+
+  mkdirSync(imagesDir, { recursive: true });
+  let result = content;
+  const bundledPaths: string[] = [];
+  const usedNames = new Set<string>();
+
+  for (const url of uniqueUrls) {
+    try {
+      const res = await fetch(url, { signal: AbortSignal.timeout(15000) });
+      if (!res.ok) {
+        console.warn(`  Could not download Supabase image, leaving as URL: ${url}`);
+        continue;
+      }
+      const buffer = Buffer.from(await res.arrayBuffer());
+      const urlPath = new URL(url).pathname;
+      const ext = extname(urlPath);
+      const base = basename(urlPath, ext);
+      let destName = `${base}${ext}`;
+      let counter = 1;
+      while (usedNames.has(destName)) {
+        destName = `${base}-${counter}${ext}`;
+        counter++;
+      }
+      usedNames.add(destName);
+      writeFileSync(join(imagesDir, destName), buffer);
+      result = result.replaceAll(url, `images/${destName}`);
+      // Extract just the storage path (after /campaign-images/)
+      const storagePath = url.split('/campaign-images/')[1];
+      if (storagePath) bundledPaths.push(storagePath);
+    } catch (err) {
+      console.warn(`  Failed to bundle Supabase image, leaving as URL: ${url}`, err);
+    }
+  }
+
+  return { processed: result, bundledPaths };
+}
+
 function bundleLocalImages(content: string, imagesDir: string): string {
   const matches = [...content.matchAll(LOCAL_IMG_PATTERN)];
   const unique = [...new Set(matches.map(m => m[1]))];
@@ -282,12 +334,13 @@ function bundleLocalImages(content: string, imagesDir: string): string {
 export async function uploadMjmlAsZip(
   emailMessageId: string,
   mjml: string,
-): Promise<string[]> {
+): Promise<ZipUploadResult> {
   const tmpDir = join(tmpdir(), `hitpay-edm-upload-${Date.now()}`);
   mkdirSync(tmpDir, { recursive: true });
   const imagesDir = join(tmpDir, 'images');
   const { processed: mjmlAfterBlob, bundledUrls } = await bundleVercelBlobImages(mjml, imagesDir);
-  const processedMjml = bundleLocalImages(mjmlAfterBlob, imagesDir);
+  const { processed: mjmlAfterSupabase, bundledPaths } = await bundleSupabaseImages(mjmlAfterBlob, imagesDir);
+  const processedMjml = bundleLocalImages(mjmlAfterSupabase, imagesDir);
   writeFileSync(join(tmpDir, 'index.mjml'), processedMjml);
   const hasImages = existsSync(imagesDir);
   const zip = new AdmZip();
@@ -338,13 +391,13 @@ export async function uploadMjmlAsZip(
     rmSync(tmpDir, { recursive: true, force: true });
   }
 
-  return bundledUrls;
+  return { bundledBlobUrls: bundledUrls, bundledSupabasePaths: bundledPaths };
 }
 
 export async function uploadHtmlAsZip(
   emailMessageId: string,
   html: string,
-): Promise<string[]> {
+): Promise<ZipUploadResult> {
   // Extract body content and styles from the React Email HTML
   const bodyMatch = html.match(/<body[^>]*>([\s\S]*)<\/body>/i);
   const bodyContent = bodyMatch ? bodyMatch[1] : html;
@@ -375,7 +428,8 @@ ${bodyContent}
   mkdirSync(tmpDir, { recursive: true });
   const imagesDir = join(tmpDir, 'images');
   const { processed: mjmlAfterBlob, bundledUrls } = await bundleVercelBlobImages(mjml, imagesDir);
-  const processedMjml2 = bundleLocalImages(mjmlAfterBlob, imagesDir);
+  const { processed: mjmlAfterSupabase, bundledPaths } = await bundleSupabaseImages(mjmlAfterBlob, imagesDir);
+  const processedMjml2 = bundleLocalImages(mjmlAfterSupabase, imagesDir);
   writeFileSync(join(tmpDir, 'index.mjml'), processedMjml2);
   const hasImages2 = existsSync(imagesDir);
   const zip2 = new AdmZip();
@@ -428,5 +482,5 @@ ${bodyContent}
   } finally {
     rmSync(tmpDir, { recursive: true, force: true });
   }
-  return bundledUrls;
+  return { bundledBlobUrls: bundledUrls, bundledSupabasePaths: bundledPaths };
 }

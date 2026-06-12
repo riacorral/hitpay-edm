@@ -103,6 +103,11 @@ export async function POST(_req: NextRequest, { params }: Params) {
       uploaded_by: user.email,
     };
 
+    // Schedule Supabase image cleanup in 7 days (Loops now hosts them)
+    const cleanupAfter = result.bundledSupabasePaths.length > 0
+      ? new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString()
+      : null;
+
     // Update campaign with Loops info — latest URL always at top
     await supabase
       .from('campaigns')
@@ -111,6 +116,10 @@ export async function POST(_req: NextRequest, { params }: Params) {
         loops_campaign_url: result.url,
         status: 'uploaded',
         loops_uploads: [newEntry, ...prevUploads],
+        ...(result.bundledSupabasePaths.length > 0 && {
+          supabase_cleanup_paths: result.bundledSupabasePaths,
+          supabase_cleanup_after: cleanupAfter,
+        }),
       })
       .eq('id', id);
 
