@@ -11,6 +11,7 @@ export interface CreateDraftResult {
   campaignId: string;
   emailMessageId: string;
   url: string;
+  bundledBlobUrls: string[];
 }
 
 export interface LoopsCampaign {
@@ -114,11 +115,9 @@ export async function createDraftCampaign(
   }
 
   // Step 4: Upload content as MJML zip
-  if (useMjml) {
-    await uploadMjmlAsZip(emailMessageId, content);
-  } else {
-    await uploadHtmlAsZip(emailMessageId, content);
-  }
+  const bundledBlobUrls = useMjml
+    ? await uploadMjmlAsZip(emailMessageId, content)
+    : await uploadHtmlAsZip(emailMessageId, content);
 
   // Step 5: Set campaign name
   await loopsFetch(`/api/campaigns/${campaignId}`, 'PUT', {
@@ -130,7 +129,7 @@ export async function createDraftCampaign(
   }
 
   const url = `${BASE_URL}/campaigns/${campaignId}/compose`;
-  return { campaignId, emailMessageId, url };
+  return { campaignId, emailMessageId, url, bundledBlobUrls };
 }
 
 export async function updateDraftCampaign(
@@ -165,11 +164,9 @@ export async function updateDraftCampaign(
   }
 
   // Step 3: Upload new content
-  if (useMjml) {
-    await uploadMjmlAsZip(emailMessageId, content);
-  } else {
-    await uploadHtmlAsZip(emailMessageId, content);
-  }
+  const bundledBlobUrls = useMjml
+    ? await uploadMjmlAsZip(emailMessageId, content)
+    : await uploadHtmlAsZip(emailMessageId, content);
 
   // Step 4: Update campaign name
   await loopsFetch(`/api/campaigns/${campaignId}`, 'PUT', {
@@ -181,7 +178,7 @@ export async function updateDraftCampaign(
   }
 
   const url = `${BASE_URL}/campaigns/${campaignId}/compose`;
-  return { campaignId, emailMessageId, url };
+  return { campaignId, emailMessageId, url, bundledBlobUrls };
 }
 
 export async function getCampaign(
@@ -207,6 +204,50 @@ export async function deleteCampaign(
 }
 
 const LOCAL_IMG_PATTERN = /src="((?!https?:\/\/)[^"]+\.(?:jpg|jpeg|png|gif|webp|svg))"/gi;
+// Matches only the user-upload bucket — brand CDN images are left as remote URLs
+const BLOB_UPLOAD_PATTERN = /src="(https:\/\/[a-z0-9]+\.public\.blob\.vercel-storage\.com\/edm-uploads\/[^"]+)"/gi;
+
+async function bundleVercelBlobImages(
+  content: string,
+  imagesDir: string,
+): Promise<{ processed: string; bundledUrls: string[] }> {
+  const matches = [...content.matchAll(BLOB_UPLOAD_PATTERN)];
+  const uniqueUrls = [...new Set(matches.map(m => m[1]))];
+  if (uniqueUrls.length === 0) return { processed: content, bundledUrls: [] };
+
+  mkdirSync(imagesDir, { recursive: true });
+  let result = content;
+  const bundledUrls: string[] = [];
+  const usedNames = new Set<string>();
+
+  for (const url of uniqueUrls) {
+    try {
+      const res = await fetch(url, { signal: AbortSignal.timeout(15000) });
+      if (!res.ok) {
+        console.warn(`  Could not download blob image, leaving as URL: ${url}`);
+        continue;
+      }
+      const buffer = Buffer.from(await res.arrayBuffer());
+      const urlPath = new URL(url).pathname;
+      const ext = extname(urlPath);
+      const base = basename(urlPath, ext);
+      let destName = `${base}${ext}`;
+      let counter = 1;
+      while (usedNames.has(destName)) {
+        destName = `${base}-${counter}${ext}`;
+        counter++;
+      }
+      usedNames.add(destName);
+      writeFileSync(join(imagesDir, destName), buffer);
+      result = result.replaceAll(url, `images/${destName}`);
+      bundledUrls.push(url);
+    } catch (err) {
+      console.warn(`  Failed to bundle blob image, leaving as URL: ${url}`, err);
+    }
+  }
+
+  return { processed: result, bundledUrls };
+}
 
 function bundleLocalImages(content: string, imagesDir: string): string {
   const matches = [...content.matchAll(LOCAL_IMG_PATTERN)];
@@ -241,12 +282,14 @@ function bundleLocalImages(content: string, imagesDir: string): string {
 export async function uploadMjmlAsZip(
   emailMessageId: string,
   mjml: string,
-): Promise<void> {
+): Promise<string[]> {
   const tmpDir = join(tmpdir(), `hitpay-edm-upload-${Date.now()}`);
   mkdirSync(tmpDir, { recursive: true });
-  const processedMjml = bundleLocalImages(mjml, join(tmpDir, 'images'));
+  const imagesDir = join(tmpDir, 'images');
+  const { processed: mjmlAfterBlob, bundledUrls } = await bundleVercelBlobImages(mjml, imagesDir);
+  const processedMjml = bundleLocalImages(mjmlAfterBlob, imagesDir);
   writeFileSync(join(tmpDir, 'index.mjml'), processedMjml);
-  const hasImages = existsSync(join(tmpDir, 'images'));
+  const hasImages = existsSync(imagesDir);
   const zip = new AdmZip();
   zip.addLocalFile(join(tmpDir, 'index.mjml'));
   if (hasImages) zip.addLocalFolder(join(tmpDir, 'images'), 'images');
@@ -294,12 +337,14 @@ export async function uploadMjmlAsZip(
   } finally {
     rmSync(tmpDir, { recursive: true, force: true });
   }
+
+  return bundledUrls;
 }
 
 export async function uploadHtmlAsZip(
   emailMessageId: string,
   html: string,
-): Promise<void> {
+): Promise<string[]> {
   // Extract body content and styles from the React Email HTML
   const bodyMatch = html.match(/<body[^>]*>([\s\S]*)<\/body>/i);
   const bodyContent = bodyMatch ? bodyMatch[1] : html;
@@ -328,12 +373,14 @@ ${bodyContent}
 
   const tmpDir = join(tmpdir(), `hitpay-edm-upload-${Date.now()}`);
   mkdirSync(tmpDir, { recursive: true });
-  const processedMjml2 = bundleLocalImages(mjml, join(tmpDir, 'images'));
+  const imagesDir = join(tmpDir, 'images');
+  const { processed: mjmlAfterBlob, bundledUrls } = await bundleVercelBlobImages(mjml, imagesDir);
+  const processedMjml2 = bundleLocalImages(mjmlAfterBlob, imagesDir);
   writeFileSync(join(tmpDir, 'index.mjml'), processedMjml2);
-  const hasImages2 = existsSync(join(tmpDir, 'images'));
+  const hasImages2 = existsSync(imagesDir);
   const zip2 = new AdmZip();
   zip2.addLocalFile(join(tmpDir, 'index.mjml'));
-  if (hasImages2) zip2.addLocalFolder(join(tmpDir, 'images'), 'images');
+  if (hasImages2) zip2.addLocalFolder(imagesDir, 'images');
   const zipBuffer = zip2.toBuffer();
 
   try {
@@ -381,4 +428,5 @@ ${bodyContent}
   } finally {
     rmSync(tmpDir, { recursive: true, force: true });
   }
+  return bundledUrls;
 }

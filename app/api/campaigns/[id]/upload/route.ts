@@ -67,6 +67,17 @@ export async function POST(_req: NextRequest, { params }: Params) {
           (newToken) => { refreshedToken = newToken; }
         );
 
+    // Delete bundled campaign images from Vercel Blob — Loops now hosts them
+    if (result.bundledBlobUrls.length > 0) {
+      try {
+        const { del } = await import('@vercel/blob');
+        await del(result.bundledBlobUrls);
+      } catch (err) {
+        // Non-fatal: log but don't fail the upload
+        console.warn('Could not delete temp blobs from Vercel:', err);
+      }
+    }
+
     // Save refreshed session token if it changed
     if (refreshedToken && refreshedToken !== sessionToken) {
       const { encrypt } = await import('@/lib/encryption');

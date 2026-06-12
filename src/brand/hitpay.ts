@@ -1,5 +1,5 @@
-const CDN = 'https://azjzrc77u6pvsjpm.public.blob.vercel-storage.com/hitpay-edm';
-const FONT_CDN = 'https://3cse8uwfv1q9zblo.public.blob.vercel-storage.com/hitpay-edm';
+const CDN = 'https://gpmgkjbyolgpikphcxvl.supabase.co/storage/v1/object/public/hitpay-brand';
+const FONT_CDN = 'https://3cse8uwfv1q9zblo.public.blob.vercel-storage.com/hitpay-edm'; // fonts still on Vercel Blob — replace if needed
 
 export const BRAND = {
   colors: {
@@ -62,8 +62,8 @@ export const BRAND = {
   },
 
   logo: {
-    dark:  'https://azjzrc77u6pvsjpm.public.blob.vercel-storage.com/brand/logo-dark.png',
-    white: 'https://azjzrc77u6pvsjpm.public.blob.vercel-storage.com/brand/logo-white.png',
+    dark:  `${CDN}/logo-dark.png`,
+    white: `${CDN}/logo-white.png`,
   },
 
   social: {

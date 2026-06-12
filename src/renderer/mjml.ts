@@ -1,7 +1,15 @@
 import type { ParsedEdm, EdmSection } from '../schema/edm.js';
 
-const CDN = 'https://azjzrc77u6pvsjpm.public.blob.vercel-storage.com/hitpay-edm';
-const BRAND_CDN = 'https://azjzrc77u6pvsjpm.public.blob.vercel-storage.com/brand';
+const CDN = 'https://gpmgkjbyolgpikphcxvl.supabase.co/storage/v1/object/public/hitpay-brand';
+const BRAND_CDN = 'https://gpmgkjbyolgpikphcxvl.supabase.co/storage/v1/object/public/hitpay-brand';
+
+const FOOTER_BANNERS: Record<string, string> = {
+  sg:     `${BRAND_CDN}/footer-banner-sg.png`,
+  my:     `${BRAND_CDN}/footer-banner-my.png`,
+  ph:     `${BRAND_CDN}/footer-banner-ph.png`,
+  global: `${BRAND_CDN}/footer-banner-global.png`,
+};
+
 
 const B = {
   deepBlue: '#002771',
@@ -260,7 +268,7 @@ export function generateMjml(edm: ParsedEdm): string {
 
   const preview = fm.previewText ? `\n    <mj-preview>${esc(fm.previewText)}</mj-preview>` : '';
 
-  const hitpayWhiteLogo = 'https://azjzrc77u6pvsjpm.public.blob.vercel-storage.com/brand/logo-white.png';
+  const hitpayWhiteLogo = `${BRAND_CDN}/logo-white.png`;
 
   let heroSection = '';
   let cobrandFooterSection = '';
@@ -512,12 +520,12 @@ export function generateMjml(edm: ParsedEdm): string {
       </mj-raw>
     </mj-column>
   </mj-section>
-  <!-- Footer banner -->
-  <mj-section padding="0">
+  <!-- Footer banner (conditional — add market URL to FOOTER_BANNERS to enable) -->
+  ${FOOTER_BANNERS[fm.market ?? 'sg'] ? `<mj-section padding="0">
     <mj-column padding="0">
-      <mj-image src="${BRAND_CDN}/footer-banner-${fm.market ?? 'sg'}.png" alt="HitPay" width="600px" padding="0" />
+      <mj-image src="${FOOTER_BANNERS[fm.market ?? 'sg']}" alt="HitPay" width="600px" padding="0" />
     </mj-column>
-  </mj-section>
+  </mj-section>` : ''}
   <!-- Footer text -->
   <mj-section background-color="${B.beige}" padding="12px 32px 24px">
     <mj-column>
