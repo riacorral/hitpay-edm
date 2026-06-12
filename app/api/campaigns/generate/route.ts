@@ -2,7 +2,8 @@ import Anthropic from '@anthropic-ai/sdk';
 import { NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { parseEdm } from '@/src/parser/markdown';
-import { renderEdm } from '@/src/renderer/engine';
+import { generateMjml } from '@/src/renderer/mjml';
+import mjml2html from 'mjml';
 
 const SYSTEM_PROMPT = `You are an expert email copywriter for HitPay, a fintech payment solutions company based in Singapore.
 
@@ -196,7 +197,7 @@ export async function POST(req: Request) {
     }
 
     const parsed = parseEdm(markdown);
-    const html = await renderEdm(parsed);
+    const { html } = mjml2html(generateMjml(parsed), { validationLevel: 'skip' });
     return NextResponse.json({ markdown, html });
   } catch (err) {
     const msg = err instanceof Error ? err.message : 'Generation failed';

@@ -56,7 +56,7 @@ function fmtTime(iso: string) {
     d.toLocaleTimeString('en-SG', { hour: '2-digit', minute: '2-digit' });
 }
 
-type EditMode = 'refine' | 'edit' | 'mjml' | 'html';
+type EditMode = 'refine' | 'edit' | 'mjml';
 type UploadEntry = { url: string; uploaded_at: string; uploaded_by: string };
 type Campaign = {
   id: string; subject: string; template: string; status: string;
@@ -153,7 +153,7 @@ function CampaignPageInner() {
         if (res.ok) {
           lastSavedMdRef.current = editedMd;
           setCampaign(c => c ? { ...c, ...data.campaign } : data.campaign);
-          setLiveHtml(data.campaign.html_content);
+          setLiveHtml(data.html ?? null);
           setAutoSaved(true);
           setTimeout(() => setAutoSaved(false), 2500);
         }
@@ -215,7 +215,7 @@ function CampaignPageInner() {
       const patchData = await patchRes.json();
       if (patchRes.ok) {
         setCampaign(c => c ? { ...c, ...patchData.campaign } : patchData.campaign);
-        setLiveHtml(patchData.campaign.html_content);
+        setLiveHtml(patchData.html ?? null);
       } else {
         const postRes = await fetch('/api/campaigns', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ markdown: editedMd }) });
         const postData = await postRes.json();
@@ -272,7 +272,7 @@ function CampaignPageInner() {
     </div>
   );
 
-  const displayHtml = liveHtml ?? campaign.html_content;
+  const displayHtml = liveHtml ?? '';
   const uploads: UploadEntry[] = campaign.loops_uploads ?? (campaign.loops_campaign_url ? [{ url: campaign.loops_campaign_url, uploaded_at: campaign.updated_at, uploaded_by: '' }] : []);
   const creator = campaign.users;
   const creatorName = creator ? (creator.name ?? creator.email.split('@')[0]) : null;
@@ -309,12 +309,11 @@ function CampaignPageInner() {
 
             {/* Mode tabs card */}
             <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-              <div className="grid grid-cols-2 border-b border-gray-100">
+              <div className="grid grid-cols-3 border-b border-gray-100">
                 {([
                   { id: 'refine', label: 'Refine' },
                   { id: 'edit',   label: 'Edit text' },
                   { id: 'mjml',   label: 'MJML' },
-                  { id: 'html',   label: 'HTML' },
                 ] as { id: EditMode; label: string }[]).map(tab => (
                   <button key={tab.id} onClick={() => { setEditMode(tab.id); setError(''); }}
                     className={`py-2.5 text-xs font-medium border-b-2 transition-colors ${
@@ -470,13 +469,6 @@ function CampaignPageInner() {
                 {editMode === 'mjml' && (
                   <pre className="text-xs font-mono text-gray-600 whitespace-pre-wrap overflow-auto max-h-96">
                     {campaign.mjml_content ?? 'No MJML content'}
-                  </pre>
-                )}
-
-                {/* HTML */}
-                {editMode === 'html' && (
-                  <pre className="text-xs font-mono text-gray-600 whitespace-pre-wrap overflow-auto max-h-96">
-                    {campaign.html_content ?? 'No HTML content'}
                   </pre>
                 )}
 

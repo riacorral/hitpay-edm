@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getCurrentUser } from '@/lib/get-user';
 import { createAdminClient } from '@/lib/supabase';
 import { parseEdm } from '@/src/parser/markdown';
-import { renderEdm } from '@/src/renderer/engine';
 import { generateMjml } from '@/src/renderer/mjml';
+import mjml2html from 'mjml';
 import { campaignSlug } from '@/src/campaign/slug';
 
 export async function GET() {
@@ -30,10 +30,8 @@ export async function POST(req: NextRequest) {
 
   try {
     const parsed = parseEdm(markdown as string);
-    const [html, mjml] = await Promise.all([
-      renderEdm(parsed),
-      Promise.resolve(generateMjml(parsed)),
-    ]);
+    const mjml = generateMjml(parsed);
+    mjml2html(mjml, { validationLevel: 'skip' }); // validate only
 
     const slug = campaignSlug(parsed.frontmatter.subject);
     const supabase = createAdminClient();
@@ -48,7 +46,6 @@ export async function POST(req: NextRequest) {
         preview_text: parsed.frontmatter.previewText ?? null,
         template: parsed.frontmatter.template,
         markdown: markdown as string,
-        html_content: html,
         mjml_content: mjml,
         brief_images: Array.isArray(brief_images) ? brief_images : [],
         status: 'draft',

@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getCurrentUser } from '@/lib/get-user';
 import { createAdminClient } from '@/lib/supabase';
 import { parseEdm } from '@/src/parser/markdown';
-import { renderEdm } from '@/src/renderer/engine';
 import { generateMjml } from '@/src/renderer/mjml';
+import mjml2html from 'mjml';
 
 type Params = { params: Promise<{ id: string }> };
 
@@ -33,10 +33,8 @@ export async function PATCH(req: NextRequest, { params }: Params) {
 
   try {
     const parsed = parseEdm(markdown as string);
-    const [html, mjml] = await Promise.all([
-      renderEdm(parsed),
-      Promise.resolve(generateMjml(parsed)),
-    ]);
+    const mjml = generateMjml(parsed);
+    const { html } = mjml2html(mjml, { validationLevel: 'skip' });
 
     const supabase = createAdminClient();
 
@@ -48,7 +46,6 @@ export async function PATCH(req: NextRequest, { params }: Params) {
         subject: parsed.frontmatter.subject,
         preview_text: parsed.frontmatter.previewText ?? null,
         template: parsed.frontmatter.template,
-        html_content: html,
         mjml_content: mjml,
         ...(Array.isArray(brief_images) && { brief_images }),
         last_updated_by: user.email,
@@ -60,7 +57,7 @@ export async function PATCH(req: NextRequest, { params }: Params) {
     if (error || !data) {
       return NextResponse.json({ error: error?.message ?? 'Campaign not found' }, { status: 404 });
     }
-    return NextResponse.json({ campaign: data });
+    return NextResponse.json({ campaign: data, html });
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Render failed';
     return NextResponse.json({ error: message }, { status: 422 });

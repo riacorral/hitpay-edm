@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getCurrentUser } from '@/lib/get-user';
 import { parseEdm } from '@/src/parser/markdown';
-import { renderEdm } from '@/src/renderer/engine';
+import { generateMjml } from '@/src/renderer/mjml';
+import mjml2html from 'mjml';
 
 export async function POST(req: NextRequest) {
   const user = await getCurrentUser();
@@ -12,7 +13,8 @@ export async function POST(req: NextRequest) {
 
   try {
     const parsed = parseEdm(markdown as string);
-    const html = await renderEdm(parsed);
+    const mjmlSource = generateMjml(parsed);
+    const { html } = mjml2html(mjmlSource, { validationLevel: 'skip' });
     return NextResponse.json({ html });
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Render failed';

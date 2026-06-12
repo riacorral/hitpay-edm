@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server';
 import { getCurrentUser } from '@/lib/get-user';
 import { createAdminClient } from '@/lib/supabase';
 import { parseEdm } from '@/src/parser/markdown';
-import { renderEdm } from '@/src/renderer/engine';
 import { generateMjml } from '@/src/renderer/mjml';
 
 export async function POST() {
@@ -23,13 +22,10 @@ export async function POST() {
   for (const c of campaigns ?? []) {
     try {
       const parsed = parseEdm(c.markdown as string);
-      const [html, mjml] = await Promise.all([
-        renderEdm(parsed),
-        Promise.resolve(generateMjml(parsed)),
-      ]);
+      const mjml = generateMjml(parsed);
       await supabase
         .from('campaigns')
-        .update({ html_content: html, mjml_content: mjml })
+        .update({ mjml_content: mjml })
         .eq('id', c.id);
       updated++;
     } catch (err) {
