@@ -54,6 +54,20 @@ function numberedItemsTable(items: string[]): string {
     .join('');
 }
 
+function simpleBulletItemsTable(items: string[]): string {
+  return items
+    .map(
+      (item, i, arr) => `
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:${i === arr.length - 1 ? '0' : '8px'};">
+  <tr>
+    <td width="20" valign="top" style="font-family:${B.font};font-size:14px;font-weight:700;color:${B.actionBlue};line-height:1.6;padding:0;white-space:nowrap;">•</td>
+    <td valign="top" style="font-family:${B.font};font-size:14px;color:${B.textSecondary};line-height:1.6;padding:0 0 0 8px;">${inlineMd(item)}</td>
+  </tr>
+</table>`,
+    )
+    .join('');
+}
+
 function bulletItemsTable(items: { title: string; body: string }[]): string {
   return items
     .map(
@@ -104,7 +118,7 @@ function sectionToMjml(section: EdmSection): string {
       return `
   <mj-section padding="0 32px 16px">
     <mj-column>
-      ${section.items.map(item => `<mj-text font-size="14px" color="${B.textSecondary}" line-height="1.6" padding="0 0 8px 0">• ${inlineMd(item)}</mj-text>`).join('\n      ')}
+      <mj-raw>${simpleBulletItemsTable(section.items)}</mj-raw>
     </mj-column>
   </mj-section>`;
 
@@ -206,6 +220,7 @@ function sectionToMjml(section: EdmSection): string {
       const n = section.items.length;
       // 600px email - 64px outer padding = 536px inner width; 8px gaps between cards
       const cardWidthPx = Math.floor((536 - (n - 1) * 8) / n);
+      const textAlign = section.textAlign ?? 'center';
       // Use mj-raw with a real <table><tr><td> so background fills to equal height
       // (mj-column background is on a <div>, not a <td>, so it won't equalise)
       const tds = section.items.map((item, i) => {
@@ -216,8 +231,8 @@ function sectionToMjml(section: EdmSection): string {
           ? `<div style="text-align:center;font-size:22px;font-weight:700;color:${B.deepBlue};line-height:1.1;margin:0 0 10px 0;font-family:${B.font};">${esc(item.stat)}</div>`
           : '';
         const spacer = i > 0 ? `<td width="8" class="col-spacer" style="width:8px;font-size:0;line-height:0;"> </td>` : '';
-        return `${spacer}<td width="${cardWidthPx}" class="col-card" valign="top" bgcolor="${B.paleBlue}" style="background-color:${B.paleBlue};border-radius:8px;padding:16px 12px;width:${cardWidthPx}px;">
-          ${iconHtml}${statHtml}<div style="text-align:left;font-size:12px;color:${B.textSecondary};line-height:1.6;margin:6px 0 0 0;font-family:${B.font};">${esc(item.text)}</div>
+        return `${spacer}<td width="${cardWidthPx}" class="col-card" valign="top" bgcolor="${B.paleBlue}" align="${textAlign}" style="background-color:${B.paleBlue};border-radius:8px;padding:16px 12px;width:${cardWidthPx}px;text-align:${textAlign};">
+          ${iconHtml}${statHtml}<p style="text-align:${textAlign};font-size:12px;color:${B.textSecondary};line-height:1.6;margin:6px 0 0 0;font-family:${B.font};">${esc(item.text)}</p>
         </td>`;
       }).join('');
       return `
