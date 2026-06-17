@@ -74,7 +74,7 @@ function fmtTime(iso: string) {
 type EditMode = 'refine' | 'edit' | 'mjml';
 type UploadEntry = { url: string; uploaded_at: string; uploaded_by: string };
 type Campaign = {
-  id: string; subject: string; template: string; status: string;
+  id: string; subject: string; title: string | null; template: string; status: string;
   created_at: string; updated_at: string;
   last_updated_by: string | null;
   markdown: string;
@@ -125,6 +125,10 @@ function CampaignPageInner() {
   const autoSaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastSavedMdRef = useRef<string>('');
 
+  // Campaign name (title)
+  const [campaignName, setCampaignName] = useState('');
+  const [editingName, setEditingName] = useState(false);
+
   // Actions
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState('');
@@ -141,6 +145,7 @@ function CampaignPageInner() {
       .then(d => {
         const c = d.campaign as Campaign;
         setCampaign(c);
+        setCampaignName(c.title || c.subject);
         if (c?.markdown) {
           lastSavedMdRef.current = c.markdown;
           setEditedMd(c.markdown);
@@ -275,6 +280,16 @@ function CampaignPageInner() {
     router.push('/dashboard');
   }
 
+  async function saveName(name: string) {
+    if (!name.trim()) return;
+    await fetch(`/api/campaigns/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: name.trim() }),
+    });
+    setCampaign(c => c ? { ...c, title: name.trim() } : c);
+  }
+
   if (loading) return (
     <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#F9F9F6' }}>
       <p className="text-sm text-gray-400">Loading…</p>
@@ -301,7 +316,28 @@ function CampaignPageInner() {
       <nav className="bg-white border-b border-gray-200 px-6 py-4 flex items-center gap-3">
         <Link href="/dashboard" className="text-sm text-gray-500 hover:text-gray-700">← Campaigns</Link>
         <span className="text-gray-300">/</span>
-        <span className="text-sm font-medium text-gray-900 truncate max-w-sm">{campaign.subject}</span>
+        {editingName ? (
+          <input
+            autoFocus
+            value={campaignName}
+            onChange={e => setCampaignName(e.target.value)}
+            onBlur={() => { saveName(campaignName); setEditingName(false); }}
+            onKeyDown={e => {
+              if (e.key === 'Enter') { saveName(campaignName); setEditingName(false); }
+              if (e.key === 'Escape') { setCampaignName(campaign.title || campaign.subject); setEditingName(false); }
+            }}
+            className="text-sm font-medium text-gray-900 border-b border-blue-400 outline-none bg-transparent max-w-sm"
+          />
+        ) : (
+          <button
+            type="button"
+            onClick={() => setEditingName(true)}
+            title="Click to rename"
+            className="text-sm font-medium text-gray-900 truncate max-w-sm hover:text-blue-600 transition-colors text-left"
+          >
+            {campaignName}
+          </button>
+        )}
         <div className="ml-auto flex items-center gap-2">
           <button onClick={handleDuplicate} disabled={duplicating}
             className="px-3 py-1.5 rounded-lg border border-gray-200 text-sm font-medium text-gray-600 hover:bg-gray-50 disabled:opacity-50">

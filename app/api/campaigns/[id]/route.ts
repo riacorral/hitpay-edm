@@ -28,7 +28,22 @@ export async function PATCH(req: NextRequest, { params }: Params) {
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const { id } = await params;
-  const { markdown, brief_images } = await req.json();
+  const { markdown, brief_images, name } = await req.json();
+
+  const supabase = createAdminClient();
+
+  // Name-only update (no markdown)
+  if (name !== undefined && !markdown) {
+    const { data, error } = await supabase
+      .from('campaigns')
+      .update({ title: name as string })
+      .eq('id', id)
+      .select()
+      .single();
+    if (error || !data) return NextResponse.json({ error: error?.message ?? 'Not found' }, { status: 404 });
+    return NextResponse.json({ campaign: data });
+  }
+
   if (!markdown) return NextResponse.json({ error: 'markdown is required' }, { status: 400 });
 
   try {
@@ -36,13 +51,10 @@ export async function PATCH(req: NextRequest, { params }: Params) {
     const mjml = generateMjml(parsed);
     const { html } = mjml2html(mjml, { validationLevel: 'skip' });
 
-    const supabase = createAdminClient();
-
     const { data, error } = await supabase
       .from('campaigns')
       .update({
         markdown: markdown as string,
-        title: parsed.frontmatter.subject,
         subject: parsed.frontmatter.subject,
         preview_text: parsed.frontmatter.previewText ?? null,
         template: parsed.frontmatter.template,
