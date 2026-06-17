@@ -124,7 +124,9 @@ function parseBody(body: string): EdmSection[] {
     //   ::column 🛍️ **50M+**
     //   Another description
     //   :::
-    if (trimmed === ':::columns') {
+    const columnsMatch = trimmed.match(/^:::columns(?:\s+(left|center|right))?$/);
+    if (columnsMatch) {
+      const textAlign = (columnsMatch[1] as 'left' | 'center' | 'right' | undefined);
       i++;
       const blockLines: string[] = [];
       while (i < lines.length && lines[i].trim() !== ':::') {
@@ -161,7 +163,7 @@ function parseBody(body: string): EdmSection[] {
       }
       flushColumn();
 
-      if (items.length > 0) sections.push({ type: 'columns', items });
+      if (items.length > 0) sections.push({ type: 'columns', items, ...(textAlign ? { textAlign } : {}) });
       continue;
     }
 

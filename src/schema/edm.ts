@@ -197,6 +197,7 @@ export const EdmSectionSchema = z.discriminatedUnion('type', [
   }),
   z.object({
     type: z.literal('columns'),
+    textAlign: z.enum(['left', 'center', 'right']).optional(),
     items: z.array(z.object({
       icon: z.string().optional(),
       stat: z.string().optional(),

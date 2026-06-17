@@ -329,7 +329,7 @@ export function SectionRenderer({ section }: SectionRendererProps) {
     case 'image_row': {
       const colWidth = `${Math.floor(100 / section.images.length)}%`;
       return (
-        <Section style={{ padding: '12px 0 16px' }}>
+        <Section style={{ padding: '16px 0 16px' }}>
           <Row style={{ width: '100%' }}>
             {section.images.map((img, i) => (
               <Column key={i} style={{ width: colWidth, verticalAlign: 'top' }}>
@@ -350,6 +350,7 @@ export function SectionRenderer({ section }: SectionRendererProps) {
       const n = section.items.length;
       // ~2% per spacer gap, remaining split evenly across cards
       const colPct = `${Math.floor((100 - (n - 1) * 2) / n)}%`;
+      const textAlign = (section.textAlign ?? 'center') as 'left' | 'center' | 'right';
       const cols: React.ReactNode[] = [];
       section.items.forEach((item, i) => {
         if (i > 0) {
@@ -376,7 +377,7 @@ export function SectionRenderer({ section }: SectionRendererProps) {
             {item.stat && (
               <p style={{ fontFamily: BRAND.fonts.headline, fontSize: '22px', fontWeight: 700, color: BRAND.colors.deepBlue, lineHeight: '1.1', margin: '0 0 10px 0', textAlign: 'center' as const }}>{item.stat}</p>
             )}
-            <p style={{ fontFamily: BRAND.fonts.body, fontSize: '12px', color: BRAND.colors.textSecondary, lineHeight: '1.6', margin: '6px 0 0 0', textAlign: 'left' as const }}>{item.text}</p>
+            <p style={{ fontFamily: BRAND.fonts.body, fontSize: '12px', color: BRAND.colors.textSecondary, lineHeight: '1.6', margin: '6px 0 0 0', textAlign }}>{item.text}</p>
           </Column>
         );
       });
@@ -434,7 +435,7 @@ export function SectionRenderer({ section }: SectionRendererProps) {
         </Column>
       );
       return (
-        <Section style={{ padding: `0 ${BRAND.spacing.lg} 40px` }}>
+        <Section style={{ padding: `${BRAND.spacing.md} ${BRAND.spacing.lg} 40px` }}>
           <Row style={{ width: '100%' }}>
             {isLeft ? imageCol : textCol}
             {isLeft ? textCol : imageCol}

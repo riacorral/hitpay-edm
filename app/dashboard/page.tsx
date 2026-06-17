@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { auth } from '@/lib/auth';
 import { createAdminClient } from '@/lib/supabase';
+import { getCurrentUser } from '@/lib/get-user';
 import { RerenderAllButton } from '@/components/rerender-all-button';
 import { HelpButton } from '@/components/help-modal';
 
@@ -23,6 +24,15 @@ export default async function DashboardPage() {
   if (!session) redirect('/auth/signin');
 
   const supabase = createAdminClient();
+  const currentUser = await getCurrentUser();
+
+  // Check if the current user has Loops credentials configured
+  const { data: loopsCreds } = currentUser ? await supabase
+    .from('loops_credentials')
+    .select('loops_api_key_enc')
+    .eq('user_id', currentUser.id)
+    .single() : { data: null };
+  const hasLoops = !!loopsCreds?.loops_api_key_enc;
 
   // Fetch ALL team campaigns with creator info — no user_id filter
   const { data: campaigns } = await supabase
@@ -46,7 +56,13 @@ export default async function DashboardPage() {
         </div>
         <div className="flex items-center gap-4">
           <HelpButton />
-          <Link href="/settings" className="text-sm text-gray-500 hover:text-gray-700">Settings</Link>
+          <Link
+            href="/settings"
+            className={`text-sm font-medium ${hasLoops ? 'text-gray-500 hover:text-gray-700' : 'hover:opacity-80'}`}
+            style={hasLoops ? undefined : { color: '#2465DE' }}
+          >
+            {hasLoops ? 'Settings' : 'Connect to Loops →'}
+          </Link>
           <Link href="/api/auth/signout" className="text-sm text-gray-500 hover:text-gray-700">Sign out</Link>
         </div>
       </nav>

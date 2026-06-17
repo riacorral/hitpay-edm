@@ -13,7 +13,7 @@ export function HelpButton() {
         title="How to use"
         className="w-7 h-7 flex items-center justify-center rounded-full border border-gray-300 text-xs font-semibold text-gray-500 hover:border-gray-400 hover:text-gray-700 transition-colors"
       >
-        ?
+        i
       </button>
 
       {open && (
@@ -140,8 +140,8 @@ export function HelpButton() {
                   {[
                     {
                       label: 'Stat / columns grid',
-                      syntax: ':::columns\n::column 📈 **42%**\nDescription here\n::column 🛒 **900M**\nDescription here\n:::',
-                      desc: 'Side-by-side stat cards. Each ::column line takes an optional emoji, a bold number, then description on the next line. Use 2–4 columns.',
+                      syntax: ':::columns\n::column 📈 **42%**\nDescription here\n::column 🛒 **900M**\nDescription here\n:::\n\n:::columns left\n::column 🛒 **900M**\nLeft-aligned description\n:::',
+                      desc: 'Side-by-side stat cards. Each ::column line takes an optional emoji, a bold number, then description on the next line. Use 2–4 columns. Descriptions are centered by default — add left or right after :::columns to change alignment.',
                     },
                     {
                       label: 'Image + text block',
