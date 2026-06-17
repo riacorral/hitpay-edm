@@ -141,7 +141,7 @@ function parseBody(body: string): EdmSection[] {
       let currentTextLines: string[] = [];
 
       const flushColumn = () => {
-        const text = currentTextLines.join(' ').replace(/\s*::\s*$/, '').trim();
+        const text = currentTextLines.join(' ').replace(/\s*::\s*$/, '').replace(/<[^>]+>/g, '').trim();
         if (currentIcon || currentStat || text) {
           items.push({ icon: currentIcon || undefined, stat: currentStat || undefined, text });
         }
