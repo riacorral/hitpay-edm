@@ -50,6 +50,21 @@ function compressImage(file: File): Promise<File> {
     img.src = url;
   });
 }
+function toUtmSlug(s: string): string {
+  return s.toLowerCase().trim()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '');
+}
+function buildFinalUrl(base: string, campaign: string, content: string, enabled: boolean): string {
+  if (!base.trim() || !enabled) return base.trim();
+  const parts: string[] = ['utm_source=email', 'utm_medium=email'];
+  if (campaign.trim()) parts.push(`utm_campaign=${encodeURIComponent(campaign.trim())}`);
+  if (content.trim()) parts.push(`utm_content=${encodeURIComponent(content.trim())}`);
+  const sep = base.includes('?') ? '&' : '?';
+  return base.trim() + sep + parts.join('&');
+}
 function fmtTime(iso: string) {
   const d = new Date(iso);
   return d.toLocaleDateString('en-SG', { day: 'numeric', month: 'short' }) + ' ' +
@@ -100,6 +115,9 @@ function CampaignPageInner() {
   const [showCtaMenu, setShowCtaMenu] = useState(false);
   const [ctaText, setCtaText] = useState('');
   const [ctaUrl, setCtaUrl] = useState('');
+  const [utmCampaign, setUtmCampaign] = useState('');
+  const [utmContent, setUtmContent] = useState('');
+  const [utmEnabled, setUtmEnabled] = useState(true);
 
   // Autosave
   const [autoSaving, setAutoSaving] = useState(false);
@@ -397,6 +415,8 @@ function CampaignPageInner() {
                             const sel = taRef.current ? taRef.current.value.slice(taRef.current.selectionStart, taRef.current.selectionEnd) : '';
                             setCtaText(sel || '');
                             setCtaUrl('');
+                            setUtmCampaign(toUtmSlug(campaign?.subject ?? ''));
+                            setUtmContent(sel ? toUtmSlug(sel) : '');
                             setShowCtaMenu(m => !m);
                           }}
                           className="w-7 h-7 flex items-center justify-center text-gray-600 rounded hover:bg-white hover:shadow-sm border border-transparent hover:border-gray-200">
@@ -409,7 +429,7 @@ function CampaignPageInner() {
                           <>
                             {/* Backdrop: only close if inputs are empty (prevents losing pasted content on window switch) */}
                             <div className="fixed inset-0 z-10" onClick={() => { if (!ctaText.trim() && !ctaUrl.trim()) setShowCtaMenu(false); }} />
-                            <div className="absolute left-0 top-8 bg-white border border-gray-200 rounded-lg shadow-lg z-20 p-3 w-56">
+                            <div className="absolute left-0 top-8 bg-white border border-gray-200 rounded-lg shadow-lg z-20 p-3 w-72">
                               <div className="flex items-center justify-between mb-2">
                                 <p className="text-xs font-medium text-gray-700">Insert button</p>
                                 <button type="button" onClick={() => { setShowCtaMenu(false); setCtaText(''); setCtaUrl(''); }}
@@ -420,7 +440,7 @@ function CampaignPageInner() {
                                 autoFocus
                                 type="text"
                                 value={ctaText}
-                                onChange={e => setCtaText(e.target.value)}
+                                onChange={e => { setCtaText(e.target.value); setUtmContent(toUtmSlug(e.target.value)); }}
                                 onKeyDown={e => { if (e.key === 'Escape') { setShowCtaMenu(false); setCtaText(''); setCtaUrl(''); } }}
                                 placeholder="e.g. Get started"
                                 className="w-full text-xs border border-gray-200 rounded px-2 py-1.5 mb-2 outline-none focus:border-blue-400"
@@ -434,23 +454,74 @@ function CampaignPageInner() {
                                   if (e.key === 'Escape') { setShowCtaMenu(false); setCtaText(''); setCtaUrl(''); }
                                   if (e.key === 'Enter' && ctaText.trim() && ctaUrl.trim() && taRef.current) {
                                     const { selectionStart: s, value } = taRef.current;
-                                    setEditedMd(value.slice(0, s) + `\n[${ctaText.trim()}](${ctaUrl.trim()}){.cta}\n` + value.slice(s));
+                                    const finalUrl = buildFinalUrl(ctaUrl, utmCampaign, utmContent, utmEnabled);
+                                    setEditedMd(value.slice(0, s) + `\n[${ctaText.trim()}](${finalUrl}){.cta}\n` + value.slice(s));
                                     setShowCtaMenu(false); setCtaText(''); setCtaUrl('');
                                   }
                                 }}
                                 placeholder="https://"
-                                className="w-full text-xs border border-gray-200 rounded px-2 py-1.5 mb-3 outline-none focus:border-blue-400"
+                                className="w-full text-xs border border-gray-200 rounded px-2 py-1.5 outline-none focus:border-blue-400"
                               />
+
+                              {/* UTM tracking */}
+                              <div className="border-t border-gray-100 mt-2.5 pt-2">
+                                <div className="flex items-center justify-between mb-2">
+                                  <p className="text-xs font-medium text-gray-600">UTM tracking</p>
+                                  <button
+                                    type="button"
+                                    onClick={() => setUtmEnabled(v => !v)}
+                                    className={`relative inline-flex h-4 w-7 shrink-0 items-center rounded-full transition-colors ${utmEnabled ? 'bg-blue-500' : 'bg-gray-200'}`}
+                                  >
+                                    <span className={`inline-block h-3 w-3 transform rounded-full bg-white shadow transition-transform ${utmEnabled ? 'translate-x-3.5' : 'translate-x-0.5'}`} />
+                                  </button>
+                                </div>
+                                {utmEnabled && (
+                                  <div className="space-y-1.5">
+                                    <div className="flex gap-1">
+                                      <span className="flex-1 text-xs font-mono bg-gray-50 border border-gray-100 rounded px-2 py-1 text-gray-400 truncate">source=email</span>
+                                      <span className="flex-1 text-xs font-mono bg-gray-50 border border-gray-100 rounded px-2 py-1 text-gray-400 truncate">medium=email</span>
+                                    </div>
+                                    <div className="relative">
+                                      <input
+                                        type="text"
+                                        value={utmCampaign}
+                                        onChange={e => setUtmCampaign(e.target.value)}
+                                        placeholder="utm_campaign"
+                                        className="w-full text-xs font-mono border border-gray-200 rounded px-2 py-1.5 pr-6 outline-none focus:border-blue-400"
+                                      />
+                                      {utmCampaign && (
+                                        <button type="button" onClick={() => setUtmCampaign('')}
+                                          className="absolute right-1.5 top-1/2 -translate-y-1/2 text-gray-300 hover:text-gray-500 leading-none">×</button>
+                                      )}
+                                    </div>
+                                    <div className="relative">
+                                      <input
+                                        type="text"
+                                        value={utmContent}
+                                        onChange={e => setUtmContent(e.target.value)}
+                                        placeholder="utm_content"
+                                        className="w-full text-xs font-mono border border-gray-200 rounded px-2 py-1.5 pr-6 outline-none focus:border-blue-400"
+                                      />
+                                      {utmContent && (
+                                        <button type="button" onClick={() => setUtmContent('')}
+                                          className="absolute right-1.5 top-1/2 -translate-y-1/2 text-gray-300 hover:text-gray-500 leading-none">×</button>
+                                      )}
+                                    </div>
+                                  </div>
+                                )}
+                              </div>
+
                               <button
                                 type="button"
                                 disabled={!ctaText.trim() || !ctaUrl.trim()}
                                 onClick={() => {
                                   if (!taRef.current) return;
                                   const { selectionStart: s, value } = taRef.current;
-                                  setEditedMd(value.slice(0, s) + `\n[${ctaText.trim()}](${ctaUrl.trim()}){.cta}\n` + value.slice(s));
+                                  const finalUrl = buildFinalUrl(ctaUrl, utmCampaign, utmContent, utmEnabled);
+                                  setEditedMd(value.slice(0, s) + `\n[${ctaText.trim()}](${finalUrl}){.cta}\n` + value.slice(s));
                                   setShowCtaMenu(false); setCtaText(''); setCtaUrl('');
                                 }}
-                                className="w-full py-1.5 rounded text-white text-xs font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity"
+                                className="w-full py-1.5 rounded text-white text-xs font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity mt-2.5"
                                 style={{ backgroundColor: '#2465DE' }}
                               >Insert button</button>
                             </div>
