@@ -14,7 +14,7 @@ export async function POST(_req: NextRequest, { params }: Params) {
 
   const { data: original, error: fetchError } = await supabase
     .from('campaigns')
-    .select('*')
+    .select('title, subject, preview_text, template, markdown, mjml_content')
     .eq('id', id)
     .single();
 

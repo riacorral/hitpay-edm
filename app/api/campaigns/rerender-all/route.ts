@@ -12,7 +12,9 @@ export async function POST() {
   const { data: campaigns, error } = await supabase
     .from('campaigns')
     .select('id, markdown')
-    .not('markdown', 'is', null);
+    .not('markdown', 'is', null)
+    .order('updated_at', { ascending: true })
+    .limit(50);
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 

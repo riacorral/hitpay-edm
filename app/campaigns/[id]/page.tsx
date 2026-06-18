@@ -149,15 +149,6 @@ function CampaignPageInner() {
         if (c?.markdown) {
           lastSavedMdRef.current = c.markdown;
           setEditedMd(c.markdown);
-          // Silently re-render preview on load to pick up any schema/template changes
-          fetch('/api/campaigns/preview', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ markdown: c.markdown }),
-          })
-            .then(r => r.json())
-            .then(data => { if (data.html) setLiveHtml(data.html); })
-            .catch(() => {});
         }
       })
       .finally(() => setLoading(false));
@@ -182,7 +173,7 @@ function CampaignPageInner() {
         }
       } catch { /* silent */ }
       finally { setAutoSaving(false); }
-    }, 2000);
+    }, 5000);
     return () => { if (autoSaveTimer.current) clearTimeout(autoSaveTimer.current); };
   }, [editedMd, campaign, id]);
 

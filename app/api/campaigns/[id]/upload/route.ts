@@ -18,7 +18,7 @@ export async function POST(_req: NextRequest, { params }: Params) {
   // Fetch campaign (no user_id filter — any team member can upload)
   const { data: campaign, error: campErr } = await supabase
     .from('campaigns')
-    .select('*')
+    .select('id, subject, preview_text, mjml_content, loops_campaign_id, loops_campaign_url, loops_uploads, supabase_cleanup_paths, supabase_cleanup_after')
     .eq('id', id)
     .single();
 
@@ -33,7 +33,7 @@ export async function POST(_req: NextRequest, { params }: Params) {
   // Fetch Loops credentials
   const { data: creds } = await supabase
     .from('loops_credentials')
-    .select('*')
+    .select('loops_api_key_enc, loops_session_enc')
     .eq('user_id', user.id)
     .single();
 
