@@ -1,8 +1,6 @@
 import { NextResponse } from 'next/server';
+import { put } from '@vercel/blob';
 import { auth } from '@/lib/auth';
-import { createAdminClient } from '@/lib/supabase';
-
-const BUCKET = 'campaign-images';
 
 export async function POST(req: Request) {
   const session = await auth();
@@ -19,18 +17,10 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Only image files are allowed' }, { status: 400 });
   }
 
-  const supabase = createAdminClient();
   const ext = file.name.split('.').pop() ?? 'bin';
-  const path = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+  const filename = `edm-uploads/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
 
-  const buffer = Buffer.from(await file.arrayBuffer());
-  const { error } = await supabase.storage
-    .from(BUCKET)
-    .upload(path, buffer, { contentType: file.type, upsert: false });
+  const blob = await put(filename, file, { access: 'public', contentType: file.type });
 
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-
-  const { data: { publicUrl } } = supabase.storage.from(BUCKET).getPublicUrl(path);
-
-  return NextResponse.json({ url: publicUrl });
+  return NextResponse.json({ url: blob.url });
 }
