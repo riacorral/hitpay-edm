@@ -156,6 +156,37 @@ function cleanOutput(raw: string): string {
   return sanitizeFrontmatterColons(cleaned);
 }
 
+// Templates that support a heroImage frontmatter field
+const HERO_IMAGE_TEMPLATES = new Set([
+  'product-launch', 'important-announcement', 'app-changes', 'rate-changes', 'compliance',
+]);
+
+// Inject the first provided image into the markdown if Claude didn't include it.
+// Prefers heroImage frontmatter for templates that support it; falls back to an inline image.
+function injectImagesIfMissing(markdown: string, images: string[]): string {
+  if (!images.length) return markdown;
+  const firstImage = images[0];
+
+  // If the URL is already present anywhere in the markdown, nothing to do
+  if (markdown.includes(firstImage)) return markdown;
+
+  const fmMatch = markdown.match(/^(---\n)([\s\S]*?)(\n---)([\s\S]*)$/);
+  if (!fmMatch) return markdown;
+  const [, open, body, close, rest] = fmMatch;
+
+  const templateMatch = body.match(/^template:\s*(.+)$/m);
+  const template = templateMatch?.[1]?.trim() ?? '';
+
+  if (HERO_IMAGE_TEMPLATES.has(template) && !body.includes('heroImage:')) {
+    // Inject as heroImage in frontmatter
+    const newBody = body.trimEnd() + `\nheroImage: ${firstImage}`;
+    return open + newBody + close + rest;
+  } else {
+    // Inject as inline image at the top of the body content
+    return open + body + close + `\n\n![](${firstImage})` + rest;
+  }
+}
+
 export async function POST(req: Request) {
   const session = await auth();
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -181,14 +212,14 @@ export async function POST(req: Request) {
 
   try {
     const message = await client.messages.create({
-      model: 'claude-sonnet-4-6',
+      model: 'claude-opus-4-6',
       max_tokens: 2048,
       system: SYSTEM_PROMPT,
       messages: [{ role: 'user', content: userMessage }],
     });
 
     const raw = (message.content[0] as { type: string; text: string }).text;
-    const markdown = cleanOutput(raw);
+    const markdown = injectImagesIfMissing(cleanOutput(raw), images ?? []);
 
     if (!markdown.startsWith('---')) {
       return NextResponse.json({
