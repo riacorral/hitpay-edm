@@ -182,16 +182,19 @@ function CampaignPageInner() {
     for (const file of Array.from(files)) {
       if (!file.type.startsWith('image/')) continue;
       const compressed = await compressImage(file);
-      const form = new FormData(); form.append('file', compressed);
-      const res = await fetch('/api/images/upload', { method: 'POST', body: form });
-      const data = await res.json();
-      if (res.ok && taRef.current) {
+      const dataUrl = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result as string);
+        reader.onerror = reject;
+        reader.readAsDataURL(compressed);
+      });
+      if (taRef.current) {
         const { selectionStart: s, selectionEnd: e, value } = taRef.current;
-        if (imgModeRef.current === 'hero') { setEditedMd(setFrontmatterField(value, 'heroImage', data.url)); }
+        if (imgModeRef.current === 'hero') { setEditedMd(setFrontmatterField(value, 'heroImage', dataUrl)); }
         else {
-          const insert = imgModeRef.current === 'image-left' ? `\n::: image-left ${data.url}\n### Heading\nBody text.\n:::\n`
-            : imgModeRef.current === 'image-right' ? `\n::: image-right ${data.url}\n### Heading\nBody text.\n:::\n`
-            : `![${value.slice(s, e) || ''}](${data.url})`;
+          const insert = imgModeRef.current === 'image-left' ? `\n::: image-left ${dataUrl}\n### Heading\nBody text.\n:::\n`
+            : imgModeRef.current === 'image-right' ? `\n::: image-right ${dataUrl}\n### Heading\nBody text.\n:::\n`
+            : `![${value.slice(s, e) || ''}](${dataUrl})`;
           setEditedMd(value.slice(0, s) + insert + value.slice(e));
         }
       }

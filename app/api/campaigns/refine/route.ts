@@ -21,6 +21,20 @@ export async function POST(req: Request) {
   if (!currentMarkdown?.trim()) return NextResponse.json({ error: 'currentMarkdown is required' }, { status: 400 });
   if (!instruction?.trim()) return NextResponse.json({ error: 'instruction is required' }, { status: 400 });
 
+  // Strip base64 images before sending to Claude to avoid massive token usage.
+  // Replace each unique data URL with a short placeholder and restore afterward.
+  const base64Map = new Map<string, string>();
+  let base64Counter = 0;
+  const markdownForAi = currentMarkdown.replace(
+    /data:image\/[a-zA-Z]+;base64,[A-Za-z0-9+\/=]+/g,
+    (match) => {
+      if (!base64Map.has(match)) {
+        base64Map.set(match, `__BASE64_IMAGE_${++base64Counter}__`);
+      }
+      return base64Map.get(match)!;
+    },
+  );
+
   const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
   try {
@@ -34,6 +48,7 @@ CRITICAL: Your response must begin with exactly --- on the first line (the YAML 
 Rules:
 - Output the COMPLETE email from --- to the last line. Never truncate or omit sections.
 - Keep all unchanged sections exactly as they are — including images, image URLs, :::columns blocks, ::: image-left blocks, and any other special syntax.
+- Inline images are represented as __BASE64_IMAGE_N__ placeholders. Preserve every placeholder exactly — never modify, remove, or duplicate them.
 - Preserve ALL frontmatter fields exactly, including long URLs with UTM parameters.
 - The frontmatter template field must remain one of: product-launch, feature-update, newsletter, promotional, event-invitation, partner-spotlight, important-announcement, app-changes, rate-changes, compliance
 - All ctaUrl values must be valid https:// URLs
@@ -51,7 +66,7 @@ Rules:
       messages: [
         {
           role: 'user',
-          content: `Current email:\n\n${currentMarkdown}\n\nInstruction: ${instruction}`,
+          content: `Current email:\n\n${markdownForAi}\n\nInstruction: ${instruction}`,
         },
       ],
     });
@@ -79,9 +94,13 @@ Rules:
       },
     );
 
-    const parsed = parseEdm(markdown);
+    // Restore base64 images Claude was told to preserve as placeholders
+    const inverseMap = new Map([...base64Map.entries()].map(([k, v]) => [v, k]));
+    const restoredMarkdown = markdown.replace(/__BASE64_IMAGE_\d+__/g, (p) => inverseMap.get(p) ?? p);
+
+    const parsed = parseEdm(restoredMarkdown);
     const { html } = mjml2html(generateMjml(parsed), { validationLevel: 'skip' });
-    return NextResponse.json({ markdown, html });
+    return NextResponse.json({ markdown: restoredMarkdown, html });
   } catch (err) {
     const msg = err instanceof Error ? err.message : 'Refinement failed';
     return NextResponse.json({ error: msg }, { status: 422 });

@@ -209,11 +209,38 @@ export async function deleteCampaign(
   return res.ok;
 }
 
-const LOCAL_IMG_PATTERN = /src="((?!https?:\/\/)[^"]+\.(?:jpg|jpeg|png|gif|webp|svg))"/gi;
+const LOCAL_IMG_PATTERN = /src="((?!https?:\/\/|data:)[^"]+\.(?:jpg|jpeg|png|gif|webp|svg))"/gi;
 // Matches only the user-upload bucket — brand CDN images are left as remote URLs
 const BLOB_UPLOAD_PATTERN = /src="(https:\/\/[a-z0-9]+\.public\.blob\.vercel-storage\.com\/edm-uploads\/[^"]+)"/gi;
 // Matches Supabase campaign-images uploads (not the brand CDN bucket)
 const SUPABASE_IMG_PATTERN = /src="(https:\/\/[a-z0-9]+\.supabase\.co\/storage\/v1\/object\/public\/campaign-images\/[^"]+)"/gi;
+// Matches base64 data URL images embedded inline
+const BASE64_IMG_PATTERN = /src="(data:image\/([a-zA-Z]+);base64,[A-Za-z0-9+\/=]+)"/g;
+
+function bundleBase64Images(content: string, imagesDir: string): string {
+  const matches = [...content.matchAll(BASE64_IMG_PATTERN)];
+  const unique = [...new Set(matches.map(m => m[1]))];
+  if (unique.length === 0) return content;
+
+  mkdirSync(imagesDir, { recursive: true });
+  let result = content;
+  let counter = 0;
+  const usedNames = new Set<string>();
+
+  for (const dataUrl of unique) {
+    const mimeMatch = dataUrl.match(/^data:image\/([a-zA-Z]+);base64,/);
+    const rawExt = mimeMatch?.[1]?.toLowerCase() ?? 'jpg';
+    const ext = rawExt === 'jpeg' ? 'jpg' : rawExt;
+    let name = `image-${++counter}.${ext}`;
+    while (usedNames.has(name)) name = `image-${counter}-${Date.now()}.${ext}`;
+    usedNames.add(name);
+    const base64Data = dataUrl.split(',')[1];
+    writeFileSync(join(imagesDir, name), Buffer.from(base64Data, 'base64'));
+    result = result.replaceAll(dataUrl, `images/${name}`);
+  }
+
+  return result;
+}
 
 async function bundleVercelBlobImages(
   content: string,
@@ -338,7 +365,8 @@ export async function uploadMjmlAsZip(
   const tmpDir = join(tmpdir(), `hitpay-edm-upload-${Date.now()}`);
   mkdirSync(tmpDir, { recursive: true });
   const imagesDir = join(tmpDir, 'images');
-  const { processed: mjmlAfterBlob, bundledUrls } = await bundleVercelBlobImages(mjml, imagesDir);
+  const mjmlAfterBase64 = bundleBase64Images(mjml, imagesDir);
+  const { processed: mjmlAfterBlob, bundledUrls } = await bundleVercelBlobImages(mjmlAfterBase64, imagesDir);
   const { processed: mjmlAfterSupabase, bundledPaths } = await bundleSupabaseImages(mjmlAfterBlob, imagesDir);
   const processedMjml = bundleLocalImages(mjmlAfterSupabase, imagesDir);
   writeFileSync(join(tmpDir, 'index.mjml'), processedMjml);
@@ -427,7 +455,8 @@ ${bodyContent}
   const tmpDir = join(tmpdir(), `hitpay-edm-upload-${Date.now()}`);
   mkdirSync(tmpDir, { recursive: true });
   const imagesDir = join(tmpDir, 'images');
-  const { processed: mjmlAfterBlob, bundledUrls } = await bundleVercelBlobImages(mjml, imagesDir);
+  const mjmlAfterBase64 = bundleBase64Images(mjml, imagesDir);
+  const { processed: mjmlAfterBlob, bundledUrls } = await bundleVercelBlobImages(mjmlAfterBase64, imagesDir);
   const { processed: mjmlAfterSupabase, bundledPaths } = await bundleSupabaseImages(mjmlAfterBlob, imagesDir);
   const processedMjml2 = bundleLocalImages(mjmlAfterSupabase, imagesDir);
   writeFileSync(join(tmpDir, 'index.mjml'), processedMjml2);
