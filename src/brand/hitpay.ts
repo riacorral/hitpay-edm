@@ -1,5 +1,7 @@
-const CDN = 'https://gpmgkjbyolgpikphcxvl.supabase.co/storage/v1/object/public/hitpay-brand';
-const FONT_CDN = 'https://3cse8uwfv1q9zblo.public.blob.vercel-storage.com/hitpay-edm'; // fonts still on Vercel Blob — replace if needed
+import { join } from 'path';
+
+const CDN = join(process.cwd(), 'public', 'brand');
+const FONT_CDN = 'https://3cse8uwfv1q9zblo.public.blob.vercel-storage.com/hitpay-edm'; // fonts for web UI only — not embedded in emails
 
 export const BRAND = {
   colors: {

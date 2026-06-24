@@ -1,13 +1,13 @@
+import { join } from 'path';
 import type { ParsedEdm, EdmSection } from '../schema/edm.js';
 
-const CDN = 'https://gpmgkjbyolgpikphcxvl.supabase.co/storage/v1/object/public/hitpay-brand';
-const BRAND_CDN = 'https://gpmgkjbyolgpikphcxvl.supabase.co/storage/v1/object/public/hitpay-brand';
+const BRAND_DIR = join(process.cwd(), 'public', 'brand');
 
 const FOOTER_BANNERS: Record<string, string> = {
-  sg:     `${BRAND_CDN}/footer-banner-sg.png`,
-  my:     `${BRAND_CDN}/footer-banner-my.png`,
-  ph:     `${BRAND_CDN}/footer-banner-ph.png`,
-  global: `${BRAND_CDN}/footer-banner-global.png`,
+  sg:     join(BRAND_DIR, 'footer-banner-sg.png'),
+  my:     join(BRAND_DIR, 'footer-banner-my.png'),
+  ph:     join(BRAND_DIR, 'footer-banner-ph.png'),
+  global: join(BRAND_DIR, 'footer-banner-global.png'),
 };
 
 
@@ -283,7 +283,7 @@ export function generateMjml(edm: ParsedEdm): string {
 
   const preview = fm.previewText ? `\n    <mj-preview>${esc(fm.previewText)}</mj-preview>` : '';
 
-  const hitpayWhiteLogo = `${BRAND_CDN}/logo-white.png`;
+  const hitpayWhiteLogo = join(BRAND_DIR, 'logo-white.png');
 
   let heroSection = '';
   let cobrandFooterSection = '';
@@ -301,7 +301,7 @@ export function generateMjml(edm: ParsedEdm): string {
   }
 
   if (fm.template === 'newsletter') {
-    const hitpayDarkLogo = 'https://azjzrc77u6pvsjpm.public.blob.vercel-storage.com/brand/logo-dark.png';
+    const hitpayDarkLogo = join(BRAND_DIR, 'logo-dark.png');
     heroSection = `
   <mj-section background-color="${B.white}" padding="16px 32px">
     <mj-column>
@@ -522,14 +522,14 @@ export function generateMjml(edm: ParsedEdm): string {
           <tr>
             <td style="padding-right:16px;vertical-align:middle;">
               <a href="https://www.hitpayapp.com" style="text-decoration:none;">
-                <img src="${BRAND_CDN}/logo-dark.png" alt="HitPay" width="70" style="display:block;" />
+                <img src="${join(BRAND_DIR, 'logo-dark.png')}" alt="HitPay" width="70" style="display:block;" />
               </a>
             </td>
-            <td style="vertical-align:middle;padding:0 5px;"><a href="https://www.instagram.com/hitpayapp"><img src="${CDN}/social-instagram.png" width="24" height="24" alt="Instagram" style="display:block;border-radius:50%;" /></a></td>
-            <td style="vertical-align:middle;padding:0 5px;"><a href="https://www.facebook.com/hitpayapp"><img src="${CDN}/social-facebook.png" width="24" height="24" alt="Facebook" style="display:block;border-radius:50%;" /></a></td>
-            <td style="vertical-align:middle;padding:0 5px;"><a href="https://www.linkedin.com/company/hit-pay/"><img src="${CDN}/social-linkedin.png" width="24" height="24" alt="LinkedIn" style="display:block;border-radius:50%;" /></a></td>
-            <td style="vertical-align:middle;padding:0 5px;"><a href="https://www.tiktok.com/@hitpayapp"><img src="${CDN}/social-tiktok.png" width="24" height="24" alt="TikTok" style="display:block;border-radius:50%;" /></a></td>
-            <td style="vertical-align:middle;padding:0 5px;"><a href="https://www.youtube.com/@hitpayapp"><img src="${CDN}/social-youtube.png" width="24" height="24" alt="YouTube" style="display:block;border-radius:50%;" /></a></td>
+            <td style="vertical-align:middle;padding:0 5px;"><a href="https://www.instagram.com/hitpayapp"><img src="${join(BRAND_DIR, 'social-instagram.png')}" width="24" height="24" alt="Instagram" style="display:block;border-radius:50%;" /></a></td>
+            <td style="vertical-align:middle;padding:0 5px;"><a href="https://www.facebook.com/hitpayapp"><img src="${join(BRAND_DIR, 'social-facebook.png')}" width="24" height="24" alt="Facebook" style="display:block;border-radius:50%;" /></a></td>
+            <td style="vertical-align:middle;padding:0 5px;"><a href="https://www.linkedin.com/company/hit-pay/"><img src="${join(BRAND_DIR, 'social-linkedin.png')}" width="24" height="24" alt="LinkedIn" style="display:block;border-radius:50%;" /></a></td>
+            <td style="vertical-align:middle;padding:0 5px;"><a href="https://www.tiktok.com/@hitpayapp"><img src="${join(BRAND_DIR, 'social-tiktok.png')}" width="24" height="24" alt="TikTok" style="display:block;border-radius:50%;" /></a></td>
+            <td style="vertical-align:middle;padding:0 5px;"><a href="https://www.youtube.com/@hitpayapp"><img src="${join(BRAND_DIR, 'social-youtube.png')}" width="24" height="24" alt="YouTube" style="display:block;border-radius:50%;" /></a></td>
           </tr>
         </table>
       </mj-raw>
