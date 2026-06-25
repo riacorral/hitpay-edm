@@ -1,13 +1,37 @@
 import { join } from 'path';
+import { readFileSync, existsSync } from 'fs';
 import type { ParsedEdm, EdmSection } from '../schema/edm.js';
 
 const BRAND_DIR = join(process.cwd(), 'public', 'brand');
 
+/** Read a brand asset file and return a base64 data URI, or empty string if missing. */
+function brandDataUri(filename: string): string {
+  const localPath = join(BRAND_DIR, filename);
+  if (!existsSync(localPath)) return '';
+  const ext = filename.split('.').pop()?.toLowerCase() ?? 'png';
+  const mime = ext === 'svg' ? 'image/svg+xml' : `image/${ext === 'jpg' ? 'jpeg' : ext}`;
+  const buffer = readFileSync(localPath);
+  return `data:${mime};base64,${buffer.toString('base64')}`;
+}
+
+// Pre-compute data URIs at module load time (server-side only).
+// Using base64 keeps brand images self-contained — no CDN dependency.
+const LOGO_WHITE     = brandDataUri('logo-white.png');
+const LOGO_DARK      = brandDataUri('logo-dark.png');
+const ICON_INSTAGRAM = brandDataUri('social-instagram.png');
+const ICON_FACEBOOK  = brandDataUri('social-facebook.png');
+const ICON_LINKEDIN  = brandDataUri('social-linkedin.png');
+const ICON_TIKTOK    = brandDataUri('social-tiktok.png');
+const ICON_YOUTUBE   = brandDataUri('social-youtube.png');
+
+// Footer banners are market-specific and not stored locally — use CDN.
+const BRAND_CDN = 'https://azjzrc77u6pvsjpm.public.blob.vercel-storage.com/brand';
+
 const FOOTER_BANNERS: Record<string, string> = {
-  sg:     join(BRAND_DIR, 'footer-banner-sg.png'),
-  my:     join(BRAND_DIR, 'footer-banner-my.png'),
-  ph:     join(BRAND_DIR, 'footer-banner-ph.png'),
-  global: join(BRAND_DIR, 'footer-banner-global.png'),
+  sg:     `${BRAND_CDN}/footer-banner-sg.png`,
+  my:     `${BRAND_CDN}/footer-banner-my.png`,
+  ph:     `${BRAND_CDN}/footer-banner-ph.png`,
+  global: `${BRAND_CDN}/footer-banner-global.png`,
 };
 
 
@@ -283,7 +307,7 @@ export function generateMjml(edm: ParsedEdm): string {
 
   const preview = fm.previewText ? `\n    <mj-preview>${esc(fm.previewText)}</mj-preview>` : '';
 
-  const hitpayWhiteLogo = join(BRAND_DIR, 'logo-white.png');
+  const hitpayWhiteLogo = LOGO_WHITE;
 
   let heroSection = '';
   let cobrandFooterSection = '';
@@ -301,11 +325,10 @@ export function generateMjml(edm: ParsedEdm): string {
   }
 
   if (fm.template === 'newsletter') {
-    const hitpayDarkLogo = join(BRAND_DIR, 'logo-dark.png');
     heroSection = `
   <mj-section background-color="${B.white}" padding="16px 32px">
     <mj-column>
-      <mj-image src="${hitpayDarkLogo}" alt="HitPay" width="120" align="left" padding="0" />
+      <mj-image src="${LOGO_DARK}" alt="HitPay" width="120" align="left" padding="0" />
     </mj-column>
   </mj-section>
   <mj-section background-color="${B.deepBlue}" padding="16px 32px">
@@ -522,14 +545,14 @@ export function generateMjml(edm: ParsedEdm): string {
           <tr>
             <td style="padding-right:16px;vertical-align:middle;">
               <a href="https://www.hitpayapp.com" style="text-decoration:none;">
-                <img src="${join(BRAND_DIR, 'logo-dark.png')}" alt="HitPay" width="70" style="display:block;" />
+                <img src="${LOGO_DARK}" alt="HitPay" width="70" style="display:block;" />
               </a>
             </td>
-            <td style="vertical-align:middle;padding:0 5px;"><a href="https://www.instagram.com/hitpayapp"><img src="${join(BRAND_DIR, 'social-instagram.png')}" width="24" height="24" alt="Instagram" style="display:block;border-radius:50%;" /></a></td>
-            <td style="vertical-align:middle;padding:0 5px;"><a href="https://www.facebook.com/hitpayapp"><img src="${join(BRAND_DIR, 'social-facebook.png')}" width="24" height="24" alt="Facebook" style="display:block;border-radius:50%;" /></a></td>
-            <td style="vertical-align:middle;padding:0 5px;"><a href="https://www.linkedin.com/company/hit-pay/"><img src="${join(BRAND_DIR, 'social-linkedin.png')}" width="24" height="24" alt="LinkedIn" style="display:block;border-radius:50%;" /></a></td>
-            <td style="vertical-align:middle;padding:0 5px;"><a href="https://www.tiktok.com/@hitpayapp"><img src="${join(BRAND_DIR, 'social-tiktok.png')}" width="24" height="24" alt="TikTok" style="display:block;border-radius:50%;" /></a></td>
-            <td style="vertical-align:middle;padding:0 5px;"><a href="https://www.youtube.com/@hitpayapp"><img src="${join(BRAND_DIR, 'social-youtube.png')}" width="24" height="24" alt="YouTube" style="display:block;border-radius:50%;" /></a></td>
+            <td style="vertical-align:middle;padding:0 5px;"><a href="https://www.instagram.com/hitpayapp"><img src="${ICON_INSTAGRAM}" width="24" height="24" alt="Instagram" style="display:block;border-radius:50%;" /></a></td>
+            <td style="vertical-align:middle;padding:0 5px;"><a href="https://www.facebook.com/hitpayapp"><img src="${ICON_FACEBOOK}" width="24" height="24" alt="Facebook" style="display:block;border-radius:50%;" /></a></td>
+            <td style="vertical-align:middle;padding:0 5px;"><a href="https://www.linkedin.com/company/hit-pay/"><img src="${ICON_LINKEDIN}" width="24" height="24" alt="LinkedIn" style="display:block;border-radius:50%;" /></a></td>
+            <td style="vertical-align:middle;padding:0 5px;"><a href="https://www.tiktok.com/@hitpayapp"><img src="${ICON_TIKTOK}" width="24" height="24" alt="TikTok" style="display:block;border-radius:50%;" /></a></td>
+            <td style="vertical-align:middle;padding:0 5px;"><a href="https://www.youtube.com/@hitpayapp"><img src="${ICON_YOUTUBE}" width="24" height="24" alt="YouTube" style="display:block;border-radius:50%;" /></a></td>
           </tr>
         </table>
       </mj-raw>
