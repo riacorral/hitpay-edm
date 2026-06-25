@@ -11,10 +11,17 @@ export function EmailPreview({ html, loading = false }: { html: string; loading?
   const [iframeHeight, setIframeHeight] = useState(600);
 
   const onLoad = useCallback((e: React.SyntheticEvent<HTMLIFrameElement>) => {
-    const doc = e.currentTarget.contentDocument;
-    if (!doc) return;
-    const h = doc.documentElement?.scrollHeight || doc.body?.scrollHeight || 600;
-    setIframeHeight(h);
+    const iframe = e.currentTarget;
+    const measure = () => {
+      const doc = iframe.contentDocument;
+      if (!doc) return;
+      const h = doc.documentElement?.scrollHeight || doc.body?.scrollHeight || 600;
+      setIframeHeight(h);
+    };
+    // Measure immediately, then again after a short delay so base64 images
+    // have time to be laid out before the final height is recorded.
+    measure();
+    setTimeout(measure, 200);
   }, []);
 
   return (
