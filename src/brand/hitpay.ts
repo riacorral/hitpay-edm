@@ -1,7 +1,6 @@
 import { join } from 'path';
 
 const CDN = join(process.cwd(), 'public', 'brand');
-const FONT_CDN = 'https://3cse8uwfv1q9zblo.public.blob.vercel-storage.com/hitpay-edm'; // fonts for web UI only — not embedded in emails
 
 export const BRAND = {
   colors: {
@@ -31,9 +30,9 @@ export const BRAND = {
   },
 
   fontUrls: {
-    regular: `${FONT_CDN}/Hauora-Regular.woff2`,
-    semibold: `${FONT_CDN}/Hauora-SemiBold.woff2`,
-    bold: `${FONT_CDN}/Hauora-Bold.woff2`,
+    regular: '/fonts/Hauora-Regular.woff2',
+    semibold: '/fonts/Hauora-SemiBold.woff2',
+    bold: '/fonts/Hauora-Bold.woff2',
   },
 
   fontSizes: {
