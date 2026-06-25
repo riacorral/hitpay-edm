@@ -1,23 +1,5 @@
 import type { ParsedEdm, EdmSection } from '../schema/edm.js';
-
-// Brand images are served as Next.js static assets from public/brand/.
-// Using absolute URLs works in both the web preview iframe and email clients.
-// VERCEL_URL is auto-injected by Vercel; falls back to localhost for local dev.
-const BASE_URL = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : 'http://localhost:3000';
-
-function brandUrl(filename: string): string {
-  return `${BASE_URL}/brand/${filename}`;
-}
-
-const LOGO_WHITE     = brandUrl('logo-white.png');
-const LOGO_DARK      = brandUrl('logo-dark.png');
-const ICON_INSTAGRAM = brandUrl('social-instagram.png');
-const ICON_FACEBOOK  = brandUrl('social-facebook.png');
-const ICON_LINKEDIN  = brandUrl('social-linkedin.png');
-const ICON_TIKTOK    = brandUrl('social-tiktok.png');
-const ICON_YOUTUBE   = brandUrl('social-youtube.png');
+import { LOGO_WHITE, LOGO_DARK, ICON_INSTAGRAM, ICON_FACEBOOK, ICON_LINKEDIN, ICON_TIKTOK, ICON_YOUTUBE } from './brand-assets.js';
 
 // Footer banners are market-specific. Add files to public/brand/ to enable them.
 const FOOTER_BANNERS: Record<string, string> = {
