@@ -539,25 +539,13 @@ export function generateMjml(edm: ParsedEdm): string {
   ${cobrandFooterSection}
   <!-- Footer -->
   <mj-section background-color="${B.beige}" padding="24px 32px 16px">
-    <mj-column>
-      <mj-raw>
-        <tr><td>
-        <table cellpadding="0" cellspacing="0" style="margin:0 auto;">
-          <tr>
-            <td style="padding-right:16px;vertical-align:middle;">
-              <a href="https://www.hitpayapp.com" style="text-decoration:none;">
-                <img src="${LOGO_DARK}" alt="HitPay" width="70" style="display:block;" />
-              </a>
-            </td>
-            <td style="vertical-align:middle;padding:0 5px;"><a href="https://www.instagram.com/hitpayapp"><img src="${ICON_INSTAGRAM}" width="24" height="24" alt="Instagram" style="display:block;border-radius:50%;" /></a></td>
-            <td style="vertical-align:middle;padding:0 5px;"><a href="https://www.facebook.com/hitpayapp"><img src="${ICON_FACEBOOK}" width="24" height="24" alt="Facebook" style="display:block;border-radius:50%;" /></a></td>
-            <td style="vertical-align:middle;padding:0 5px;"><a href="https://www.linkedin.com/company/hit-pay/"><img src="${ICON_LINKEDIN}" width="24" height="24" alt="LinkedIn" style="display:block;border-radius:50%;" /></a></td>
-            <td style="vertical-align:middle;padding:0 5px;"><a href="https://www.tiktok.com/@hitpayapp"><img src="${ICON_TIKTOK}" width="24" height="24" alt="TikTok" style="display:block;border-radius:50%;" /></a></td>
-            <td style="vertical-align:middle;padding:0 5px;"><a href="https://www.youtube.com/@hitpayapp"><img src="${ICON_YOUTUBE}" width="24" height="24" alt="YouTube" style="display:block;border-radius:50%;" /></a></td>
-          </tr>
-        </table>
-        </td></tr>
-      </mj-raw>
+    <mj-column width="40%" vertical-align="middle" padding="0">
+      <mj-image src="${LOGO_DARK}" alt="HitPay" width="70px" align="left" padding="0" href="https://www.hitpayapp.com" />
+    </mj-column>
+    <mj-column width="60%" vertical-align="middle" padding="0">
+      <mj-text align="right" padding="0">
+        <a href="https://www.instagram.com/hitpayapp" style="display:inline-block;margin:0 3px;"><img src="${ICON_INSTAGRAM}" width="24" height="24" alt="Instagram" style="display:block;border-radius:50%;" /></a><a href="https://www.facebook.com/hitpayapp" style="display:inline-block;margin:0 3px;"><img src="${ICON_FACEBOOK}" width="24" height="24" alt="Facebook" style="display:block;border-radius:50%;" /></a><a href="https://www.linkedin.com/company/hit-pay/" style="display:inline-block;margin:0 3px;"><img src="${ICON_LINKEDIN}" width="24" height="24" alt="LinkedIn" style="display:block;border-radius:50%;" /></a><a href="https://www.tiktok.com/@hitpayapp" style="display:inline-block;margin:0 3px;"><img src="${ICON_TIKTOK}" width="24" height="24" alt="TikTok" style="display:block;border-radius:50%;" /></a><a href="https://www.youtube.com/@hitpayapp" style="display:inline-block;margin:0 3px;"><img src="${ICON_YOUTUBE}" width="24" height="24" alt="YouTube" style="display:block;border-radius:50%;" /></a>
+      </mj-text>
     </mj-column>
   </mj-section>
   <!-- Footer banner (conditional — add market URL to FOOTER_BANNERS to enable) -->
