@@ -541,6 +541,7 @@ export function generateMjml(edm: ParsedEdm): string {
   <mj-section background-color="${B.beige}" padding="24px 32px 16px">
     <mj-column>
       <mj-raw>
+        <tr><td>
         <table cellpadding="0" cellspacing="0" style="margin:0 auto;">
           <tr>
             <td style="padding-right:16px;vertical-align:middle;">
@@ -555,6 +556,7 @@ export function generateMjml(edm: ParsedEdm): string {
             <td style="vertical-align:middle;padding:0 5px;"><a href="https://www.youtube.com/@hitpayapp"><img src="${ICON_YOUTUBE}" width="24" height="24" alt="YouTube" style="display:block;border-radius:50%;" /></a></td>
           </tr>
         </table>
+        </td></tr>
       </mj-raw>
     </mj-column>
   </mj-section>
