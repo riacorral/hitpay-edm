@@ -1,5 +1,5 @@
 import type { ParsedEdm, EdmSection } from '../schema/edm.js';
-import { LOGO_WHITE, LOGO_DARK, ICON_INSTAGRAM, ICON_FACEBOOK, ICON_LINKEDIN, ICON_TIKTOK, ICON_YOUTUBE } from './brand-assets.js';
+import { LOGO_WHITE, LOGO_DARK, ICON_INSTAGRAM, ICON_FACEBOOK, ICON_LINKEDIN, ICON_TIKTOK, ICON_YOUTUBE, EMAIL_SIGNATURE } from './brand-assets.js';
 
 // Footer banners are market-specific. Add files to public/brand/ to enable them.
 const FOOTER_BANNERS: Record<string, string> = {
@@ -523,6 +523,12 @@ export function generateMjml(edm: ParsedEdm): string {
       <mj-image src="${FOOTER_BANNERS[fm.market ?? 'sg']}" alt="HitPay" width="600px" padding="0" />
     </mj-column>
   </mj-section>` : ''}
+  <!-- Footer signature image -->
+  <mj-section background-color="${B.beige}" padding="0">
+    <mj-column padding="0">
+      <mj-image src="${EMAIL_SIGNATURE}" alt="HitPay products" width="600px" padding="0" />
+    </mj-column>
+  </mj-section>
   <!-- Footer text -->
   <mj-section background-color="${B.beige}" padding="12px 32px 24px">
     <mj-column>
