@@ -1,37 +1,27 @@
-import { join } from 'path';
-import { readFileSync, existsSync } from 'fs';
 import type { ParsedEdm, EdmSection } from '../schema/edm.js';
 
-const BRAND_DIR = join(process.cwd(), 'public', 'brand');
+// Brand images are served as Next.js static assets from public/brand/.
+// Using absolute URLs works in both the web preview iframe and email clients.
+// VERCEL_URL is auto-injected by Vercel; falls back to localhost for local dev.
+const BASE_URL = process.env.VERCEL_URL
+  ? `https://${process.env.VERCEL_URL}`
+  : 'http://localhost:3000';
 
-/** Read a brand asset file and return a base64 data URI, or empty string if missing. */
-function brandDataUri(filename: string): string {
-  const localPath = join(BRAND_DIR, filename);
-  if (!existsSync(localPath)) return '';
-  const ext = filename.split('.').pop()?.toLowerCase() ?? 'png';
-  const mime = ext === 'svg' ? 'image/svg+xml' : `image/${ext === 'jpg' ? 'jpeg' : ext}`;
-  const buffer = readFileSync(localPath);
-  return `data:${mime};base64,${buffer.toString('base64')}`;
+function brandUrl(filename: string): string {
+  return `${BASE_URL}/brand/${filename}`;
 }
 
-// Pre-compute data URIs at module load time (server-side only).
-// Using base64 keeps brand images self-contained — no CDN dependency.
-const LOGO_WHITE     = brandDataUri('logo-white.png');
-const LOGO_DARK      = brandDataUri('logo-dark.png');
-const ICON_INSTAGRAM = brandDataUri('social-instagram.png');
-const ICON_FACEBOOK  = brandDataUri('social-facebook.png');
-const ICON_LINKEDIN  = brandDataUri('social-linkedin.png');
-const ICON_TIKTOK    = brandDataUri('social-tiktok.png');
-const ICON_YOUTUBE   = brandDataUri('social-youtube.png');
+const LOGO_WHITE     = brandUrl('logo-white.png');
+const LOGO_DARK      = brandUrl('logo-dark.png');
+const ICON_INSTAGRAM = brandUrl('social-instagram.png');
+const ICON_FACEBOOK  = brandUrl('social-facebook.png');
+const ICON_LINKEDIN  = brandUrl('social-linkedin.png');
+const ICON_TIKTOK    = brandUrl('social-tiktok.png');
+const ICON_YOUTUBE   = brandUrl('social-youtube.png');
 
-// Footer banners are market-specific and not stored locally — use CDN.
-const BRAND_CDN = 'https://azjzrc77u6pvsjpm.public.blob.vercel-storage.com/brand';
-
+// Footer banners are market-specific. Add files to public/brand/ to enable them.
 const FOOTER_BANNERS: Record<string, string> = {
-  sg:     `${BRAND_CDN}/footer-banner-sg.png`,
-  my:     `${BRAND_CDN}/footer-banner-my.png`,
-  ph:     `${BRAND_CDN}/footer-banner-ph.png`,
-  global: `${BRAND_CDN}/footer-banner-global.png`,
+  // sg: brandUrl('footer-banner-sg.png'),
 };
 
 
