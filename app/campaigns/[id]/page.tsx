@@ -5,6 +5,24 @@ import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { EmailPreview } from '@/components/email-preview';
 
+// ── Base64 placeholder helpers ────────────────────────────────────────────────
+const B64_RE = /data:image\/[^;]+;base64,[A-Za-z0-9+/]+=*/g;
+function collapseBase64(md: string): { display: string; map: Map<string, string> } {
+  const map = new Map<string, string>();
+  let i = 0;
+  const display = md.replace(B64_RE, (match) => {
+    const key = `[image-${++i}]`;
+    map.set(key, match);
+    return key;
+  });
+  return { display, map };
+}
+function restoreBase64(display: string, map: Map<string, string>): string {
+  let result = display;
+  map.forEach((b64, key) => { result = result.replaceAll(key, b64); });
+  return result;
+}
+
 // ── Toolbar helpers ───────────────────────────────────────────────────────────
 function wrapSelection(ta: HTMLTextAreaElement, set: (v: string) => void, b: string, a: string) {
   const { selectionStart: s, selectionEnd: e, value: v } = ta;
@@ -104,6 +122,7 @@ function CampaignPageInner() {
 
   // Edit
   const [editedMd, setEditedMd] = useState('');
+  const b64MapRef = useRef(new Map<string, string>());
   const [liveHtml, setLiveHtml] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [rendering, setRendering] = useState(false);
@@ -559,7 +578,13 @@ function CampaignPageInner() {
                         )}
                       </div>
                     </div>
-                    <textarea ref={taRef} value={editedMd} onChange={e => setEditedMd(e.target.value)}
+                    <textarea ref={taRef}
+                      value={collapseBase64(editedMd).display}
+                      onChange={e => {
+                        const { map } = collapseBase64(editedMd);
+                        b64MapRef.current = map;
+                        setEditedMd(restoreBase64(e.target.value, map));
+                      }}
                       rows={18}
                       className="w-full text-xs text-gray-700 border border-gray-200 rounded-lg px-3 py-2 outline-none focus:border-blue-400 resize-none font-mono"
                       spellCheck={false} />
