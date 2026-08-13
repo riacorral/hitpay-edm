@@ -18,6 +18,7 @@ CLI tool to create HitPay-branded email campaigns (EDMs) from markdown and push 
 - Email max-width: 600px
 - All templates use React Email components
 - ESM modules throughout (`"type": "module"` in package.json)
+- Closing line before the sign-off should read "Questions? Reply to this email and we will help you out." — not a support.hitpay.com link.
 
 ## Commands
 
@@ -44,6 +45,31 @@ npm test
 ## Content Format
 
 Markdown files with YAML frontmatter specifying template type and metadata. Body uses standard markdown (headings, bullets, blockquotes, links with `{.cta}` class for buttons).
+
+Every email body must open with `Hi {firstName},` as the first line (Loops contact-property tag — no inline fallback syntax; fallback text is set via Loops' dynamic-content menu after upload, not written in the markdown).
+
+## CTA URLs & UTM Tracking
+
+Every CTA that links to a webpage (`ctaUrl` in frontmatter, `[text](url){.cta}` links, and secondary text links) must carry UTM parameters:
+
+```
+?utm_source=email&utm_medium=email&utm_campaign=<campaign-slug>&utm_content=<position>-<cta-slug>
+```
+
+- `utm_campaign` — kebab-case slug identifying the campaign/feature (e.g. `platforms-oauth`).
+- `utm_content` — the CTA's 1-indexed position in the email, followed by a kebab-case slug of its label (e.g. `1-try-creating-oauth-app`, `2-read-the-docs`). Renumber if CTAs are reordered.
+- Skip UTM params on non-`http(s)` links (`mailto:`, `tel:`) — they aren't read by web analytics, so the params are dead weight.
+
+## Subject Lines & Preview Text
+
+Optimize for open rate while staying accurate to the content:
+
+- Front-load the first 3-5 words with the strongest hook — the biggest benefit, a pain point solved, or genuine curiosity. Never spend the opening words on the brand name or filler ("Introducing", "Announcing", "Newsletter").
+- Keep subjects under ~60 characters (mobile inboxes typically show only the first 30-45).
+- Prefer benefit/outcome-driven language over feature names (e.g. "Skip API Keys" over "OAuth Apps").
+- Clarity over cleverness — never clickbait or imply something the email doesn't deliver.
+- Preview text should complement the subject, not repeat it — add context or a supporting benefit, ~40-90 characters, no generic filler ("View in browser") and no trailing punctuation.
+- When drafting a new campaign's subject/preview (and the user hasn't already supplied one), propose ~5 options covering different angles (pain point, benefit, feature announcement, speed/convenience, security/trust, curiosity), ranked strongest-to-weakest, and let the user pick before locking one in.
 
 ## Templates
 

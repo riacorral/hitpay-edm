@@ -33,7 +33,9 @@ function inlineMd(text: string): string {
   return esc(text)
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, linkText, url) =>
       `<a href="${url}" style="color:${B.actionBlue};text-decoration:underline;">${linkText}</a>`)
-    .replace(/\*\*(.+?)\*\*/g, `<b style="color:${B.textPrimary};">$1</b>`);
+    .replace(/\*\*(.+?)\*\*/g, `<b style="color:${B.textPrimary};">$1</b>`)
+    .replace(/`([^`]+)`/g, (_, code) =>
+      `<code style="font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;background:${B.neutral100};color:${B.textPrimary};padding:2px 5px;border-radius:4px;font-size:0.9em;">${code}</code>`);
 }
 
 function numberedItemsTable(items: string[]): string {
@@ -87,7 +89,7 @@ function sectionToMjml(section: EdmSection): string {
       return `
   <mj-section padding="${section.level <= 2 ? '0 32px 16px' : '16px 32px 24px'}">
     <mj-column>
-      <mj-text font-size="${section.level <= 2 ? '24px' : '16px'}" font-weight="700" color="${B.deepBlue}" line-height="1.3" padding="0">${esc(section.text)}</mj-text>
+      <mj-text align="left" font-size="${section.level <= 2 ? '24px' : '16px'}" font-weight="700" color="${B.deepBlue}" line-height="1.3" padding="0">${esc(section.text)}</mj-text>
     </mj-column>
   </mj-section>`;
 
@@ -97,7 +99,7 @@ function sectionToMjml(section: EdmSection): string {
       return `
   <mj-section padding="0 32px 16px">
     <mj-column>
-      <mj-text font-size="14px" color="${B.textSecondary}" line-height="1.6" padding="0"${isCentered ? ' align="center"' : ''}>${inlineMd(paraText)}</mj-text>
+      <mj-text align="${isCentered ? 'center' : 'left'}" font-size="14px" color="${B.textSecondary}" line-height="1.6" padding="0">${inlineMd(paraText)}</mj-text>
     </mj-column>
   </mj-section>`;
     }
@@ -130,8 +132,8 @@ function sectionToMjml(section: EdmSection): string {
       return `
   <mj-section padding="0 32px 16px">
     <mj-column border-left="4px solid ${B.actionBlue}" background-color="${B.paleBlue}" border-radius="0 8px 8px 0" padding="16px">
-      <mj-text font-size="14px" font-style="italic" color="${B.textSecondary}" line-height="1.6" padding="0">${esc(section.text.replace(/\*\*(.+?)\*\*/g, '$1').replace(/(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g, '$1'))}</mj-text>
-      ${section.attribution ? `<mj-text font-size="14px" color="${B.textSecondary}" padding="8px 0 0">— ${esc(section.attribution)}</mj-text>` : ''}
+      <mj-text align="left" font-size="14px" font-style="italic" color="${B.textSecondary}" line-height="1.6" padding="0">${esc(section.text.replace(/\*\*(.+?)\*\*/g, '$1').replace(/(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g, '$1'))}</mj-text>
+      ${section.attribution ? `<mj-text align="left" font-size="14px" color="${B.textSecondary}" padding="8px 0 0">— ${esc(section.attribution)}</mj-text>` : ''}
     </mj-column>
   </mj-section>`;
 
@@ -159,18 +161,34 @@ function sectionToMjml(section: EdmSection): string {
     </mj-column>
   </mj-section>`;
 
+    case 'code': {
+      const codeHtml = section.lines
+        .map(line => {
+          const match = line.match(/^( *)(.*)$/);
+          const indent = '&nbsp;'.repeat(match?.[1].length ?? 0);
+          return (indent + esc(match?.[2] ?? line)) || '&nbsp;';
+        })
+        .join('<br/>');
+      return `
+  <mj-section padding="0 32px 16px">
+    <mj-column background-color="${B.neutral100}" border-radius="8px" padding="14px 16px">
+      <mj-text align="left" font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="13px" color="${B.textPrimary}" line-height="1.7" padding="0">${codeHtml}</mj-text>
+    </mj-column>
+  </mj-section>`;
+    }
+
     case 'metric':
       return `
   <mj-section padding="0 32px 16px">
+    ${section.items
+      .map(
+        item => `
     <mj-column>
-      ${section.items
-        .map(
-          item => `
       <mj-text align="center" font-size="36px" font-weight="700" color="${B.actionBlue}" line-height="1.2" padding="0 0 4px">${esc(item.value)}</mj-text>
-      <mj-text align="center" font-size="14px" color="${B.textSecondary}" padding="0 0 16px">${esc(item.label)}</mj-text>`,
-        )
-        .join('')}
-    </mj-column>
+      <mj-text align="center" font-size="14px" color="${B.textSecondary}" padding="0 0 16px">${esc(item.label)}</mj-text>
+    </mj-column>`,
+      )
+      .join('')}
   </mj-section>`;
 
     case 'image_text': {
@@ -184,10 +202,10 @@ function sectionToMjml(section: EdmSection): string {
           ? `<mj-raw>${bulletItemsTable(section.items)}</mj-raw>`
           : section.orderedItems && section.orderedItems.length > 0
             ? `<mj-raw>${numberedItemsTable(section.orderedItems)}</mj-raw>`
-            : `<mj-text font-size="14px" color="${B.textSecondary}" line-height="1.6" padding="0">${inlineMd(section.text || '')}</mj-text>`;
+            : `<mj-text align="left" font-size="14px" color="${B.textSecondary}" line-height="1.6" padding="0">${inlineMd(section.text || '')}</mj-text>`;
 
       const headingContent = section.heading
-        ? `<mj-text font-size="16px" font-weight="700" color="${B.textPrimary}" line-height="1.3" padding="0 0 12px">${esc(section.heading)}</mj-text>\n      `
+        ? `<mj-text align="left" font-size="16px" font-weight="700" color="${B.textPrimary}" line-height="1.3" padding="0 0 12px">${esc(section.heading)}</mj-text>\n      `
         : '';
 
       const textCol = `
@@ -241,21 +259,21 @@ function sectionToMjml(section: EdmSection): string {
 
     case 'feature_card': {
       const paragraphsHtml = section.paragraphs
-        .map(p => `\n      <mj-text font-size="14px" color="${B.textSecondary}" line-height="1.6" padding="0 0 10px">${inlineMd(p)}</mj-text>`)
+        .map(p => `\n      <mj-text align="left" font-size="14px" color="${B.textSecondary}" line-height="1.6" padding="0 0 10px">${inlineMd(p)}</mj-text>`)
         .join('');
 
       const youGetHtml = section.youGet.length > 0
-        ? `\n      <mj-text font-size="16px" font-weight="600" color="${B.textPrimary}" line-height="1.5" padding="10px 0 6px">You get:</mj-text>\n      ${section.youGet.map(item => `<mj-text font-size="14px" color="${B.textSecondary}" line-height="1.5" padding="0 0 4px">• ${esc(item)}</mj-text>`).join('\n      ')}`
+        ? `\n      <mj-text align="left" font-size="16px" font-weight="600" color="${B.textPrimary}" line-height="1.5" padding="10px 0 6px">You get:</mj-text>\n      ${section.youGet.map(item => `<mj-text align="left" font-size="14px" color="${B.textSecondary}" line-height="1.5" padding="0 0 4px">• ${esc(item)}</mj-text>`).join('\n      ')}`
         : '';
 
       const closingHtml = section.closingText
-        ? `\n      <mj-text font-size="14px" color="${B.textSecondary}" line-height="1.6" padding="10px 0 16px">${inlineMd(section.closingText)}</mj-text>`
+        ? `\n      <mj-text align="left" font-size="14px" color="${B.textSecondary}" line-height="1.6" padding="10px 0 16px">${inlineMd(section.closingText)}</mj-text>`
         : '\n      <mj-text padding="8px 0 0"> </mj-text>';
 
       const textCol = `
     <mj-column width="62%" vertical-align="top" padding="0 20px 0 0">
-      <mj-text font-size="16px" font-weight="700" color="${B.textPrimary}" line-height="1.3" padding="0 0 12px">${esc(section.heading)}</mj-text>${paragraphsHtml}${youGetHtml}${closingHtml}
-      <mj-text font-size="16px" font-weight="600" color="${B.actionBlue}" padding="0"><a href="${esc(section.ctaUrl)}" style="color:${B.actionBlue};text-decoration:underline;">${esc(section.ctaText)}</a></mj-text>
+      <mj-text align="left" font-size="16px" font-weight="700" color="${B.textPrimary}" line-height="1.3" padding="0 0 12px">${esc(section.heading)}</mj-text>${paragraphsHtml}${youGetHtml}${closingHtml}
+      <mj-text align="left" font-size="16px" font-weight="600" color="${B.actionBlue}" padding="0"><a href="${esc(section.ctaUrl)}" style="color:${B.actionBlue};text-decoration:underline;">${esc(section.ctaText)}</a></mj-text>
     </mj-column>`;
 
       const imageCol = `
@@ -289,9 +307,14 @@ export function generateMjml(edm: ParsedEdm): string {
     heroSection = `
   <mj-section background-color="${B.deepBlue}" padding="48px 32px 0">
     <mj-column>
-      <mj-text align="center" font-size="11px" font-weight="600" color="${B.neutral200}" letter-spacing="1.5px" text-transform="uppercase" padding="0 0 8px">Product Announcement</mj-text>
-      <mj-text align="center" font-size="28px" font-weight="700" color="${B.white}" line-height="1.2" padding="0 0 16px">${esc(fm.productName)}</mj-text>
-      ${fm.heroImage ? `<mj-image src="${esc(fm.heroImage)}" alt="${esc(fm.productName)}" border-radius="8px 8px 0 0" padding="0" />` : ''}
+      <mj-raw><table align="center" cellpadding="0" cellspacing="0" border="0" style="margin:0 auto 20px;"><tr>
+        <td style="background-color:rgba(255,255,255,0.10);border-radius:20px;padding:6px 18px;font-family:${B.font};font-size:11px;font-weight:600;color:${B.white};letter-spacing:0.8px;text-transform:uppercase;text-align:center;white-space:normal;">
+          <span style="white-space:nowrap;">${esc(fm.eyebrowText ?? 'New Product Announcement')}</span>${fm.secondaryEyebrowText ? `<span class="eyebrow-sep" style="color:rgba(255,255,255,0.45);padding:0 8px;white-space:nowrap;">&bull;</span><br class="eyebrow-break" style="display:none;mso-hide:all;line-height:4px;" /><span style="color:${B.neutral200};font-weight:500;white-space:nowrap;">${esc(fm.secondaryEyebrowText)}</span>` : ''}
+        </td>
+      </tr></table></mj-raw>
+      <mj-text align="center" font-size="28px" font-weight="700" color="${B.white}" line-height="1.2" padding="0 0 16px">${esc(fm.productName).replace(/\n/g, '<br/>')}</mj-text>
+      ${fm.subtitle ? `<mj-text align="center" font-size="15px" color="${B.neutral200}" line-height="1.5" padding="0 8px 24px">${esc(fm.subtitle)}</mj-text>` : ''}
+      ${fm.heroImage ? `<mj-image src="${esc(fm.heroImage)}" alt="${esc(fm.productName)}" border="2px solid ${B.white}" border-radius="12px 12px 0 0" padding="0" />` : ''}
     </mj-column>
   </mj-section>`;
   }
@@ -501,6 +524,9 @@ export function generateMjml(edm: ParsedEdm): string {
         table.col-wrap tr { display: block !important; }
         td.col-card { display: block !important; width: 100% !important; max-width: 100% !important; box-sizing: border-box !important; margin-bottom: 8px !important; }
         td.col-spacer { display: none !important; width: 0 !important; }
+        /* Wrap secondary eyebrow pill text onto its own line */
+        .eyebrow-sep { display: none !important; }
+        .eyebrow-break { display: block !important; }
       }
     </mj-style>
   </mj-head>
@@ -509,6 +535,12 @@ export function generateMjml(edm: ParsedEdm): string {
     ${fm.template !== 'event-invitation' ? `${versionBadgeMjml || `<mj-section padding="32px 0 0" background-color="${B.white}"><mj-column /></mj-section>`}\n    ${bodyMjml}\n    ${testimonialBottomMjml}${secondaryCtaMjml}` : ''}
     ${ctaSection}
   ${cobrandFooterSection}
+  <!-- Footer: help banner -->
+  <mj-section background-color="${B.beige}" padding="24px 32px 0">
+    <mj-column>
+      <mj-image src="img/help_banner.png" alt="Need help? Visit our Help Centre" href="https://help.hit-pay.com/" width="536px" padding="0" />
+    </mj-column>
+  </mj-section>
   <!-- Footer -->
   <mj-section background-color="${B.beige}" padding="24px 32px 16px">
     <mj-column>

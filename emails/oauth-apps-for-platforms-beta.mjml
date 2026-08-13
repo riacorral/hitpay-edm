@@ -1,0 +1,177 @@
+<mjml>
+  <mj-head>
+    <mj-font name="Manrope" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap" />
+    <mj-preview>Easier for merchants. Safer for platforms.</mj-preview>
+    <mj-attributes>
+      <mj-all font-family="Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif" />
+      <mj-section padding="0" background-color="#FFFFFF" />
+      <mj-column padding="0" />
+      <mj-text font-family="Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif" padding="0" />
+      <mj-image padding="0" />
+    </mj-attributes>
+    <mj-style>
+      a { color: inherit; text-decoration: none; }
+      p { margin: 0 !important; }
+      @media only screen and (max-width:480px) {
+        /* Add gap below image when image+text block stacks on mobile */
+        .img-col { padding-bottom: 20px !important; }
+        /* Stack stat/column cards vertically on mobile */
+        table.col-wrap tr { display: block !important; }
+        td.col-card { display: block !important; width: 100% !important; max-width: 100% !important; box-sizing: border-box !important; margin-bottom: 8px !important; }
+        td.col-spacer { display: none !important; width: 0 !important; }
+      }
+    </mj-style>
+  </mj-head>
+  <mj-body background-color="#F0F2F5" width="600px">
+    
+  <mj-section background-color="#002771" padding="48px 32px 0">
+    <mj-column>
+      <mj-text align="center" font-size="11px" font-weight="600" color="#D4D9E0" letter-spacing="1.5px" text-transform="uppercase" padding="0 0 8px">For Platforms &amp; Developers · Beta</mj-text>
+      <mj-text align="center" font-size="28px" font-weight="700" color="#FFFFFF" line-height="1.2" padding="0 0 16px">OAuth Apps for Platforms is here.</mj-text>
+      <mj-text align="center" font-size="15px" color="#D4D9E0" line-height="1.5" padding="0 8px 24px">Let merchants connect their HitPay account in one click - no API keys required.</mj-text>
+      <mj-image src="img/oauth-hero.png" alt="OAuth Apps for Platforms is here." border-radius="8px 8px 0 0" padding="0" />
+    </mj-column>
+  </mj-section>
+    <mj-section padding="32px 0 0" background-color="#FFFFFF"><mj-column /></mj-section>
+    
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0">Connecting a merchant today means digging up their API key and pasting it into your product - clunky, and risky if that secret leaks.</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0"><b style="color:#03102F;">OAuth Apps for Platforms</b> swaps that for a &quot;Connect your HitPay account&quot; button. One approval gets you a scoped token - no raw keys - revocable anytime from their dashboard.</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 24px">
+    <mj-column>
+      <mj-divider border-color="#D4D9E0" border-width="1px" padding="8px 0 0" />
+    </mj-column>
+  </mj-section>
+  <mj-section padding="16px 32px 24px">
+    <mj-column>
+      <mj-text font-size="16px" font-weight="700" color="#002771" line-height="1.3" padding="0">Set it up now</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-raw>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:12px;">
+  <tr>
+    <td width="24" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:700;color:#2465DE;line-height:1.6;padding:0;white-space:nowrap;">1.</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;padding:0 0 0 8px;">Go to <b style="color:#03102F;">Payments &gt; Others &gt; Developers</b></td>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:12px;">
+  <tr>
+    <td width="24" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:700;color:#2465DE;line-height:1.6;padding:0;white-space:nowrap;">2.</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;padding:0 0 0 8px;">Click the <b style="color:#03102F;">App Builder</b> tab</td>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:12px;">
+  <tr>
+    <td width="24" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:700;color:#2465DE;line-height:1.6;padding:0;white-space:nowrap;">3.</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;padding:0 0 0 8px;">Click <b style="color:#03102F;">+ New App</b></td>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:0;">
+  <tr>
+    <td width="24" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:700;color:#2465DE;line-height:1.6;padding:0;white-space:nowrap;">4.</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;padding:0 0 0 8px;">Name your app, then copy your <b style="color:#03102F;">Client ID</b> and <b style="color:#03102F;">Client Secret</b></td>
+  </tr>
+</table></mj-raw>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="16px 32px 16px">
+    <mj-column>
+      <mj-image src="img/oauth-app-builder-dashboard.png" alt="Find it under Developers → App Builder in your HitPay dashboard" border-radius="8px" padding="0" />
+    </mj-column>
+  </mj-section>
+  <mj-section padding="16px 32px 24px">
+    <mj-column>
+      <mj-button href="https://dashboard.hit-pay.com?utm_source=email&amp;utm_medium=email&amp;utm_campaign=platforms-oauth&amp;utm_content=1-try-creating-oauth-app" background-color="#2465DE" color="#FFFFFF" border-radius="6px" font-size="16px" font-weight="600" inner-padding="12px 24px" align="center">Try Creating an OAuth App Now</mj-button>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 24px">
+    <mj-column>
+      <mj-divider border-color="#D4D9E0" border-width="1px" padding="8px 0 0" />
+    </mj-column>
+  </mj-section>
+  <mj-section padding="16px 32px 24px">
+    <mj-column>
+      <mj-text font-size="16px" font-weight="700" color="#002771" line-height="1.3" padding="0">How it works</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-raw>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:12px;">
+  <tr>
+    <td width="24" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:700;color:#2465DE;line-height:1.6;padding:0;white-space:nowrap;">1.</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;padding:0 0 0 8px;">Merchant clicks &quot;Connect your HitPay account&quot;</td>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:12px;">
+  <tr>
+    <td width="24" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:700;color:#2465DE;line-height:1.6;padding:0;white-space:nowrap;">2.</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;padding:0 0 0 8px;">Merchant sees a consent screen and approves</td>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:12px;">
+  <tr>
+    <td width="24" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:700;color:#2465DE;line-height:1.6;padding:0;white-space:nowrap;">3.</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;padding:0 0 0 8px;">Your platform receives scoped OAuth tokens</td>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:0;">
+  <tr>
+    <td width="24" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:700;color:#2465DE;line-height:1.6;padding:0;white-space:nowrap;">4.</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;padding:0 0 0 8px;">Merchant can revoke access anytime from their dashboard</td>
+  </tr>
+</table></mj-raw>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 24px">
+    <mj-column>
+      <mj-divider border-color="#D4D9E0" border-width="1px" padding="8px 0 0" />
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0">This is a <b style="color:#03102F;">Beta</b>. Today, OAuth tokens cover Payment Requests, Charges, and Refunds - we're adding more API scopes soon. Early platforms get a head start and a direct line to shape what we build next.</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="16px 32px 24px">
+    <mj-column>
+      <mj-button href="https://docs.hitpayapp.com/platforms/oauth?utm_source=email&amp;utm_medium=email&amp;utm_campaign=platforms-oauth&amp;utm_content=2-read-the-docs" background-color="#2465DE" color="#FFFFFF" border-radius="6px" font-size="16px" font-weight="600" inner-padding="12px 24px" align="center">Read the docs</mj-button>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0">Don't have Platform API access yet? <a href="mailto:sales@hit-pay.com" style="color:#2465DE;text-decoration:underline;">Talk to us</a></mj-text>
+    </mj-column>
+  </mj-section>
+    
+    
+  
+  <!-- Footer -->
+  <mj-section background-color="#F9F9F6" padding="24px 32px 16px">
+    <mj-column>
+      <mj-text align="center" padding="0">
+        <a href="https://www.hitpayapp.com" style="display:inline-block;vertical-align:middle;margin-right:14px;"><img src="img/logo-dark.png" width="70" alt="HitPay" style="display:inline-block;vertical-align:middle;" /></a><a href="https://www.instagram.com/hitpayapp" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="img/social-instagram.png" width="24" height="24" alt="Instagram" style="display:inline-block;border-radius:50%;vertical-align:middle;" /></a><a href="https://www.facebook.com/hitpayapp" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="img/social-facebook.png" width="24" height="24" alt="Facebook" style="display:inline-block;border-radius:50%;vertical-align:middle;" /></a><a href="https://www.linkedin.com/company/hit-pay/" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="img/social-linkedin.png" width="24" height="24" alt="LinkedIn" style="display:inline-block;border-radius:50%;vertical-align:middle;" /></a><a href="https://www.tiktok.com/@hitpayapp" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="img/social-tiktok.png" width="24" height="24" alt="TikTok" style="display:inline-block;border-radius:50%;vertical-align:middle;" /></a><a href="https://www.youtube.com/@hitpayapp" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="img/social-youtube.png" width="24" height="24" alt="YouTube" style="display:inline-block;border-radius:50%;vertical-align:middle;" /></a>
+      </mj-text>
+    </mj-column>
+  </mj-section>
+  <!-- Footer banner (conditional — add market URL to FOOTER_BANNERS to enable) -->
+  
+  <!-- Footer text -->
+  <mj-section background-color="#F9F9F6" padding="12px 32px 24px">
+    <mj-column>
+      <mj-divider border-color="#D4D9E0" border-width="1px" padding="0 0 12px" />
+      <mj-text align="center" font-size="11px" color="#9295A5" line-height="16px" padding="0 0 4px">HitPay Payment Solutions Pte Ltd</mj-text>
+      <mj-text align="center" font-size="9px" color="#D4D9E0" line-height="14px" padding="0"><a href="{unsubscribe_link}" style="color:#D4D9E0;text-decoration:none;font-size:9px;">Unsubscribe</a></mj-text>
+    </mj-column>
+  </mj-section>
+  </mj-body>
+</mjml>

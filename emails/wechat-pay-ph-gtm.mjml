@@ -1,0 +1,290 @@
+<mjml>
+  <mj-head>
+    <mj-font name="Manrope" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap" />
+    <mj-preview>Tap into 1 billion global Chinese travelers and let them pay their way</mj-preview>
+    <mj-attributes>
+      <mj-all font-family="Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif" />
+      <mj-section padding="0" background-color="#FFFFFF" />
+      <mj-column padding="0" />
+      <mj-text font-family="Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif" padding="0" />
+      <mj-image padding="0" />
+    </mj-attributes>
+    <mj-style>
+      a { color: inherit; text-decoration: none; }
+      p { margin: 0 !important; }
+      @media only screen and (max-width:480px) {
+        .img-col { padding-bottom: 20px !important; }
+        table.col-wrap tr { display: block !important; }
+        td.col-card { display: block !important; width: 100% !important; max-width: 100% !important; box-sizing: border-box !important; margin-bottom: 8px !important; }
+        td.col-spacer { display: none !important; width: 0 !important; }
+      }
+    </mj-style>
+  </mj-head>
+  <mj-body background-color="#F0F2F5" width="600px">
+
+    <!-- Hero -->
+    <mj-section background-color="#002771" padding="48px 32px 0">
+      <mj-column>
+        <mj-text align="center" font-size="11px" font-weight="600" color="#D4D9E0" letter-spacing="1.5px" text-transform="uppercase" padding="0 0 8px">Product Announcement</mj-text>
+        <mj-text align="center" font-size="28px" font-weight="700" color="#FFFFFF" line-height="1.2" padding="0 0 16px">WeChat Pay is now live on HitPay Philippines</mj-text>
+        <mj-image src="img/wechat-hero.png" alt="WeChat Pay is now live on HitPay Philippines" border-radius="8px 8px 0 0" padding="0" />
+      </mj-column>
+    </mj-section>
+
+    <!-- Body top spacer -->
+    <mj-section padding="32px 0 0" background-color="#FFFFFF"><mj-column /></mj-section>
+
+    <!-- Intro paragraph -->
+    <mj-section padding="0 32px 8px">
+      <mj-column>
+        <mj-text font-size="16px" font-weight="700" color="#03102F" line-height="1.4" padding="0 0 12px">Tap into 1 billion global users and eliminate checkout friction by letting Chinese travelers pay their way - settled directly in PHP. 🇵🇭</mj-text>
+        <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0">Accept WeChat Pay across your online store, POS and QR payments - and receive settlements directly in PHP, at a competitive transaction fee of 1.5%.</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Divider -->
+    <mj-section padding="0 32px 24px">
+      <mj-column>
+        <mj-divider border-color="#D4D9E0" border-width="1px" padding="8px 0 0" />
+      </mj-column>
+    </mj-section>
+
+    <!-- Heading -->
+    <mj-section padding="0 32px 16px">
+      <mj-column>
+        <mj-text font-size="24px" font-weight="700" color="#002771" line-height="1.3" padding="0">Give Chinese customers the payment method they already use.</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Why paragraph 1 -->
+    <mj-section padding="0 32px 16px">
+      <mj-column>
+        <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0">Chinese visitors expect to pay with familiar digital wallets instead of cash or international cards. By adding WeChat Pay, you can reduce checkout friction, improve payment success rates, and capture more sales from Chinese customers - whether they shop online, visit your store, or pay via QR.</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Why paragraph 2 -->
+    <mj-section padding="0 32px 16px">
+      <mj-column>
+        <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0">With HitPay, there's no separate integration. Simply enable WeChat Pay and start accepting payments across your existing sales channels while receiving settlements in PHP.</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- CTA Button -->
+    <mj-section padding="0 32px 32px">
+      <mj-column>
+        <mj-button background-color="#2465DE" color="#FFFFFF" border-radius="6px" font-size="16px" font-weight="600" inner-padding="12px 24px" align="center" href="https://docs.hitpayapp.com/payment-methods/wechatpay?utm_source=email&amp;utm_medium=email&amp;utm_campaign=we-chat-pay-ph&amp;utm_content=1-start-accepting-wechat-pay-today#setup">Start Accepting WeChat Pay Today</mj-button>
+      </mj-column>
+    </mj-section>
+
+    <!-- Divider -->
+    <mj-section padding="0 32px 24px">
+      <mj-column>
+        <mj-divider border-color="#D4D9E0" border-width="1px" padding="8px 0 0" />
+      </mj-column>
+    </mj-section>
+
+    <!-- Heading -->
+    <mj-section padding="0 32px 16px">
+      <mj-column>
+        <mj-text font-size="24px" font-weight="700" color="#002771" line-height="1.3" padding="0">One Integration. Accept Across Online and In-Person Channels.</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Feature card: Online Checkout -->
+    <mj-section padding="16px 32px 40px">
+      <mj-column width="62%" vertical-align="top" padding="0 20px 0 0">
+        <mj-text font-size="16px" font-weight="700" color="#03102F" line-height="1.3" padding="0 0 12px">Online Checkout</mj-text>
+        <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0 0 10px">Let customers complete checkout using WeChat Pay directly on your HitPay-powered store or payment link. No redirects. No friction.</mj-text>
+        <mj-text padding="8px 0 0"> </mj-text>
+      </mj-column>
+      <mj-column width="38%" vertical-align="middle" padding="0">
+        <mj-raw><div style="background-color:#F5F7FC;border-radius:12px;padding:12px;overflow:hidden;"><img src="img/wechat-online.png" alt="WeChat Pay online checkout" style="width:100%;border-radius:8px;display:block;height:auto;" /></div></mj-raw>
+      </mj-column>
+    </mj-section>
+
+    <!-- Divider -->
+    <mj-section padding="0 32px 24px">
+      <mj-column>
+        <mj-divider border-color="#D4D9E0" border-width="1px" padding="8px 0 0" />
+      </mj-column>
+    </mj-section>
+
+    <!-- Feature card: POS -->
+    <mj-section padding="16px 32px 40px">
+      <mj-column width="62%" vertical-align="top" padding="0 20px 0 0">
+        <mj-text font-size="16px" font-weight="700" color="#03102F" line-height="1.3" padding="0 0 12px">Point of Sale (POS) via Borderless QR</mj-text>
+        <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0 0 10px">Accept WeChat Pay at the cashier through HitPay POS, or display a static Borderless QR at your counter, market stall, or pop-up. Customers scan and pay instantly - no extra hardware required.</mj-text>
+        <mj-text padding="8px 0 0"> </mj-text>
+      </mj-column>
+      <mj-column width="38%" vertical-align="middle" padding="0">
+        <mj-raw><div style="background-color:#F5F7FC;border-radius:12px;padding:12px;overflow:hidden;"><img src="img/wechat-pos.png" alt="WeChat Pay point of sale QR" style="width:100%;border-radius:8px;display:block;height:auto;" /></div></mj-raw>
+      </mj-column>
+    </mj-section>
+
+    <!-- Divider -->
+    <mj-section padding="0 32px 24px">
+      <mj-column>
+        <mj-divider border-color="#D4D9E0" border-width="1px" padding="8px 0 0" />
+      </mj-column>
+    </mj-section>
+
+    <!-- Heading: Who Is It For -->
+    <mj-section padding="0 32px 16px">
+      <mj-column>
+        <mj-text font-size="24px" font-weight="700" color="#002771" line-height="1.3" padding="0">Who Is It For?</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Bullet list: merchant segments -->
+    <mj-section padding="0 32px 16px">
+      <mj-column>
+        <mj-raw>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">
+  <tr>
+    <td width="24" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:700;color:#2465DE;line-height:1.6;padding:0;white-space:nowrap;">•</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;padding:0 0 0 8px;"><div style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:400;color:#61667C;line-height:1.6;margin:0;">Online Stores</div>
+    </td>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">
+  <tr>
+    <td width="24" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:700;color:#2465DE;line-height:1.6;padding:0;white-space:nowrap;">•</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;padding:0 0 0 8px;"><div style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:400;color:#61667C;line-height:1.6;margin:0;">Retail Stores</div>
+    </td>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">
+  <tr>
+    <td width="24" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:700;color:#2465DE;line-height:1.6;padding:0;white-space:nowrap;">•</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;padding:0 0 0 8px;"><div style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:400;color:#61667C;line-height:1.6;margin:0;">Restaurants &amp; Cafés</div>
+    </td>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">
+  <tr>
+    <td width="24" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:700;color:#2465DE;line-height:1.6;padding:0;white-space:nowrap;">•</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;padding:0 0 0 8px;"><div style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:400;color:#61667C;line-height:1.6;margin:0;">Beauty &amp; Wellness</div>
+    </td>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">
+  <tr>
+    <td width="24" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:700;color:#2465DE;line-height:1.6;padding:0;white-space:nowrap;">•</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;padding:0 0 0 8px;"><div style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:400;color:#61667C;line-height:1.6;margin:0;">Service Businesses</div>
+    </td>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">
+  <tr>
+    <td width="24" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:700;color:#2465DE;line-height:1.6;padding:0;white-space:nowrap;">•</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;padding:0 0 0 8px;"><div style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:400;color:#61667C;line-height:1.6;margin:0;">Pop-Up Stores &amp; Events</div>
+    </td>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:0;">
+  <tr>
+    <td width="24" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:700;color:#2465DE;line-height:1.6;padding:0;white-space:nowrap;">•</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;padding:0 0 0 8px;"><div style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:400;color:#61667C;line-height:1.6;margin:0;">Omnichannel Businesses</div>
+    </td>
+  </tr>
+</table>
+        </mj-raw>
+      </mj-column>
+    </mj-section>
+
+    <!-- Divider -->
+    <mj-section padding="0 32px 24px">
+      <mj-column>
+        <mj-divider border-color="#D4D9E0" border-width="1px" padding="8px 0 0" />
+      </mj-column>
+    </mj-section>
+
+    <!-- Heading: Getting Started -->
+    <mj-section padding="0 32px 16px">
+      <mj-column>
+        <mj-text font-size="24px" font-weight="700" color="#002771" line-height="1.3" padding="0">Getting Started Is Instant</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Numbered steps -->
+    <mj-section padding="0 32px 16px">
+      <mj-column>
+        <mj-raw>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:12px;">
+  <tr>
+    <td width="24" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:700;color:#2465DE;line-height:1.6;padding:0;white-space:nowrap;">1.</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;padding:0 0 0 8px;">Go to <b style="color:#03102F;">Payment Methods</b> in your HitPay Dashboard.</td>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:12px;">
+  <tr>
+    <td width="24" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:700;color:#2465DE;line-height:1.6;padding:0;white-space:nowrap;">2.</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;padding:0 0 0 8px;">Click <b style="color:#03102F;">&quot;Turn On&quot;</b> for WeChat Pay.</td>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:0;">
+  <tr>
+    <td width="24" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:700;color:#2465DE;line-height:1.6;padding:0;white-space:nowrap;">3.</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;padding:0 0 0 8px;">Start accepting payments immediately across Online Checkout, Payment Links, POS, and Borderless QR.</td>
+  </tr>
+</table>
+        </mj-raw>
+      </mj-column>
+    </mj-section>
+
+    <!-- CTA button -->
+    <mj-section padding="16px 32px 24px">
+      <mj-column>
+        <mj-button href="https://dashboard.hit-pay.com/?utm_source=email&amp;utm_medium=email&amp;utm_campaign=we-chat-pay-ph&amp;utm_content=2-enable-wechat-pay-now" background-color="#2465DE" color="#FFFFFF" border-radius="6px" font-size="16px" font-weight="600" inner-padding="12px 24px" align="center">Enable WeChat Pay Now</mj-button>
+      </mj-column>
+    </mj-section>
+
+    <!-- Divider -->
+    <mj-section padding="0 32px 24px">
+      <mj-column>
+        <mj-divider border-color="#D4D9E0" border-width="1px" padding="8px 0 0" />
+      </mj-column>
+    </mj-section>
+
+    <!-- Questions / help link -->
+    <mj-section padding="0 32px 16px">
+      <mj-column>
+        <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0">Questions? Reply to this email.</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Sign-off -->
+    <mj-section padding="0 32px 16px">
+      <mj-column>
+        <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0">Best regards,<br /><b style="color:#03102F;">Aditya</b></mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Footer: help banner -->
+    <mj-section background-color="#F9F9F6" padding="24px 32px 0">
+      <mj-column>
+        <mj-image src="img/help_banner.png" alt="Need help? Visit our Help Centre" href="https://help.hit-pay.com/" width="536px" padding="0" />
+      </mj-column>
+    </mj-section>
+
+    <!-- Footer: logo + social icons -->
+    <mj-section background-color="#F9F9F6" padding="16px 32px 16px">
+      <mj-column>
+        <mj-text align="center" padding="0">
+          <a href="https://www.hitpayapp.com" style="display:inline-block;vertical-align:middle;margin-right:14px;"><img src="img/logo.png" width="70" alt="HitPay" style="display:inline-block;vertical-align:middle;" /></a><a href="https://www.instagram.com/hitpayapp" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="img/social_instagram.png" width="24" height="24" alt="Instagram" style="display:inline-block;vertical-align:middle;" /></a><a href="https://www.facebook.com/hitpayapp" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="img/social_facebook.png" width="24" height="24" alt="Facebook" style="display:inline-block;vertical-align:middle;" /></a><a href="https://www.linkedin.com/company/hit-pay/" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="img/social_linkedin.png" width="24" height="24" alt="LinkedIn" style="display:inline-block;vertical-align:middle;" /></a><a href="https://www.youtube.com/@hitpayapp" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="img/social_youtube.png" width="24" height="24" alt="YouTube" style="display:inline-block;vertical-align:middle;" /></a>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Footer text -->
+    <mj-section background-color="#F9F9F6" padding="12px 32px 24px">
+      <mj-column>
+        <mj-divider border-color="#D4D9E0" border-width="1px" padding="0 0 12px" />
+        <mj-text align="center" font-size="11px" color="#9295A5" line-height="16px" padding="0 0 4px">HitPay Payment Solutions Pte Ltd</mj-text>
+        <mj-text align="center" font-size="9px" color="#D4D9E0" line-height="14px" padding="0"><a href="{unsubscribe_link}" style="color:#D4D9E0;text-decoration:none;font-size:9px;">Unsubscribe</a></mj-text>
+      </mj-column>
+    </mj-section>
+
+  </mj-body>
+</mjml>

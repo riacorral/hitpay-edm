@@ -1,0 +1,255 @@
+<mjml>
+  <mj-head>
+    <mj-font name="Manrope" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap" />
+    <mj-preview>Save on fees, increase conversion rates when customers pay in their local currency and familiar payment methods.</mj-preview>
+    <mj-attributes>
+      <mj-all font-family="Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif" />
+      <mj-section padding="0" background-color="#FFFFFF" />
+      <mj-column padding="0" />
+      <mj-text font-family="Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif" padding="0" />
+      <mj-image padding="0" />
+    </mj-attributes>
+    <mj-style>
+      a { color: inherit; text-decoration: none; }
+      p { margin: 0 !important; }
+      @media only screen and (max-width:480px) {
+        /* Add gap below image when image+text block stacks on mobile */
+        .img-col { padding-bottom: 20px !important; }
+        /* Stack stat/column cards vertically on mobile */
+        table.col-wrap tr { display: block !important; }
+        td.col-card { display: block !important; width: 100% !important; max-width: 100% !important; box-sizing: border-box !important; margin-bottom: 8px !important; }
+        td.col-spacer { display: none !important; width: 0 !important; }
+        /* Wrap secondary eyebrow pill text onto its own line */
+        .eyebrow-sep { display: none !important; }
+        .eyebrow-break { display: block !important; }
+      }
+    </mj-style>
+  </mj-head>
+  <mj-body background-color="#F0F2F5" width="600px">
+    
+  <mj-section background-color="#002771" padding="48px 32px 0">
+    <mj-column>
+      <mj-raw><table align="center" cellpadding="0" cellspacing="0" border="0" style="margin:0 auto 20px;"><tr>
+        <td style="background-color:rgba(255,255,255,0.10);border-radius:20px;padding:6px 18px;font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:11px;font-weight:600;color:#FFFFFF;letter-spacing:0.8px;text-transform:uppercase;text-align:center;white-space:normal;">
+          <span style="white-space:nowrap;">🎉 New Product Release - Cross-Border Payments</span>
+        </td>
+      </tr></table></mj-raw>
+      <mj-text align="center" font-size="28px" font-weight="700" color="#FFFFFF" line-height="1.2" padding="0 0 16px">Adaptive Pricing for Online Checkout</mj-text>
+      
+      <mj-image src="img/adaptive-pricing-checkout-page.png" alt="Adaptive Pricing for Online Checkout" border="2px solid #FFFFFF" border-radius="12px 12px 0 0" padding="0" />
+    </mj-column>
+  </mj-section>
+    <mj-section padding="32px 0 0" background-color="#FFFFFF"><mj-column /></mj-section>
+    
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text align="left" font-size="14px" color="#61667C" line-height="1.6" padding="0">Hi {firstName},</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text align="left" font-size="14px" color="#61667C" line-height="1.6" padding="0"><b style="color:#03102F;">Have overseas customers?</b> They can now pay in their own local currency and familiar payment methods - without you lifting a finger.</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text align="left" font-size="14px" color="#61667C" line-height="1.6" padding="0">No separate currency payment link to create, no need to set your product prices in a different currency. Simply keep to your current business as usual, and your customers can keep to theirs too.</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 24px">
+    <mj-column>
+      <mj-raw><table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#F5F7FC;border-radius:12px;">
+        <tr>
+          <td width="34%" valign="middle" style="padding:20px 4px 20px 20px;">
+            <div style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:30px;font-weight:800;color:#2465DE;line-height:1.1;white-space:nowrap;">&gt;+10%</div>
+          </td>
+          <td valign="middle" style="padding:16px 20px 16px 20px;border-left:1px solid #D4D9E0;">
+            <div style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:13px;color:#61667C;line-height:1.5;">Average lift in international revenue, plus net new sales in markets where customers pay by local methods.</div>
+          </td>
+        </tr>
+      </table></mj-raw>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 24px">
+    <mj-column>
+      <mj-divider border-color="#D4D9E0" border-width="1px" padding="8px 0 0" />
+    </mj-column>
+  </mj-section>
+  <mj-section padding="16px 32px 24px">
+    <mj-column>
+      <mj-text align="left" font-size="16px" font-weight="700" color="#002771" line-height="1.3" padding="0">Getting Started</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-raw>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:12px;">
+  <tr>
+    <td width="24" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:700;color:#2465DE;line-height:1.6;padding:0;white-space:nowrap;">1.</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;padding:0 0 0 8px;">Go to <b style="color:#03102F;">Settings &gt; Payment Methods</b> and connect the crossborder payment methods you want to support. (Partner review takes 3-5 business days.)</td>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:12px;">
+  <tr>
+    <td width="24" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:700;color:#2465DE;line-height:1.6;padding:0;white-space:nowrap;">2.</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;padding:0 0 0 8px;">Go to <b style="color:#03102F;">Settings &gt; Checkout Customisation &gt; Adaptive Pricing</b> and turn on <b style="color:#03102F;">Enable Adaptive Pricing</b>.</td>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:0;">
+  <tr>
+    <td width="24" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:700;color:#2465DE;line-height:1.6;padding:0;white-space:nowrap;">3.</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;padding:0 0 0 8px;">Save - all hosted checkout sessions will activate adaptive pricing for international customers automatically.</td>
+  </tr>
+</table></mj-raw>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="16px 32px 16px">
+    <mj-column>
+      <mj-image src="img/adaptive-pricing-settings.png" alt="Enable adaptive pricing under Settings &gt; Checkout Customisation &gt; Adaptive Pricing" border-radius="8px" padding="0" />
+    </mj-column>
+  </mj-section>
+  <mj-section padding="16px 32px 24px">
+    <mj-column>
+      <mj-button href="https://docs.hitpayapp.com/payments/adaptive-pricing?utm_source=email&amp;utm_medium=email&amp;utm_campaign=adaptive-pricing-checkout&amp;utm_content=2-read-the-documentation" background-color="#2465DE" color="#FFFFFF" border-radius="6px" font-size="16px" font-weight="600" inner-padding="12px 24px" align="center">Read the Documentation</mj-button>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 24px">
+    <mj-column>
+      <mj-divider border-color="#D4D9E0" border-width="1px" padding="8px 0 0" />
+    </mj-column>
+  </mj-section>
+  <mj-section padding="16px 32px 24px">
+    <mj-column>
+      <mj-text align="left" font-size="16px" font-weight="700" color="#002771" line-height="1.3" padding="0">Key Benefits</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-raw>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:8px;">
+  <tr>
+    <td width="20" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:700;color:#2465DE;line-height:1.6;padding:0;white-space:nowrap;">•</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;padding:0 0 0 8px;"><b style="color:#03102F;">Better checkout conversion</b> - customers pay less at a better fx rate, using a payment method and in a currency they recognize</td>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:8px;">
+  <tr>
+    <td width="20" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:700;color:#2465DE;line-height:1.6;padding:0;white-space:nowrap;">•</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;padding:0 0 0 8px;"><b style="color:#03102F;">Auto-detects location</b> - shows the amount in the customer's local currency automatically</td>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:8px;">
+  <tr>
+    <td width="20" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:700;color:#2465DE;line-height:1.6;padding:0;white-space:nowrap;">•</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;padding:0 0 0 8px;"><b style="color:#03102F;">Cross-border payment methods surfaces automatically</b> - relevant payment methods appear to your customers (e.g. DuitNow, PayNow, QRPh, QRIS, VietQR and many more). See available methods in your HitPay Dashboard &gt; Payment Methods</td>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:8px;">
+  <tr>
+    <td width="20" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:700;color:#2465DE;line-height:1.6;padding:0;white-space:nowrap;">•</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;padding:0 0 0 8px;"><b style="color:#03102F;">You save on transaction fees</b> - when your international customer selects a non-card payment method, it usually costs you less per transaction</td>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:0;">
+  <tr>
+    <td width="20" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:700;color:#2465DE;line-height:1.6;padding:0;white-space:nowrap;">•</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;padding:0 0 0 8px;"><b style="color:#03102F;">You get paid the same way</b> - payouts always land in your home currency</td>
+  </tr>
+</table></mj-raw>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="16px 32px 24px">
+    <mj-column>
+      <mj-button href="https://dashboard.hit-pay.com/?utm_source=email&amp;utm_medium=email&amp;utm_campaign=adaptive-pricing-checkout&amp;utm_content=3-turn-on-adaptive-pricing-today" background-color="#2465DE" color="#FFFFFF" border-radius="6px" font-size="16px" font-weight="600" inner-padding="12px 24px" align="center">Turn On Adaptive Pricing Today</mj-button>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 24px">
+    <mj-column>
+      <mj-divider border-color="#D4D9E0" border-width="1px" padding="8px 0 0" />
+    </mj-column>
+  </mj-section>
+  <mj-section padding="16px 32px 24px">
+    <mj-column>
+      <mj-text align="left" font-size="16px" font-weight="700" color="#002771" line-height="1.3" padding="0">Suitable For</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text align="left" font-size="14px" color="#61667C" line-height="1.6" padding="0">Businesses selling online to overseas customers who want <b style="color:#03102F;">higher conversion at checkout</b> - without managing separate payment links per currency.</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 24px">
+    <mj-column padding="0">
+      <mj-raw><table class="col-wrap" width="100%" cellpadding="0" cellspacing="0" border="0" role="presentation"><tbody><tr><td width="173" class="col-card" valign="top" bgcolor="#F5F7FC" align="center" style="background-color:#F5F7FC;border-radius:8px;padding:16px 12px;width:173px;text-align:center;">
+          <div style="text-align:center;font-size:20px;line-height:1.2;margin:0 0 6px 0;font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;">🛒</div><div style="text-align:center;font-size:15px;font-weight:700;color:#002771;line-height:1.2;margin:0 0 6px 0;font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;">Cross-Border E-Commerce</div><p style="text-align:center;font-size:11px;color:#61667C;line-height:1.5;margin:4px 0 0 0;font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;">Sell to overseas shoppers without creating a separate link per currency</p>
+        </td><td width="8" class="col-spacer" style="width:8px;font-size:0;line-height:0;"> </td><td width="173" class="col-card" valign="top" bgcolor="#F5F7FC" align="center" style="background-color:#F5F7FC;border-radius:8px;padding:16px 12px;width:173px;text-align:center;">
+          <div style="text-align:center;font-size:20px;line-height:1.2;margin:0 0 6px 0;font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;">🎓</div><div style="text-align:center;font-size:15px;font-weight:700;color:#002771;line-height:1.2;margin:0 0 6px 0;font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;">Online Course Sellers</div><p style="text-align:center;font-size:11px;color:#61667C;line-height:1.5;margin:4px 0 0 0;font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;">Let international students check out in a currency they recognize</p>
+        </td><td width="8" class="col-spacer" style="width:8px;font-size:0;line-height:0;"> </td><td width="173" class="col-card" valign="top" bgcolor="#F5F7FC" align="center" style="background-color:#F5F7FC;border-radius:8px;padding:16px 12px;width:173px;text-align:center;">
+          <div style="text-align:center;font-size:20px;line-height:1.2;margin:0 0 6px 0;font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;">🧾</div><div style="text-align:center;font-size:15px;font-weight:700;color:#002771;line-height:1.2;margin:0 0 6px 0;font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;">Regional Service Providers</div><p style="text-align:center;font-size:11px;color:#61667C;line-height:1.5;margin:4px 0 0 0;font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;">Bill clients across markets, get paid the same way every time</p>
+        </td></tr></tbody></table></mj-raw>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="16px 32px 24px">
+    <mj-column>
+      <mj-button href="https://dashboard.hit-pay.com/?utm_source=email&amp;utm_medium=email&amp;utm_campaign=adaptive-pricing-checkout&amp;utm_content=4-enable-adaptive-pricing-now" background-color="#2465DE" color="#FFFFFF" border-radius="6px" font-size="16px" font-weight="600" inner-padding="12px 24px" align="center">Enable Adaptive Pricing Now</mj-button>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 24px">
+    <mj-column>
+      <mj-divider border-color="#D4D9E0" border-width="1px" padding="8px 0 0" />
+    </mj-column>
+  </mj-section>
+  <mj-section padding="16px 32px 24px">
+    <mj-column>
+      <mj-text align="left" font-size="16px" font-weight="700" color="#002771" line-height="1.3" padding="0">Availability</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text align="left" font-size="14px" color="#61667C" line-height="1.6" padding="0">Hosted checkout and payment links (one-time payments). Also works with API-created payment requests.</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 24px">
+    <mj-column>
+      <mj-divider border-color="#D4D9E0" border-width="1px" padding="8px 0 0" />
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text align="left" font-size="14px" color="#61667C" line-height="1.6" padding="0">Questions? Reply to this email and we will help you out.</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text align="left" font-size="14px" color="#61667C" line-height="1.6" padding="0"><b style="color:#03102F;">The HitPay Team</b></mj-text>
+    </mj-column>
+  </mj-section>
+    
+    
+  
+  <!-- Footer: help banner -->
+  <mj-section background-color="#F9F9F6" padding="24px 32px 0">
+    <mj-column>
+      <mj-image src="img/help_banner.png" alt="Need help? Visit our Help Centre" href="https://help.hit-pay.com/" width="536px" padding="0" />
+    </mj-column>
+  </mj-section>
+  <!-- Footer -->
+  <mj-section background-color="#F9F9F6" padding="24px 32px 16px">
+    <mj-column>
+      <mj-text align="center" padding="0">
+        <a href="https://www.hitpayapp.com" style="display:inline-block;vertical-align:middle;margin-right:14px;"><img src="img/logo-dark.png" width="70" alt="HitPay" style="display:inline-block;vertical-align:middle;" /></a><a href="https://www.instagram.com/hitpayapp" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="img/social-instagram.png" width="24" height="24" alt="Instagram" style="display:inline-block;border-radius:50%;vertical-align:middle;" /></a><a href="https://www.facebook.com/hitpayapp" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="img/social-facebook.png" width="24" height="24" alt="Facebook" style="display:inline-block;border-radius:50%;vertical-align:middle;" /></a><a href="https://www.linkedin.com/company/hit-pay/" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="img/social-linkedin.png" width="24" height="24" alt="LinkedIn" style="display:inline-block;border-radius:50%;vertical-align:middle;" /></a><a href="https://www.tiktok.com/@hitpayapp" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="img/social-tiktok.png" width="24" height="24" alt="TikTok" style="display:inline-block;border-radius:50%;vertical-align:middle;" /></a><a href="https://www.youtube.com/@hitpayapp" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="img/social-youtube.png" width="24" height="24" alt="YouTube" style="display:inline-block;border-radius:50%;vertical-align:middle;" /></a>
+      </mj-text>
+    </mj-column>
+  </mj-section>
+  <!-- Footer banner (conditional — add market URL to FOOTER_BANNERS to enable) -->
+  
+  <!-- Footer text -->
+  <mj-section background-color="#F9F9F6" padding="12px 32px 24px">
+    <mj-column>
+      <mj-divider border-color="#D4D9E0" border-width="1px" padding="0 0 12px" />
+      <mj-text align="center" font-size="11px" color="#9295A5" line-height="16px" padding="0 0 4px">HitPay Payment Solutions Pte Ltd</mj-text>
+      <mj-text align="center" font-size="9px" color="#D4D9E0" line-height="14px" padding="0"><a href="{unsubscribe_link}" style="color:#D4D9E0;text-decoration:none;font-size:9px;">Unsubscribe</a></mj-text>
+    </mj-column>
+  </mj-section>
+  </mj-body>
+</mjml>

@@ -50,6 +50,7 @@ Rules:
 - Keep all unchanged sections exactly as they are — including images, image URLs, :::columns blocks, ::: image-left blocks, and any other special syntax.
 - Inline images are represented as __BASE64_IMAGE_N__ placeholders. Preserve every placeholder exactly — never modify, remove, or duplicate them.
 - Preserve ALL frontmatter fields exactly, including long URLs with UTM parameters.
+- CTA URLs: every ctaUrl and every [text](url){.cta} link that points to a webpage (http/https) MUST carry UTM parameters: ?utm_source=email&utm_medium=email&utm_campaign=<kebab-case-campaign-slug>&utm_content=<position>-<kebab-case-cta-slug> — utm_content is 1-indexed by the CTA's order in the email. If you add a new CTA or reorder existing ones, add/renumber utm_content accordingly, matching the utm_campaign already used elsewhere in the document. Skip UTM params on mailto: or tel: links.
 - The frontmatter template field must remain one of: product-launch, feature-update, newsletter, promotional, event-invitation, partner-spotlight, important-announcement, app-changes, rate-changes, compliance
 - All ctaUrl values must be valid https:// URLs
 - Do NOT use merge tags like {{first_name}} — use plain copy

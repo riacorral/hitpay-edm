@@ -1,0 +1,166 @@
+<mjml>
+  <mj-head>
+    <mj-font name="Manrope" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" />
+    <mj-preview>Faster, branded, mobile-first and live for your account.</mj-preview>
+    <mj-attributes>
+      <mj-all font-family="Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif" />
+      <mj-section padding="0" background-color="#FFFFFF" />
+      <mj-column padding="0" />
+      <mj-text font-family="Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif" padding="0" />
+      <mj-image padding="0" />
+    </mj-attributes>
+    <mj-style>
+      a { color: inherit; text-decoration: none; }
+      p { margin: 0 !important; }
+      @media only screen and (max-width:480px) {
+        .feat-img { padding-bottom: 12px !important; }
+      }
+    </mj-style>
+  </mj-head>
+  <mj-body background-color="#FFFFFF" width="600px">
+
+    <!-- Header: hero -->
+    <mj-section background-color="#002771" padding="48px 32px 44px">
+      <mj-column>
+        <mj-text align="center" font-size="11px" font-weight="600" color="#D4D9E0" letter-spacing="1.5px" text-transform="uppercase" padding="0 0 10px">Product Announcement</mj-text>
+        <mj-text align="center" font-size="28px" font-weight="700" color="#FFFFFF" line-height="1.25" padding="0">Meet Your New HitPay Checkout ✨</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Greeting -->
+    <mj-section padding="28px 32px 0">
+      <mj-column>
+        <mj-text font-size="15px" color="#03102F" line-height="1.6" padding="0">Hi {firstName},<br /><br />A great checkout doesn't just process payments - it removes doubt, builds trust, and converts customers. That's why we redesigned your HitPay checkout page.</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- From label + THEN image -->
+    <mj-section padding="20px 32px 10px">
+      <mj-column>
+        <mj-text font-size="15px" color="#03102F" line-height="1.5" padding="0 0 12px">From 👇</mj-text>
+        <mj-image src="img/checkout-then.jpg" alt="HitPay checkout page - before" border-radius="12px" padding="0" />
+      </mj-column>
+    </mj-section>
+
+    <!-- To label + NOW image -->
+    <mj-section padding="16px 32px 10px">
+      <mj-column>
+        <mj-text font-size="15px" color="#03102F" line-height="1.5" padding="0 0 12px">To 👇</mj-text>
+        <mj-image src="img/checkout-now.jpg" alt="HitPay checkout page - now" border-radius="12px" padding="0" />
+      </mj-column>
+    </mj-section>
+
+    <!-- Intro copy -->
+    <mj-section padding="22px 32px 0">
+      <mj-column>
+        <mj-text font-size="15px" color="#03102F" line-height="1.6" padding="0 0 16px">Your HitPay checkout page has been <b style="color:#03102F;">rebuilt from scratch</b> - faster, cleaner, and designed to get your customers to convert.</mj-text>
+        <mj-text font-size="15px" color="#03102F" line-height="1.6" padding="0 0 16px">It's already live for your account. No setup needed.</mj-text>
+        <mj-text font-size="15px" color="#03102F" line-height="1.6" padding="0 0 4px">Hit reply with a 🎉 if you love it - or give us feedback on your experience on HitPay so far (good, bad, we're all ears). We read every message.</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Divider -->
+    <mj-section padding="24px 32px 0">
+      <mj-column>
+        <mj-divider border-color="#E7E9EF" border-width="1px" padding="0" />
+      </mj-column>
+    </mj-section>
+
+    <!-- What's New heading -->
+    <mj-section padding="28px 32px 20px">
+      <mj-column>
+        <mj-text align="center" font-size="24px" font-weight="800" color="#03102F" line-height="1.3" padding="0">What's New?</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Feature 1: Built for mobile first -->
+    <mj-section padding="0 32px 28px">
+      <mj-column width="37%" vertical-align="top" padding="0" css-class="feat-img">
+        <mj-image src="img/feat-mobile.jpg" alt="Mobile-first checkout" border-radius="14px" padding="0" />
+      </mj-column>
+      <mj-column width="63%" vertical-align="top" padding="0 0 0 16px">
+        <mj-text font-size="17px" font-weight="700" color="#03102F" line-height="1.35" padding="0 0 8px">Built for mobile first</mj-text>
+        <mj-text font-size="14px" color="#3C3D47" line-height="1.6" padding="0">Around 70% of payments happen on a phone. The new checkout is designed for small screens - no awkward scrolling, QR codes that fit perfectly, and a flow that feels natural on mobile.</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Feature 2: QR payments -->
+    <mj-section padding="0 32px 28px">
+      <mj-column width="37%" vertical-align="top" padding="0" css-class="feat-img">
+        <mj-image src="img/feat-qr.jpg" alt="PayNow QR payment" border-radius="14px" padding="0" />
+      </mj-column>
+      <mj-column width="63%" vertical-align="top" padding="0 0 0 16px">
+        <mj-text font-size="17px" font-weight="700" color="#03102F" line-height="1.35" padding="0 0 8px">QR payments that actually make sense</mj-text>
+        <mj-text font-size="14px" color="#3C3D47" line-height="1.6" padding="0">Clear scan instructions, a live countdown timer, and a clear expired state mean customers always know what to do next.</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Feature 3: All the little details -->
+    <mj-section padding="0 32px 28px">
+      <mj-column width="37%" vertical-align="top" padding="0" css-class="feat-img">
+        <mj-image src="img/feat-details.jpg" alt="Refined checkout states" border-radius="14px" padding="0" />
+      </mj-column>
+      <mj-column width="63%" vertical-align="top" padding="0 0 0 16px">
+        <mj-text font-size="17px" font-weight="700" color="#03102F" line-height="1.35" padding="0 0 8px">All the little details, fixed</mj-text>
+        <mj-text font-size="14px" color="#3C3D47" line-height="1.6" padding="0">Loading states, error messages, expired links, timed-out sessions - we've refined all the edge cases so the checkout simply feels smoother.</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Feature 4: No more fee surprises -->
+    <mj-section padding="0 32px 28px">
+      <mj-column width="37%" vertical-align="top" padding="0" css-class="feat-img">
+        <mj-image src="img/feat-fee.jpg" alt="Fees shown upfront" border-radius="14px" padding="0" />
+      </mj-column>
+      <mj-column width="63%" vertical-align="top" padding="0 0 0 16px">
+        <mj-text font-size="17px" font-weight="700" color="#03102F" line-height="1.35" padding="0 0 8px">No more fee surprises</mj-text>
+        <mj-text font-size="14px" color="#3C3D47" line-height="1.6" padding="0">Admin fees are now shown before customers choose a payment method. The pay button displays the exact amount (<b style="color:#03102F;">e.g. Pay SGD 52.50</b>), reducing confusion and drop-offs.</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Feature 5: Your checkout, your brand -->
+    <mj-section padding="0 32px 8px">
+      <mj-column width="37%" vertical-align="top" padding="0" css-class="feat-img">
+        <mj-image src="img/feat-brand.jpg" alt="Branded checkout customisation" border-radius="14px" padding="0" />
+      </mj-column>
+      <mj-column width="63%" vertical-align="top" padding="0 0 0 16px">
+        <mj-text font-size="17px" font-weight="700" color="#03102F" line-height="1.35" padding="0 0 8px">Your checkout, your brand</mj-text>
+        <mj-text font-size="14px" color="#3C3D47" line-height="1.6" padding="0">Set your brand colour, choose light or dark mode, and pick a layout.<br />Just head to <b style="color:#03102F;">Dashboard → Settings → Checkout Customisation</b>.</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Closing copy -->
+    <mj-section padding="24px 32px 0">
+      <mj-column>
+        <mj-text font-size="15px" color="#03102F" line-height="1.6" padding="0 0 16px">Everything else stays exactly the same. Your payment links, API integrations, webhooks - untouched. Only what your customers see has changed.</mj-text>
+        <mj-text font-size="15px" color="#03102F" line-height="1.6" padding="0 0 16px">Now that you're familiar with the changes - reply to this email to let us know your feedback or experience on HitPay so far (<b style="color:#03102F;">good, bad, we're all ears</b>). Or simply with an emoji 🎉 We read every message.</mj-text>
+        <mj-text font-size="15px" color="#03102F" line-height="1.6" padding="0 0 28px">The HitPay Team</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Footer: help banner -->
+    <mj-section background-color="#F9F9F6" padding="24px 32px 0">
+      <mj-column>
+        <mj-image src="img/help_banner.jpg" alt="Need help? Visit our Help Centre" href="https://help.hit-pay.com/" width="536px" padding="0" />
+      </mj-column>
+    </mj-section>
+
+    <!-- Footer: logo + social icons -->
+    <mj-section background-color="#F9F9F6" padding="16px 32px 16px">
+      <mj-column>
+        <mj-text align="center" padding="0">
+          <a href="https://www.hitpayapp.com" style="display:inline-block;vertical-align:middle;margin-right:14px;"><img src="img/logo.png" width="70" alt="HitPay" style="display:inline-block;vertical-align:middle;" /></a><a href="https://www.instagram.com/hitpayapp" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="img/social_instagram.png" width="24" height="24" alt="Instagram" style="display:inline-block;vertical-align:middle;" /></a><a href="https://www.facebook.com/hitpayapp" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="img/social_facebook.png" width="24" height="24" alt="Facebook" style="display:inline-block;vertical-align:middle;" /></a><a href="https://www.linkedin.com/company/hit-pay/" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="img/social_linkedin.png" width="24" height="24" alt="LinkedIn" style="display:inline-block;vertical-align:middle;" /></a><a href="https://www.youtube.com/@hitpayapp" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="img/social_youtube.png" width="24" height="24" alt="YouTube" style="display:inline-block;vertical-align:middle;" /></a>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Footer text -->
+    <mj-section background-color="#F9F9F6" padding="12px 32px 24px">
+      <mj-column>
+        <mj-divider border-color="#D4D9E0" border-width="1px" padding="0 0 12px" />
+        <mj-text align="center" font-size="11px" color="#9295A5" line-height="16px" padding="0 0 4px">HitPay Payment Solutions Pte Ltd</mj-text>
+        <mj-text align="center" font-size="9px" color="#D4D9E0" line-height="14px" padding="0"><a href="{unsubscribe_link}" style="color:#D4D9E0;text-decoration:none;font-size:9px;">Unsubscribe</a></mj-text>
+      </mj-column>
+    </mj-section>
+
+  </mj-body>
+</mjml>

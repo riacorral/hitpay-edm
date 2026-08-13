@@ -1,0 +1,334 @@
+<mjml>
+  <mj-head>
+    <mj-font name="Manrope" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap" />
+    <mj-preview>DuitNow QR now activated for you.</mj-preview>
+    <mj-attributes>
+      <mj-all font-family="Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif" />
+      <mj-section padding="0" background-color="#FFFFFF" />
+      <mj-column padding="0" />
+      <mj-text font-family="Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif" padding="0" />
+      <mj-image padding="0" />
+    </mj-attributes>
+    <mj-style>
+      a { color: inherit; text-decoration: none; }
+      p { margin: 0 !important; }
+      @media only screen and (max-width:480px) {
+        /* Add gap below image when image+text block stacks on mobile */
+        .img-col { padding-bottom: 20px !important; }
+        /* Stack stat/column cards vertically on mobile */
+        table.col-wrap tr { display: block !important; }
+        td.col-card { display: block !important; width: 100% !important; max-width: 100% !important; box-sizing: border-box !important; margin-bottom: 8px !important; }
+        td.col-spacer { display: none !important; width: 0 !important; }
+      }
+    </mj-style>
+  </mj-head>
+  <mj-body background-color="#F0F2F5" width="600px">
+    
+  <mj-section background-color="#002771" padding="48px 32px 0">
+    <mj-column>
+      <mj-text align="center" font-size="11px" font-weight="600" color="#D4D9E0" letter-spacing="1.5px" text-transform="uppercase" padding="0 0 8px">Product Announcement</mj-text>
+      <mj-text align="center" font-size="28px" font-weight="700" color="#FFFFFF" line-height="1.2" padding="0 0 16px">Welcome Malaysian Shoppers: Accept DuitNow QR in Singapore</mj-text>
+      
+      <mj-image src="file:///Users/riacorral/Documents/HitPay-Claude/hitpay-edm-main/emails/images/duitnow-hero-main.jpg" alt="Welcome Malaysian Shoppers: Accept DuitNow QR in Singapore" border-radius="8px 8px 0 0" padding="0" />
+    </mj-column>
+  </mj-section>
+    <mj-section padding="32px 0 0" background-color="#FFFFFF"><mj-column /></mj-section>
+    
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0">Malaysia's national payment standard is now available for Singapore merchants. No Malaysian entity required.</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 24px">
+    <mj-column>
+      <mj-divider border-color="#D4D9E0" border-width="1px" padding="8px 0 0" />
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text font-size="24px" font-weight="700" color="#002771" line-height="1.3" padding="0">Why DuitNow Matters for Singapore Businesses</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0">Every day, Malaysian visitors walk into Singapore stores, sit at your tables, and browse your online shop, ready to spend. But if you don't accept DuitNow, you're invisible to them at checkout.</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0">DuitNow is Malaysia's national payment standard, embedded in every major Malaysian banking app. It's how millions of Malaysians pay, and they expect to use it here too.</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0">One activation inside HitPay. No Malaysian bank account. No entity setup. MYR payments settled in SGD automatically.</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="16px 32px 16px">
+    <mj-column>
+      <mj-image src="/Users/riacorral/Documents/HitPay-Claude/hitpay-edm-main/emails/images/duitnow-pos-qr.jpg" alt="DuitNow QR on HitPay POS" border-radius="8px" padding="0" />
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 24px">
+    <mj-column>
+      <mj-divider border-color="#D4D9E0" border-width="1px" padding="8px 0 0" />
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text font-size="24px" font-weight="700" color="#002771" line-height="1.3" padding="0">Why This Is a Big Opportunity for SG Merchants</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="16px 32px 24px">
+    
+    <mj-column width="42%" vertical-align="middle" padding="0 16px 0 0" css-class="img-col">
+      <mj-image src="/Users/riacorral/Documents/HitPay-Claude/hitpay-edm-main/emails/images/malaysia-visitors.png" alt="" padding="0" />
+    </mj-column>
+    <mj-column width="58%" vertical-align="middle" padding="0">
+      <mj-raw>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">
+  <tr>
+    <td width="24" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:16px;font-weight:700;color:#2465DE;line-height:1.4;padding:0;white-space:nowrap;">•</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;padding:0 0 0 4px;">
+      <div style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:16px;font-weight:700;color:#03102F;line-height:1.4;margin:0 0 4px 0;">Massive Cross-Border Traffic</div>
+      <div style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:400;color:#61667C;line-height:1.6;">Malaysia is one of Singapore's largest inbound visitor markets. From Johor day-trippers to Kuala Lumpur tourists, this is a high-frequency spending segment.</div>
+    </td>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">
+  <tr>
+    <td width="24" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:16px;font-weight:700;color:#2465DE;line-height:1.4;padding:0;white-space:nowrap;">•</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;padding:0 0 0 4px;">
+      <div style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:16px;font-weight:700;color:#03102F;line-height:1.4;margin:0 0 4px 0;">High Banking App Adoption</div>
+      <div style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:400;color:#61667C;line-height:1.6;">DuitNow QR is embedded inside major Malaysian banking apps. For many customers, it's their default way to pay. If you don't offer it, you risk friction at checkout, especially for impulse retail and F&amp;B purchases.</div>
+    </td>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:0;">
+  <tr>
+    <td width="24" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:16px;font-weight:700;color:#2465DE;line-height:1.4;padding:0;white-space:nowrap;">•</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;padding:0 0 0 4px;">
+      <div style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:16px;font-weight:700;color:#03102F;line-height:1.4;margin:0 0 4px 0;">Trusted &amp; Recognisable</div>
+      <div style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:400;color:#61667C;line-height:1.6;">Malaysian shoppers actively look for the DuitNow logo. It signals familiarity, security, and confidence to complete the transaction.</div>
+    </td>
+  </tr>
+</table></mj-raw>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 24px">
+    <mj-column>
+      <mj-divider border-color="#D4D9E0" border-width="1px" padding="8px 0 0" />
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text font-size="24px" font-weight="700" color="#002771" line-height="1.3" padding="0">Who Benefits Most in Singapore</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-raw>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">
+  <tr>
+    <td width="24" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:16px;font-weight:700;color:#2465DE;line-height:1.4;padding:0;white-space:nowrap;">•</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;padding:0 0 0 4px;">
+      <div style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:16px;font-weight:700;color:#03102F;line-height:1.4;margin:0 0 4px 0;">Retail &amp; Lifestyle</div>
+      <div style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:400;color:#61667C;line-height:1.6;">Tourist-heavy malls, Orchard Road, Jewel, Bugis, pop-ups. Capture Malaysian footfall more effectively.</div>
+    </td>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">
+  <tr>
+    <td width="24" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:16px;font-weight:700;color:#2465DE;line-height:1.4;padding:0;white-space:nowrap;">•</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;padding:0 0 0 4px;">
+      <div style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:16px;font-weight:700;color:#03102F;line-height:1.4;margin:0 0 4px 0;">F&amp;B &amp; Hospitality</div>
+      <div style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:400;color:#61667C;line-height:1.6;">Restaurants, cafés, bars, hotels, and attractions serving Malaysian visitors daily.</div>
+    </td>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">
+  <tr>
+    <td width="24" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:16px;font-weight:700;color:#2465DE;line-height:1.4;padding:0;white-space:nowrap;">•</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;padding:0 0 0 4px;">
+      <div style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:16px;font-weight:700;color:#03102F;line-height:1.4;margin:0 0 4px 0;">Education &amp; Training</div>
+      <div style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:400;color:#61667C;line-height:1.6;">Collect tuition and course fees from Malaysian students in MYR without operational complexity.</div>
+    </td>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:0;">
+  <tr>
+    <td width="24" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:16px;font-weight:700;color:#2465DE;line-height:1.4;padding:0;white-space:nowrap;">•</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;padding:0 0 0 4px;">
+      <div style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:16px;font-weight:700;color:#03102F;line-height:1.4;margin:0 0 4px 0;">E-commerce Brands</div>
+      <div style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:400;color:#61667C;line-height:1.6;">Singapore-based brands shipping to Malaysia can offer a fully local checkout experience, without setting up a Malaysian entity.</div>
+    </td>
+  </tr>
+</table></mj-raw>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 24px">
+    <mj-column>
+      <mj-divider border-color="#D4D9E0" border-width="1px" padding="8px 0 0" />
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text font-size="24px" font-weight="700" color="#002771" line-height="1.3" padding="0">Cross Border Payment Details</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0"><b style="color:#03102F;">Online Fee:</b> 2.3% per transaction</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0"><b style="color:#03102F;">In-Person (POS) Fee:</b> 1.5% per transaction</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0"><b style="color:#03102F;">Settlement Currency:</b> Settled in SGD (converted automatically from MYR)</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0"><b style="color:#03102F;">Settlement Time:</b> T+3 (Cross-Border)</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0"><b style="color:#03102F;">Refunds:</b> Fully supported, including partial refunds</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0"><b style="color:#03102F;">Channels:</b> Online Web Redirect &amp; POS / Quick Sale (Dynamic QR)</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 24px">
+    <mj-column>
+      <mj-divider border-color="#D4D9E0" border-width="1px" padding="8px 0 0" />
+    </mj-column>
+  </mj-section>
+  <mj-section padding="16px 32px 24px">
+    <mj-column>
+      <mj-button href="https://hitpayapp.com/hitpay-borderless-qr-payments" background-color="#2465DE" color="#FFFFFF" border-radius="6px" font-size="16px" font-weight="600" inner-padding="12px 24px" align="center">Start using DuitNow with Borderless QR Today</mj-button>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 24px">
+    <mj-column>
+      <mj-divider border-color="#D4D9E0" border-width="1px" padding="8px 0 0" />
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text font-size="24px" font-weight="700" color="#002771" line-height="1.3" padding="0">3 Powerful Ways to Start Selling in MYR</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0">Whether you sell online, in person, or through chat and social channels, activation takes minutes, not weeks.</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="16px 32px 40px">
+    
+    <mj-column width="62%" vertical-align="top" padding="0 20px 0 0">
+      <mj-text font-size="16px" font-weight="700" color="#03102F" line-height="1.3" padding="0 0 12px">1️⃣ In-Store with Borderless QR (POS)</mj-text>
+      <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0 0 10px">Perfect for retail, pop-ups, events, and hospitality.</mj-text>
+      <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0 0 10px">Generate a Dynamic QR from your HitPay POS. Malaysian customers scan with Touch 'n Go or their banking app via DuitNow and pay instantly in MYR.</mj-text>
+      <mj-text font-size="16px" font-weight="600" color="#03102F" line-height="1.5" padding="10px 0 6px">You get:</mj-text>
+      <mj-text font-size="14px" color="#61667C" line-height="1.5" padding="0 0 4px">• Real-time payment confirmation</mj-text>
+      <mj-text font-size="14px" color="#61667C" line-height="1.5" padding="0 0 4px">• Automatic MYR-to-home-currency settlement</mj-text>
+      <mj-text font-size="14px" color="#61667C" line-height="1.5" padding="0 0 4px">• No manual reconciliation</mj-text>
+      <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="10px 0 16px">Sell to Malaysian tourists as seamlessly as you sell locally.</mj-text>
+      <mj-text font-size="16px" font-weight="600" color="#2465DE" padding="0"><a href="https://hitpayapp.com/hitpay-borderless-qr-payments" style="color:#2465DE;text-decoration:underline;">Start using Borderless QR →</a></mj-text>
+    </mj-column>
+    <mj-column width="38%" vertical-align="middle" padding="0">
+      <mj-raw><div style="background-color:#F5F7FC;border-radius:12px;padding:12px;overflow:hidden;"><img src="/Users/riacorral/Documents/HitPay-Claude/hitpay-edm-main/emails/images/feature-borderless-qr.png" alt="" style="width:100%;border-radius:8px;display:block;height:auto;" /></div></mj-raw>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 24px">
+    <mj-column>
+      <mj-divider border-color="#D4D9E0" border-width="1px" padding="8px 0 0" />
+    </mj-column>
+  </mj-section>
+  <mj-section padding="16px 32px 40px">
+    
+    <mj-column width="62%" vertical-align="top" padding="0 20px 0 0">
+      <mj-text font-size="16px" font-weight="700" color="#03102F" line-height="1.3" padding="0 0 12px">2️⃣ Create a Multicurrency HitPay Online Store</mj-text>
+      <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0 0 10px">Ideal for cross-border e-commerce.</mj-text>
+      <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0 0 10px">Turn on DuitNow in your payment settings and instantly offer a fully local Malaysian checkout experience, without additional integrations.</mj-text>
+      <mj-text font-size="16px" font-weight="600" color="#03102F" line-height="1.5" padding="10px 0 6px">You get:</mj-text>
+      <mj-text font-size="14px" color="#61667C" line-height="1.5" padding="0 0 4px">• Higher checkout conversion from Malaysian shoppers</mj-text>
+      <mj-text font-size="14px" color="#61667C" line-height="1.5" padding="0 0 4px">• Access to every major Malaysian bank and wallet via one QR standard</mj-text>
+      <mj-text font-size="14px" color="#61667C" line-height="1.5" padding="0 0 4px">• Automatic currency conversion and settlement</mj-text>
+      <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="10px 0 16px">No local bank account required.</mj-text>
+      <mj-text font-size="16px" font-weight="600" color="#2465DE" padding="0"><a href="https://hitpayapp.com/multi-currency-ecommerce-pricing" style="color:#2465DE;text-decoration:underline;">Start using Multicurrency HitPay Online Store →</a></mj-text>
+    </mj-column>
+    <mj-column width="38%" vertical-align="middle" padding="0">
+      <mj-raw><div style="background-color:#F5F7FC;border-radius:12px;padding:12px;overflow:hidden;"><img src="/Users/riacorral/Documents/HitPay-Claude/hitpay-edm-main/emails/images/feature-multicurrency-store.png" alt="" style="width:100%;border-radius:8px;display:block;height:auto;" /></div></mj-raw>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 24px">
+    <mj-column>
+      <mj-divider border-color="#D4D9E0" border-width="1px" padding="8px 0 0" />
+    </mj-column>
+  </mj-section>
+  <mj-section padding="16px 32px 40px">
+    
+    <mj-column width="62%" vertical-align="top" padding="0 20px 0 0">
+      <mj-text font-size="16px" font-weight="700" color="#03102F" line-height="1.3" padding="0 0 12px">3️⃣ Send MYR Payment Links Anywhere</mj-text>
+      <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0 0 10px">Best for remote sales, social commerce, travel bookings, or invoice collections.</mj-text>
+      <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0 0 10px">Create and share payment links in MYR via WhatsApp, email, or social media.</mj-text>
+      <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0 0 10px">Customers complete payment instantly using their preferred Malaysian banking app or Touch 'n Go.</mj-text>
+      <mj-text font-size="16px" font-weight="600" color="#03102F" line-height="1.5" padding="10px 0 6px">You get:</mj-text>
+      <mj-text font-size="14px" color="#61667C" line-height="1.5" padding="0 0 4px">• Faster collections from Malaysian customers</mj-text>
+      <mj-text font-size="14px" color="#61667C" line-height="1.5" padding="0 0 4px">• Frictionless cross-border billing</mj-text>
+      <mj-text font-size="14px" color="#61667C" line-height="1.5" padding="0 0 4px">• Support for full and partial refunds</mj-text>
+      <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="10px 0 16px">Turn conversations into paid transactions, in MYR.</mj-text>
+      <mj-text font-size="16px" font-weight="600" color="#2465DE" padding="0"><a href="https://docs.hitpayapp.com/payment-links/payment-links" style="color:#2465DE;text-decoration:underline;">Start using Payment Links →</a></mj-text>
+    </mj-column>
+    <mj-column width="38%" vertical-align="middle" padding="0">
+      <mj-raw><div style="background-color:#F5F7FC;border-radius:12px;padding:12px;overflow:hidden;"><img src="/Users/riacorral/Documents/HitPay-Claude/hitpay-edm-main/emails/images/feature-payment-links.png" alt="" style="width:100%;border-radius:8px;display:block;height:auto;" /></div></mj-raw>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 24px">
+    <mj-column>
+      <mj-divider border-color="#D4D9E0" border-width="1px" padding="8px 0 0" />
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0">Questions? Our team is here to help. Reply to this email or visit our Help Centre.</mj-text>
+    </mj-column>
+  </mj-section>
+    
+    
+  
+  <!-- Footer: help banner -->
+  <mj-section background-color="#F9F9F6" padding="24px 32px 0">
+    <mj-column>
+      <mj-image src="img/help_banner.png" alt="Need help? Visit our Help Centre" href="https://help.hit-pay.com/" width="536px" padding="0" />
+    </mj-column>
+  </mj-section>
+  <!-- Footer -->
+  <mj-section background-color="#F9F9F6" padding="24px 32px 16px">
+    <mj-column>
+      <mj-text align="center" padding="0">
+        <a href="https://www.hitpayapp.com" style="display:inline-block;vertical-align:middle;margin-right:14px;"><img src="img/logo-dark.png" width="70" alt="HitPay" style="display:inline-block;vertical-align:middle;" /></a><a href="https://www.instagram.com/hitpayapp" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="img/social-instagram.png" width="24" height="24" alt="Instagram" style="display:inline-block;border-radius:50%;vertical-align:middle;" /></a><a href="https://www.facebook.com/hitpayapp" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="img/social-facebook.png" width="24" height="24" alt="Facebook" style="display:inline-block;border-radius:50%;vertical-align:middle;" /></a><a href="https://www.linkedin.com/company/hit-pay/" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="img/social-linkedin.png" width="24" height="24" alt="LinkedIn" style="display:inline-block;border-radius:50%;vertical-align:middle;" /></a><a href="https://www.tiktok.com/@hitpayapp" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="img/social-tiktok.png" width="24" height="24" alt="TikTok" style="display:inline-block;border-radius:50%;vertical-align:middle;" /></a><a href="https://www.youtube.com/@hitpayapp" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="img/social-youtube.png" width="24" height="24" alt="YouTube" style="display:inline-block;border-radius:50%;vertical-align:middle;" /></a>
+      </mj-text>
+    </mj-column>
+  </mj-section>
+  <!-- Footer banner (conditional — add market URL to FOOTER_BANNERS to enable) -->
+  
+  <!-- Footer text -->
+  <mj-section background-color="#F9F9F6" padding="12px 32px 24px">
+    <mj-column>
+      <mj-divider border-color="#D4D9E0" border-width="1px" padding="0 0 12px" />
+      <mj-text align="center" font-size="11px" color="#9295A5" line-height="16px" padding="0 0 4px">HitPay Payment Solutions Pte Ltd</mj-text>
+      <mj-text align="center" font-size="9px" color="#D4D9E0" line-height="14px" padding="0"><a href="{unsubscribe_link}" style="color:#D4D9E0;text-decoration:none;font-size:9px;">Unsubscribe</a></mj-text>
+    </mj-column>
+  </mj-section>
+  </mj-body>
+</mjml>

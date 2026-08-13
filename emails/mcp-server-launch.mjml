@@ -1,0 +1,279 @@
+<mjml>
+  <mj-head>
+    <mj-font name="Manrope" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap" />
+    <mj-preview>Query sales, payouts, and balances or create payment links - right from chat.</mj-preview>
+    <mj-attributes>
+      <mj-all font-family="Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif" />
+      <mj-section padding="0" background-color="#FFFFFF" />
+      <mj-column padding="0" />
+      <mj-text font-family="Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif" padding="0" />
+      <mj-image padding="0" />
+    </mj-attributes>
+    <mj-style>
+      a { color: inherit; text-decoration: none; }
+      p { margin: 0 !important; }
+      @media only screen and (max-width:480px) {
+        /* Add gap below image when image+text block stacks on mobile */
+        .img-col { padding-bottom: 20px !important; }
+        /* Stack stat/column cards vertically on mobile */
+        table.col-wrap tr { display: block !important; }
+        td.col-card { display: block !important; width: 100% !important; max-width: 100% !important; box-sizing: border-box !important; margin-bottom: 8px !important; }
+        td.col-spacer { display: none !important; width: 0 !important; }
+      }
+    </mj-style>
+  </mj-head>
+  <mj-body background-color="#F0F2F5" width="600px">
+    
+  <mj-section background-color="#002771" padding="48px 32px 0">
+    <mj-column>
+      <mj-text align="center" font-size="11px" font-weight="600" color="#D4D9E0" letter-spacing="1.5px" text-transform="uppercase" padding="0 0 8px">🚀 New · MCP Server</mj-text>
+      <mj-text align="center" font-size="28px" font-weight="700" color="#FFFFFF" line-height="1.2" padding="0 0 16px">Build with AI -
+HitPay MCP Now Available</mj-text>
+      <mj-text align="center" font-size="15px" color="#D4D9E0" line-height="1.5" padding="0 8px 24px">Query sales, transactions, payouts, and balances, or create payment links and invoices for your business - all from an AI assistant.</mj-text>
+      <mj-image src="img/mcp-hero.png" alt="Build with AI -
+HitPay MCP Now Available" border-radius="8px 8px 0 0" padding="0" />
+    </mj-column>
+  </mj-section>
+    <mj-section padding="32px 0 0" background-color="#FFFFFF"><mj-column /></mj-section>
+    
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0">Hi {firstName},</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0">We've shipped a hosted MCP server. You can now connect Claude - also Codex, Cursor, or any MCP client - to your HitPay account and ask about sales, transactions, payouts, and balances, or create payment links and invoices right from chat.</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0">You sign in with your dashboard login (owner or admin), approve a consent screen, and the connection is scoped to that one business. No API keys involved.</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 24px">
+    <mj-column>
+      <mj-divider border-color="#D4D9E0" border-width="1px" padding="8px 0 0" />
+    </mj-column>
+  </mj-section>
+  <mj-section padding="16px 32px 24px">
+    <mj-column>
+      <mj-text font-size="16px" font-weight="700" color="#002771" line-height="1.3" padding="0">How to Connect</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0">Add the HitPay MCP server to your AI client of choice:</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0"><b style="color:#03102F;">Claude Code</b> - then run <code style="font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;background:#F0F2F5;color:#03102F;padding:2px 5px;border-radius:4px;font-size:0.9em;">/mcp</code>, select hitpay, and choose Authenticate.</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column background-color="#F0F2F5" border-radius="8px" padding="14px 16px">
+      <mj-text font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="13px" color="#03102F" line-height="1.7" padding="0">claude mcp add --transport http hitpay https://mcp.hit-pay.com/</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0"><b style="color:#03102F;">Codex</b></mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column background-color="#F0F2F5" border-radius="8px" padding="14px 16px">
+      <mj-text font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="13px" color="#03102F" line-height="1.7" padding="0">codex mcp add hitpay --url https://mcp.hit-pay.com/</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0"><b style="color:#03102F;">Cursor</b> - add this to <code style="font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;background:#F0F2F5;color:#03102F;padding:2px 5px;border-radius:4px;font-size:0.9em;">~/.cursor/mcp.json</code></mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column background-color="#F0F2F5" border-radius="8px" padding="14px 16px">
+      <mj-text font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="13px" color="#03102F" line-height="1.7" padding="0">{<br/>&nbsp;&nbsp;&quot;mcpServers&quot;: {<br/>&nbsp;&nbsp;&nbsp;&nbsp;&quot;hitpay&quot;: {<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;url&quot;: &quot;https://mcp.hit-pay.com/&quot;<br/>&nbsp;&nbsp;&nbsp;&nbsp;}<br/>&nbsp;&nbsp;}<br/>}</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="12px 0 16px">
+    <mj-column width="50%" padding="0">
+      <mj-image src="img/mcp-connect-terminal.png" alt="Claude Code connected to hitpay-prod after running /mcp" border-radius="0" padding="0" />
+    </mj-column>
+    <mj-column width="50%" padding="0">
+      <mj-image src="img/mcp-connect-browser-success.png" alt="Browser confirmation after approving access" border-radius="0" padding="0" />
+    </mj-column>
+  </mj-section>
+  <mj-section padding="16px 32px 24px">
+    <mj-column>
+      <mj-button href="https://docs.hitpayapp.com/apis/guide/mcp-server?utm_source=email&amp;utm_medium=email&amp;utm_campaign=mcp-server-launch&amp;utm_content=1-try-connecting-your-hitpay-account-to-ai-now" background-color="#2465DE" color="#FFFFFF" border-radius="6px" font-size="16px" font-weight="600" inner-padding="12px 24px" align="center">Try Connecting Your HitPay Account to AI Now</mj-button>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 24px">
+    <mj-column>
+      <mj-divider border-color="#D4D9E0" border-width="1px" padding="8px 0 0" />
+    </mj-column>
+  </mj-section>
+  <mj-section padding="16px 32px 24px">
+    <mj-column>
+      <mj-text font-size="16px" font-weight="700" color="#002771" line-height="1.3" padding="0">Just ask</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-raw>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:8px;">
+  <tr>
+    <td width="20" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:700;color:#2465DE;line-height:1.6;padding:0;white-space:nowrap;">•</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;padding:0 0 0 8px;">&quot;What were my total sales last month, and how do they compare to the month before?&quot;</td>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:8px;">
+  <tr>
+    <td width="20" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:700;color:#2465DE;line-height:1.6;padding:0;white-space:nowrap;">•</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;padding:0 0 0 8px;">&quot;Show my top-selling products this quarter&quot;</td>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:8px;">
+  <tr>
+    <td width="20" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:700;color:#2465DE;line-height:1.6;padding:0;white-space:nowrap;">•</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;padding:0 0 0 8px;">&quot;When is my next payout, and what's my current balance?&quot;</td>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:8px;">
+  <tr>
+    <td width="20" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:700;color:#2465DE;line-height:1.6;padding:0;white-space:nowrap;">•</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;padding:0 0 0 8px;">&quot;Create a payment link for SGD 49.90 for a consultation session&quot;</td>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:0;">
+  <tr>
+    <td width="20" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:700;color:#2465DE;line-height:1.6;padding:0;white-space:nowrap;">•</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;padding:0 0 0 8px;">&quot;Invoice a customer SGD 1,200 and email it to them&quot;</td>
+  </tr>
+</table></mj-raw>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 24px">
+    <mj-column>
+      <mj-divider border-color="#D4D9E0" border-width="1px" padding="8px 0 0" />
+    </mj-column>
+  </mj-section>
+  <mj-section padding="16px 32px 24px">
+    <mj-column>
+      <mj-text font-size="16px" font-weight="700" color="#002771" line-height="1.3" padding="0">Built to be safe with your live business</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-raw>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">
+  <tr>
+    <td width="24" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:16px;font-weight:700;color:#2465DE;line-height:1.4;padding:0;white-space:nowrap;">•</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;padding:0 0 0 4px;">
+      <div style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:16px;font-weight:700;color:#03102F;line-height:1.4;margin:0 0 4px 0;">Signed in with your HitPay login</div>
+      <div style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:400;color:#61667C;line-height:1.6;">No API keys - approve access with the login you already use, on dashboard.hit-pay.com.</div>
+    </td>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">
+  <tr>
+    <td width="24" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:16px;font-weight:700;color:#2465DE;line-height:1.4;padding:0;white-space:nowrap;">•</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;padding:0 0 0 4px;">
+      <div style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:16px;font-weight:700;color:#03102F;line-height:1.4;margin:0 0 4px 0;">Scoped to one business</div>
+      <div style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:400;color:#61667C;line-height:1.6;">Each connection only ever sees the business you authorized.</div>
+    </td>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">
+  <tr>
+    <td width="24" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:16px;font-weight:700;color:#2465DE;line-height:1.4;padding:0;white-space:nowrap;">•</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;padding:0 0 0 4px;">
+      <div style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:16px;font-weight:700;color:#03102F;line-height:1.4;margin:0 0 4px 0;">Owner and admin only</div>
+      <div style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:400;color:#61667C;line-height:1.6;">Other team roles can't authorize a connection.</div>
+    </td>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">
+  <tr>
+    <td width="24" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:16px;font-weight:700;color:#2465DE;line-height:1.4;padding:0;white-space:nowrap;">•</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;padding:0 0 0 4px;">
+      <div style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:16px;font-weight:700;color:#03102F;line-height:1.4;margin:0 0 4px 0;">No destructive actions</div>
+      <div style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:400;color:#61667C;line-height:1.6;">It can't refund, cancel, transfer money, or change settings - the only writes are creating payment links, invoices, products, and recurring plans.</div>
+    </td>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:0;">
+  <tr>
+    <td width="24" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:16px;font-weight:700;color:#2465DE;line-height:1.4;padding:0;white-space:nowrap;">•</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;padding:0 0 0 4px;">
+      <div style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:16px;font-weight:700;color:#03102F;line-height:1.4;margin:0 0 4px 0;">Revoke anytime</div>
+      <div style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:400;color:#61667C;line-height:1.6;">Remove the connector from your client to cut off access instantly.</div>
+    </td>
+  </tr>
+</table></mj-raw>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="16px 32px 24px">
+    <mj-column>
+      <mj-button href="https://docs.hitpayapp.com/apis/guide/mcp-server?utm_source=email&amp;utm_medium=email&amp;utm_campaign=mcp-server-launch&amp;utm_content=2-connect-to-hitpays-mcp-today" background-color="#2465DE" color="#FFFFFF" border-radius="6px" font-size="16px" font-weight="600" inner-padding="12px 24px" align="center">Connect to HitPay's MCP Today</mj-button>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 24px">
+    <mj-column>
+      <mj-divider border-color="#D4D9E0" border-width="1px" padding="8px 0 0" />
+    </mj-column>
+  </mj-section>
+  <mj-section padding="16px 32px 24px">
+    <mj-column>
+      <mj-text font-size="16px" font-weight="700" color="#002771" line-height="1.3" padding="0">See what Claude can build once it's connected</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0">Ask Claude to analyze your sales, channel, and product data, and it can turn the answer into a shareable Claude Artifact - a dashboard like this one, built entirely from live data pulled through the MCP connection.</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="16px 32px 16px">
+    <mj-column>
+      <mj-image src="img/mcp-artifact-demo.png" alt="Claude Artifact showing a HitPay business growth-levers analysis" border-radius="8px" padding="0" />
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 24px">
+    <mj-column>
+      <mj-divider border-color="#D4D9E0" border-width="1px" padding="8px 0 0" />
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0">Questions or feedback? Reply to this email - happy to help!</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0">Best, <b style="color:#03102F;">Aditya</b></mj-text>
+    </mj-column>
+  </mj-section>
+    
+    
+  
+  <!-- Footer -->
+  <mj-section background-color="#F9F9F6" padding="24px 32px 16px">
+    <mj-column>
+      <mj-text align="center" padding="0">
+        <a href="https://www.hitpayapp.com" style="display:inline-block;vertical-align:middle;margin-right:14px;"><img src="img/logo-dark.png" width="70" alt="HitPay" style="display:inline-block;vertical-align:middle;" /></a><a href="https://www.instagram.com/hitpayapp" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="img/social-instagram.png" width="24" height="24" alt="Instagram" style="display:inline-block;border-radius:50%;vertical-align:middle;" /></a><a href="https://www.facebook.com/hitpayapp" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="img/social-facebook.png" width="24" height="24" alt="Facebook" style="display:inline-block;border-radius:50%;vertical-align:middle;" /></a><a href="https://www.linkedin.com/company/hit-pay/" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="img/social-linkedin.png" width="24" height="24" alt="LinkedIn" style="display:inline-block;border-radius:50%;vertical-align:middle;" /></a><a href="https://www.tiktok.com/@hitpayapp" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="img/social-tiktok.png" width="24" height="24" alt="TikTok" style="display:inline-block;border-radius:50%;vertical-align:middle;" /></a><a href="https://www.youtube.com/@hitpayapp" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="img/social-youtube.png" width="24" height="24" alt="YouTube" style="display:inline-block;border-radius:50%;vertical-align:middle;" /></a>
+      </mj-text>
+    </mj-column>
+  </mj-section>
+  <!-- Footer banner (conditional — add market URL to FOOTER_BANNERS to enable) -->
+  
+  <!-- Footer text -->
+  <mj-section background-color="#F9F9F6" padding="12px 32px 24px">
+    <mj-column>
+      <mj-divider border-color="#D4D9E0" border-width="1px" padding="0 0 12px" />
+      <mj-text align="center" font-size="11px" color="#9295A5" line-height="16px" padding="0 0 4px">HitPay Payment Solutions Pte Ltd</mj-text>
+      <mj-text align="center" font-size="9px" color="#D4D9E0" line-height="14px" padding="0"><a href="{unsubscribe_link}" style="color:#D4D9E0;text-decoration:none;font-size:9px;">Unsubscribe</a></mj-text>
+    </mj-column>
+  </mj-section>
+  </mj-body>
+</mjml>

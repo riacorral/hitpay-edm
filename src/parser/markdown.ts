@@ -351,6 +351,19 @@ function parseBody(body: string): EdmSection[] {
       continue;
     }
 
+    // Fenced code block: ```lang\n...\n```
+    if (/^```/.test(trimmed)) {
+      i++;
+      const codeLines: string[] = [];
+      while (i < lines.length && !/^```/.test(lines[i].trim())) {
+        codeLines.push(lines[i]);
+        i++;
+      }
+      i++; // skip closing ```
+      sections.push({ type: 'code', lines: codeLines });
+      continue;
+    }
+
     // Horizontal rule → divider
     if (/^---+$/.test(trimmed) || /^\*\*\*+$/.test(trimmed)) {
       sections.push({ type: 'divider' });
@@ -480,7 +493,8 @@ function parseBody(body: string): EdmSection[] {
       !/^!\[/.test(lines[i].trim()) &&
       !/^\[.+\]\(.+\)\{\.cta\}$/.test(lines[i].trim()) &&
       !/^<\/?[a-zA-Z][^>]*>\s*$/.test(lines[i].trim()) &&
-      !lines[i].trim().startsWith(':::')
+      !lines[i].trim().startsWith(':::') &&
+      !/^```/.test(lines[i].trim())
     ) {
       paraLines.push(lines[i].trim());
       i++;

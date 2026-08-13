@@ -26,6 +26,9 @@ const BaseFrontmatter = z.object({
 export const ProductLaunchFrontmatter = BaseFrontmatter.extend({
   template: z.literal('product-launch'),
   productName: z.string(),
+  eyebrowText: z.string().optional(),
+  secondaryEyebrowText: z.string().optional(),
+  subtitle: z.string().optional(),
   heroImage: z.string().optional(),
   ctaText: z.string().default('Get Started'),
   ctaUrl: z.string().url().optional(),
@@ -161,6 +164,7 @@ export const EdmSectionSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('cta'), text: z.string(), url: z.string() }),
   z.object({ type: z.literal('divider') }),
   z.object({ type: z.literal('image'), src: z.string(), alt: z.string().optional(), width: z.number().optional() }),
+  z.object({ type: z.literal('code'), lines: z.array(z.string()) }),
   z.object({
     type: z.literal('metric'),
     items: z.array(z.object({ value: z.string(), label: z.string() })),

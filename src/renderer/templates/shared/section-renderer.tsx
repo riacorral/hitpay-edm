@@ -182,6 +182,19 @@ export function SectionRenderer({ section }: SectionRendererProps) {
         </Section>
       );
 
+    case 'code':
+      return (
+        <Section style={{ padding: `0 ${BRAND.spacing.lg} 16px` }}>
+          <Row>
+            <Column style={{ backgroundColor: BRAND.colors.neutral100, borderRadius: BRAND.email.borderRadius, padding: '14px 16px' }}>
+              <Text style={{ fontFamily: "'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace", fontSize: '13px', color: BRAND.colors.textPrimary, lineHeight: '1.7', margin: 0, whiteSpace: 'pre-wrap' as const }}>
+                {section.lines.join('\n')}
+              </Text>
+            </Column>
+          </Row>
+        </Section>
+      );
+
     case 'image_text': {
       const isLeft = section.imagePosition === 'left';
       const imgCol = (

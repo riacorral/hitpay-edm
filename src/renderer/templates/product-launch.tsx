@@ -27,19 +27,29 @@ export function ProductLaunchEmail({ frontmatter, sections }: Props) {
           textAlign: 'center' as const,
         }}
       >
-        <Text
-          style={{
-            fontFamily: BRAND.fonts.body,
-            fontSize: BRAND.fontSizes.eyebrow,
-            fontWeight: 600,
-            color: BRAND.colors.neutral200,
-            textTransform: 'uppercase' as const,
-            letterSpacing: '1.5px',
-            margin: '0 0 8px 0',
-          }}
-        >
-          Product Announcement
-        </Text>
+        <table cellPadding={0} cellSpacing={0} border={0} style={{ margin: '0 auto 20px' }}>
+          <tbody>
+            <tr>
+              <td
+                style={{
+                  backgroundColor: BRAND.colors.white,
+                  borderRadius: '20px',
+                  padding: '8px 20px',
+                  fontFamily: BRAND.fonts.body,
+                  fontSize: '13px',
+                  fontWeight: 800,
+                  color: BRAND.colors.deepBlue,
+                  letterSpacing: '0.5px',
+                  textTransform: 'uppercase' as const,
+                  textAlign: 'center' as const,
+                  whiteSpace: 'nowrap' as const,
+                }}
+              >
+                {fm.eyebrowText ?? 'Product Announcement'}
+              </td>
+            </tr>
+          </tbody>
+        </table>
         {fm.productName.trim().split('\n').map((line, i) => (
           <Text
             key={i}
@@ -55,6 +65,20 @@ export function ProductLaunchEmail({ frontmatter, sections }: Props) {
             {line}
           </Text>
         ))}
+        {fm.subtitle && (
+          <Text
+            style={{
+              fontFamily: BRAND.fonts.body,
+              fontSize: '15px',
+              fontWeight: 400,
+              color: BRAND.colors.neutral200,
+              lineHeight: '1.5',
+              margin: '0 8px 24px',
+            }}
+          >
+            {fm.subtitle}
+          </Text>
+        )}
         {fm.heroImage && (
           <Img
             src={fm.heroImage}

@@ -1,0 +1,310 @@
+<mjml>
+  <mj-head>
+    <mj-font name="Manrope" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap" />
+    <mj-preview>Capture, approve, and pay every supplier bill from one dashboard</mj-preview>
+    <mj-attributes>
+      <mj-all font-family="Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif" />
+      <mj-section padding="0" background-color="#FFFFFF" />
+      <mj-column padding="0" />
+      <mj-text font-family="Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif" padding="0" />
+      <mj-image padding="0" />
+    </mj-attributes>
+    <mj-style>
+      a { color: inherit; text-decoration: none; }
+      p { margin: 0 !important; }
+      @media only screen and (max-width:480px) {
+        /* Add gap below image when image+text block stacks on mobile */
+        .img-col { padding-bottom: 20px !important; }
+        /* Stack stat/column cards vertically on mobile */
+        table.col-wrap tr { display: block !important; }
+        td.col-card { display: block !important; width: 100% !important; max-width: 100% !important; box-sizing: border-box !important; margin-bottom: 8px !important; }
+        td.col-spacer { display: none !important; width: 0 !important; }
+      }
+    </mj-style>
+  </mj-head>
+  <mj-body background-color="#F0F2F5" width="600px">
+    
+  <mj-section background-color="#002771" padding="48px 32px 0">
+    <mj-column>
+      <mj-raw><table align="center" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 20px;"><tr><td style="background-color:#FFFFFF;border-radius:20px;padding:8px 20px;font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:13px;font-weight:800;color:#002771;letter-spacing:0.5px;text-transform:uppercase;text-align:center;white-space:nowrap;">🧾 New Product · BillPay</td></tr></table></mj-raw>
+      <mj-text align="center" font-size="28px" font-weight="700" color="#FFFFFF" line-height="1.2" padding="0 0 16px">Make paying suppliers<br/>as easy as getting paid.</mj-text>
+      <mj-text align="center" font-size="15px" color="#D4D9E0" line-height="1.5" padding="0 8px 24px">Capture, approve, and pay your suppliers — right from the HitPay dashboard you already use to get paid.</mj-text>
+      <mj-image src="img/billpay-hero.png" alt="Make paying suppliers
+as easy as getting paid." border-radius="8px 8px 0 0" padding="0" />
+    </mj-column>
+  </mj-section>
+    <mj-section padding="32px 0 0" background-color="#FFFFFF"><mj-column /></mj-section>
+    
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0">Hi {firstName},</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0">Right now, paying suppliers probably means chasing invoices across email and spreadsheets, logging into your bank one payment at a time, and reconciling it all by hand afterwards.</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0">BillPay brings that entire process into HitPay — the same platform you already use to get paid. Forward or upload an invoice, approve it, pay it, and watch it sync straight to Xero. No new software, no extra logins.</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 24px">
+    <mj-column>
+      <mj-divider border-color="#D4D9E0" border-width="1px" padding="8px 0 0" />
+    </mj-column>
+  </mj-section>
+  <mj-section padding="16px 32px 24px">
+    <mj-column>
+      <mj-text font-size="16px" font-weight="700" color="#002771" line-height="1.3" padding="0">Forward. Approve. Paid.</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 24px">
+    <mj-column padding="0">
+      <mj-raw><table class="col-wrap" width="100%" cellpadding="0" cellspacing="0" border="0" role="presentation"><tbody><tr><td width="173" class="col-card" valign="top" bgcolor="#F5F7FC" align="center" style="background-color:#F5F7FC;border-radius:8px;padding:16px 12px;width:173px;text-align:center;">
+          <div style="text-align:center;font-size:20px;line-height:1.2;margin:0 0 6px 0;font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;">✉️</div><div style="text-align:center;font-size:22px;font-weight:700;color:#002771;line-height:1.1;margin:0 0 10px 0;font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;">Forward</div><p style="text-align:center;font-size:12px;color:#61667C;line-height:1.6;margin:6px 0 0 0;font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;">Email an invoice to your BillPay inbox or upload it from your dashboard — no template needed.</p>
+        </td><td width="8" class="col-spacer" style="width:8px;font-size:0;line-height:0;"> </td><td width="173" class="col-card" valign="top" bgcolor="#F5F7FC" align="center" style="background-color:#F5F7FC;border-radius:8px;padding:16px 12px;width:173px;text-align:center;">
+          <div style="text-align:center;font-size:20px;line-height:1.2;margin:0 0 6px 0;font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;">✅</div><div style="text-align:center;font-size:22px;font-weight:700;color:#002771;line-height:1.1;margin:0 0 10px 0;font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;">Approve</div><p style="text-align:center;font-size:12px;color:#61667C;line-height:1.6;margin:6px 0 0 0;font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;">OCR pulls out the details, and your approval workflow routes it to the right person.</p>
+        </td><td width="8" class="col-spacer" style="width:8px;font-size:0;line-height:0;"> </td><td width="173" class="col-card" valign="top" bgcolor="#F5F7FC" align="center" style="background-color:#F5F7FC;border-radius:8px;padding:16px 12px;width:173px;text-align:center;">
+          <div style="text-align:center;font-size:20px;line-height:1.2;margin:0 0 6px 0;font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;">💸</div><div style="text-align:center;font-size:22px;font-weight:700;color:#002771;line-height:1.1;margin:0 0 10px 0;font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;">Paid</div><p style="text-align:center;font-size:12px;color:#61667C;line-height:1.6;margin:6px 0 0 0;font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;">Fund it via InstaPay, PESONet, or QRPH, on the date you choose.</p>
+        </td></tr></tbody></table></mj-raw>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 24px">
+    <mj-column>
+      <mj-divider border-color="#D4D9E0" border-width="1px" padding="8px 0 0" />
+    </mj-column>
+  </mj-section>
+  <mj-section padding="16px 32px 24px">
+    <mj-column>
+      <mj-text font-size="16px" font-weight="700" color="#002771" line-height="1.3" padding="0">Turn every invoice into a ready-to-approve bill</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0">Forward an invoice to your BillPay inbox, or upload it straight from your dashboard. OCR and AI read the vendor, amount, account number, and due date automatically.</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-raw>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:8px;">
+  <tr>
+    <td width="20" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:700;color:#2465DE;line-height:1.6;padding:0;white-space:nowrap;">•</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;padding:0 0 0 8px;">No manual data entry, no typos</td>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:8px;">
+  <tr>
+    <td width="20" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:700;color:#2465DE;line-height:1.6;padding:0;white-space:nowrap;">•</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;padding:0 0 0 8px;">Works from a forwarded email or a direct upload</td>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:0;">
+  <tr>
+    <td width="20" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:700;color:#2465DE;line-height:1.6;padding:0;white-space:nowrap;">•</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;padding:0 0 0 8px;">Bill is ready for approval in seconds</td>
+  </tr>
+</table></mj-raw>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="16px 32px 16px">
+    <mj-column>
+      <mj-image src="img/billpay-ocr-capture.png" alt="OCR automatically extracting vendor, amount, and due date from an uploaded invoice" border-radius="8px" padding="0" width="420px" align="center" />
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 24px">
+    <mj-column>
+      <mj-divider border-color="#D4D9E0" border-width="1px" padding="8px 0 0" />
+    </mj-column>
+  </mj-section>
+  <mj-section padding="16px 32px 24px">
+    <mj-column>
+      <mj-text font-size="16px" font-weight="700" color="#002771" line-height="1.3" padding="0">The right sign-off before money moves</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0">Select the bills that are ready, review the total, and release them together — instead of opening your bank portal one payment at a time.</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-raw>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:8px;">
+  <tr>
+    <td width="20" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:700;color:#2465DE;line-height:1.6;padding:0;white-space:nowrap;">•</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;padding:0 0 0 8px;">Multi-level approval by amount, so the right person signs off</td>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:8px;">
+  <tr>
+    <td width="20" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:700;color:#2465DE;line-height:1.6;padding:0;white-space:nowrap;">•</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;padding:0 0 0 8px;">One review, one funding action, however many bills are in it</td>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:0;">
+  <tr>
+    <td width="20" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:700;color:#2465DE;line-height:1.6;padding:0;white-space:nowrap;">•</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;padding:0 0 0 8px;">Full audit trail on every approval</td>
+  </tr>
+</table></mj-raw>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="16px 32px 16px">
+    <mj-column>
+      <mj-image src="img/billpay-approval.png" alt="Bill Pay dashboard showing bills awaiting approval and the Approve &amp; pay dialog" border-radius="8px" padding="0" width="420px" align="center" />
+    </mj-column>
+  </mj-section>
+  <mj-section padding="16px 32px 24px">
+    <mj-column>
+      <mj-button href="https://dashboard.hit-pay.com/bill-pay?utm_source=email&amp;utm_medium=email&amp;utm_campaign=billpay-launch-ph&amp;utm_content=1-set-up-billpay-now" background-color="#2465DE" color="#FFFFFF" border-radius="6px" font-size="16px" font-weight="600" inner-padding="12px 24px" align="center">Set Up BillPay Now</mj-button>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 24px">
+    <mj-column>
+      <mj-divider border-color="#D4D9E0" border-width="1px" padding="8px 0 0" />
+    </mj-column>
+  </mj-section>
+  <mj-section padding="16px 32px 24px">
+    <mj-column>
+      <mj-text font-size="16px" font-weight="700" color="#002771" line-height="1.3" padding="0">Every payment reconciles to Xero — no double entry</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0">Once a payment is made, it flows straight into your books. No manual matching, no spreadsheet reconciliation at month-end.</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-raw>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:8px;">
+  <tr>
+    <td width="20" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:700;color:#2465DE;line-height:1.6;padding:0;white-space:nowrap;">•</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;padding:0 0 0 8px;">Bills sync to Xero automatically</td>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:8px;">
+  <tr>
+    <td width="20" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:700;color:#2465DE;line-height:1.6;padding:0;white-space:nowrap;">•</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;padding:0 0 0 8px;">Split into line items with per-line accounting codes</td>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:0;">
+  <tr>
+    <td width="20" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:700;color:#2465DE;line-height:1.6;padding:0;white-space:nowrap;">•</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;padding:0 0 0 8px;">Full payment timeline — pending, processing, completed</td>
+  </tr>
+</table></mj-raw>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="16px 32px 16px">
+    <mj-column>
+      <mj-image src="img/billpay-xero-sync.png" alt="Approve &amp; pay success screen with payments syncing to Xero" border-radius="8px" padding="0" width="420px" align="center" />
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 24px">
+    <mj-column>
+      <mj-divider border-color="#D4D9E0" border-width="1px" padding="8px 0 0" />
+    </mj-column>
+  </mj-section>
+  <mj-section padding="16px 32px 24px">
+    <mj-column>
+      <mj-text font-size="16px" font-weight="700" color="#002771" line-height="1.3" padding="0">Built For</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 24px">
+    <mj-column padding="0">
+      <mj-raw><table class="col-wrap" width="100%" cellpadding="0" cellspacing="0" border="0" role="presentation"><tbody><tr><td width="173" class="col-card" valign="top" bgcolor="#F5F7FC" align="center" style="background-color:#F5F7FC;border-radius:8px;padding:16px 12px;width:173px;text-align:center;">
+          <div style="text-align:center;font-size:20px;line-height:1.2;margin:0 0 6px 0;font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;">🧾</div><p style="text-align:center;font-size:12px;color:#61667C;line-height:1.6;margin:6px 0 0 0;font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;">Xero partners tired of reconciling bill payments by hand</p>
+        </td><td width="8" class="col-spacer" style="width:8px;font-size:0;line-height:0;"> </td><td width="173" class="col-card" valign="top" bgcolor="#F5F7FC" align="center" style="background-color:#F5F7FC;border-radius:8px;padding:16px 12px;width:173px;text-align:center;">
+          <div style="text-align:center;font-size:20px;line-height:1.2;margin:0 0 6px 0;font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;">💼</div><p style="text-align:center;font-size:12px;color:#61667C;line-height:1.6;margin:6px 0 0 0;font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;">Businesses paying 10+ supplier bills a month across scattered spreadsheets and email threads</p>
+        </td><td width="8" class="col-spacer" style="width:8px;font-size:0;line-height:0;"> </td><td width="173" class="col-card" valign="top" bgcolor="#F5F7FC" align="center" style="background-color:#F5F7FC;border-radius:8px;padding:16px 12px;width:173px;text-align:center;">
+          <div style="text-align:center;font-size:20px;line-height:1.2;margin:0 0 6px 0;font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;">🇵🇭</div><p style="text-align:center;font-size:12px;color:#61667C;line-height:1.6;margin:6px 0 0 0;font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;">Anyone paying local suppliers across the Philippines</p>
+        </td></tr></tbody></table></mj-raw>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 24px">
+    <mj-column>
+      <mj-divider border-color="#D4D9E0" border-width="1px" padding="8px 0 0" />
+    </mj-column>
+  </mj-section>
+  <mj-section padding="16px 32px 24px">
+    <mj-column>
+      <mj-text font-size="16px" font-weight="700" color="#002771" line-height="1.3" padding="0">Simple, Pay-As-You-Go Pricing</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-raw>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">
+  <tr>
+    <td width="24" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:16px;font-weight:700;color:#2465DE;line-height:1.4;padding:0;white-space:nowrap;">•</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;padding:0 0 0 4px;">
+      <div style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:16px;font-weight:700;color:#03102F;line-height:1.4;margin:0 0 4px 0;">No monthly subscription</div>
+      <div style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:400;color:#61667C;line-height:1.6;">Pay only for the transfers you make — no setup fees, no platform fees.</div>
+    </td>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:0;">
+  <tr>
+    <td width="24" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:16px;font-weight:700;color:#2465DE;line-height:1.4;padding:0;white-space:nowrap;">•</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;padding:0 0 0 4px;">
+      <div style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:16px;font-weight:700;color:#03102F;line-height:1.4;margin:0 0 4px 0;">₱15 per local transfer</div>
+      <div style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:400;color:#61667C;line-height:1.6;">InstaPay and PESONet, same flat rate every time, however many bills you pay.</div>
+    </td>
+  </tr>
+</table></mj-raw>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="16px 32px 24px">
+    <mj-column>
+      <mj-button href="https://dashboard.hit-pay.com/bill-pay?utm_source=email&amp;utm_medium=email&amp;utm_campaign=billpay-launch-ph&amp;utm_content=2-start-paying-suppliers-with-billpay" background-color="#2465DE" color="#FFFFFF" border-radius="6px" font-size="16px" font-weight="600" inner-padding="12px 24px" align="center">Start Paying Suppliers With BillPay</mj-button>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 24px">
+    <mj-column>
+      <mj-divider border-color="#D4D9E0" border-width="1px" padding="8px 0 0" />
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0">Questions? Reply to this email and we will help you out.</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text font-size="14px" color="#61667C" line-height="1.6" padding="0">— The HitPay Team</mj-text>
+    </mj-column>
+  </mj-section>
+    
+    
+  
+  <!-- Footer: help banner -->
+  <mj-section background-color="#F9F9F6" padding="24px 32px 0">
+    <mj-column>
+      <mj-image src="img/help_banner.png" alt="Need help? Visit our Help Centre" href="https://help.hit-pay.com/" width="536px" padding="0" />
+    </mj-column>
+  </mj-section>
+  <!-- Footer -->
+  <mj-section background-color="#F9F9F6" padding="24px 32px 16px">
+    <mj-column>
+      <mj-text align="center" padding="0">
+        <a href="https://www.hitpayapp.com" style="display:inline-block;vertical-align:middle;margin-right:14px;"><img src="img/logo-dark.png" width="70" alt="HitPay" style="display:inline-block;vertical-align:middle;" /></a><a href="https://www.instagram.com/hitpayapp" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="img/social-instagram.png" width="24" height="24" alt="Instagram" style="display:inline-block;border-radius:50%;vertical-align:middle;" /></a><a href="https://www.facebook.com/hitpayapp" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="img/social-facebook.png" width="24" height="24" alt="Facebook" style="display:inline-block;border-radius:50%;vertical-align:middle;" /></a><a href="https://www.linkedin.com/company/hit-pay/" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="img/social-linkedin.png" width="24" height="24" alt="LinkedIn" style="display:inline-block;border-radius:50%;vertical-align:middle;" /></a><a href="https://www.tiktok.com/@hitpayapp" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="img/social-tiktok.png" width="24" height="24" alt="TikTok" style="display:inline-block;border-radius:50%;vertical-align:middle;" /></a><a href="https://www.youtube.com/@hitpayapp" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="img/social-youtube.png" width="24" height="24" alt="YouTube" style="display:inline-block;border-radius:50%;vertical-align:middle;" /></a>
+      </mj-text>
+    </mj-column>
+  </mj-section>
+  <!-- Footer banner (conditional — add market URL to FOOTER_BANNERS to enable) -->
+  
+  <!-- Footer text -->
+  <mj-section background-color="#F9F9F6" padding="12px 32px 24px">
+    <mj-column>
+      <mj-divider border-color="#D4D9E0" border-width="1px" padding="0 0 12px" />
+      <mj-text align="center" font-size="11px" color="#9295A5" line-height="16px" padding="0 0 4px">HitPay Payment Solutions Pte Ltd</mj-text>
+      <mj-text align="center" font-size="9px" color="#D4D9E0" line-height="14px" padding="0"><a href="{unsubscribe_link}" style="color:#D4D9E0;text-decoration:none;font-size:9px;">Unsubscribe</a></mj-text>
+    </mj-column>
+  </mj-section>
+  </mj-body>
+</mjml>

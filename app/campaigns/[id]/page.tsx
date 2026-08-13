@@ -151,6 +151,8 @@ function CampaignPageInner() {
   // Actions
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState('');
+  const [zipping, setZipping] = useState(false);
+  const [zipError, setZipError] = useState('');
   const [deleting, setDeleting] = useState(false);
   const [duplicating, setDuplicating] = useState(false);
 
@@ -274,6 +276,26 @@ function CampaignPageInner() {
       } : c);
     } catch (e) { setUploadError(e instanceof Error ? e.message : 'Upload failed'); }
     finally { setUploading(false); }
+  }
+
+  async function handleExportZip() {
+    setZipping(true); setZipError('');
+    try {
+      const res = await fetch(`/api/campaigns/${id}/export-zip`, { method: 'POST' });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error((data as { error?: string }).error ?? 'Export failed');
+      }
+      const blob = await res.blob();
+      const disposition = res.headers.get('Content-Disposition') ?? '';
+      const match = disposition.match(/filename="([^"]+)"/);
+      const filename = match ? match[1] : `edm-${id}.zip`;
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = filename; a.click();
+      URL.revokeObjectURL(url);
+    } catch (e) { setZipError(e instanceof Error ? e.message : 'Export failed'); }
+    finally { setZipping(false); }
   }
 
   async function handleDuplicate() {
@@ -635,6 +657,18 @@ function CampaignPageInner() {
                 {uploadError}{' '}
                 {uploadError.toLowerCase().includes('settings') && <Link href="/settings" className="underline">Settings →</Link>}
               </p>
+            )}
+
+            {/* Download ZIP for Loops */}
+            <button onClick={handleExportZip} disabled={zipping}
+              className="w-full py-2 rounded-lg text-white text-xs font-semibold hover:opacity-90 disabled:opacity-50 transition-opacity border border-white/20"
+              style={{ backgroundColor: '#61667C' }}>
+              {zipping
+                ? <span className="flex items-center justify-center gap-2"><span className="animate-spin inline-block w-3 h-3 border-2 border-white border-t-transparent rounded-full" />Exporting…</span>
+                : 'Download ZIP for Loops'}
+            </button>
+            {zipError && (
+              <p className="text-xs text-red-600">{zipError}</p>
             )}
 
             {/* View in Loops */}

@@ -104,7 +104,9 @@ RULES:
 - Tone: professional, warm, confident.
 - Do NOT use merge tags like {{first_name}} or {firstName} — write plain copy.
 - If images are provided, use the first as heroImage (if template supports it).
-- Subject lines must use Title Case (capitalise the first letter of every major word). Example: "Meet Bukku - HitPay's New Accounting Integration" not "Meet Bukku - HitPay's new accounting integration".
+- CTA URLs: every ctaUrl and every [text](url){.cta} link that points to a webpage (http/https) MUST carry UTM parameters appended as a query string: ?utm_source=email&utm_medium=email&utm_campaign=<kebab-case-campaign-slug>&utm_content=<position>-<kebab-case-cta-slug> — utm_content is 1-indexed by the CTA's order in the email (e.g. utm_content=1-read-the-docs, then utm_content=2-talk-to-us for the next one). Skip UTM params on mailto: or tel: links.
+- Subject lines: use Title Case. Front-load the first 3-5 words with the strongest hook (biggest benefit, pain point solved, or genuine curiosity) — never spend the opening words on the brand name or filler like "Introducing"/"Announcing"/"Newsletter". Keep under ~60 characters. Prefer benefit/outcome language over feature names (e.g. "Skip API Keys" over "OAuth Apps"). Clarity over cleverness — never clickbait. Example: "Meet Bukku - HitPay's New Accounting Integration" not "Meet Bukku - HitPay's new accounting integration".
+- Preview text: complement the subject, don't repeat it — add context or a supporting benefit. ~40-90 characters. No generic filler ("View in browser") and no trailing punctuation.
 - YAML values that contain a colon must ALWAYS be wrapped in double quotes. Example: subject: "Exclusive Offer: Save on Card Payments" — never write subject: Exclusive Offer: Save on Card Payments (unquoted).
 - Write complete polished copy, no placeholders.
 - NEVER include raw HTML tags (no <div>, <span>, <table>, etc.) in the markdown body. Only use the markdown syntax shown above.
