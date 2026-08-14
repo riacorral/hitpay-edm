@@ -1,23 +1,20 @@
 import React from 'react';
+import { join } from 'path';
 import { Section, Row, Column, Text, Link, Hr, Img } from '@react-email/components'; // Img used for banner + social icons
 import { BRAND } from '../../../brand/hitpay.js';
 
-const BLOB_BASE = 'https://azjzrc77u6pvsjpm.public.blob.vercel-storage.com/icons';
-const BRAND_BASE = 'https://azjzrc77u6pvsjpm.public.blob.vercel-storage.com/brand';
+const CDN_LOCAL = join(process.cwd(), 'public', 'brand');
+const EMAIL_SIGNATURE = `${CDN_LOCAL}/email-signature.png`;
 
-const FOOTER_BANNERS: Record<string, string> = {
-  sg:     `${BRAND_BASE}/footer-banner-sg.png`,
-  my:     `${BRAND_BASE}/footer-banner-my.png`,
-  ph:     `${BRAND_BASE}/footer-banner-ph.png`,
-  global: `${BRAND_BASE}/footer-banner-global.png`,
-};
+// No local footer banner assets — kept empty so the banner row is skipped in browser preview
+const FOOTER_BANNERS: Record<string, string> = {};
 
 const SOCIAL_ICONS = [
-  { name: 'Instagram', href: BRAND.social.links.instagram, src: `${BLOB_BASE}/social-instagram.png` },
-  { name: 'Facebook',  href: BRAND.social.links.facebook,  src: `${BLOB_BASE}/social-facebook.png`  },
-  { name: 'LinkedIn',  href: BRAND.social.links.linkedin,  src: `${BLOB_BASE}/social-linkedin.png`  },
-  { name: 'TikTok',   href: BRAND.social.links.tiktok,    src: `${BLOB_BASE}/social-tiktok.png`    },
-  { name: 'YouTube',  href: BRAND.social.links.youtube,   src: `${BLOB_BASE}/social-youtube.png`   },
+  { name: 'Instagram', href: BRAND.social.links.instagram, src: BRAND.social.icons.instagram },
+  { name: 'Facebook',  href: BRAND.social.links.facebook,  src: BRAND.social.icons.facebook  },
+  { name: 'LinkedIn',  href: BRAND.social.links.linkedin,  src: BRAND.social.icons.linkedin  },
+  { name: 'TikTok',   href: BRAND.social.links.tiktok,    src: BRAND.social.icons.tiktok    },
+  { name: 'YouTube',  href: BRAND.social.links.youtube,   src: BRAND.social.icons.youtube   },
 ];
 
 function SocialIcon({ name, href, src }: { name: string; href: string; src: string }) {
@@ -31,7 +28,7 @@ function SocialIcon({ name, href, src }: { name: string; href: string; src: stri
 }
 
 export function Footer({ market = 'sg' }: { market?: string }) {
-  const bannerSrc = FOOTER_BANNERS[market] ?? FOOTER_BANNERS.global;
+  const bannerSrc = FOOTER_BANNERS[market];
   return (
     <Section>
       {/* Logo + social icons */}
@@ -54,12 +51,26 @@ export function Footer({ market = 'sg' }: { market?: string }) {
         </Column>
       </Row>
 
-      {/* Market cross-sell banner — full bleed, no padding */}
+      {/* Market cross-sell banner — only shown when a local asset exists */}
+      {bannerSrc && (
+        <Row>
+          <Column style={{ padding: '0', lineHeight: '0', fontSize: '0' }}>
+            <Img
+              src={bannerSrc}
+              alt="HitPay"
+              width="600"
+              style={{ display: 'block', width: '100%', maxWidth: '600px' }}
+            />
+          </Column>
+        </Row>
+      )}
+
+      {/* Email signature */}
       <Row>
         <Column style={{ padding: '0', lineHeight: '0', fontSize: '0' }}>
           <Img
-            src={bannerSrc}
-            alt="HitPay"
+            src={EMAIL_SIGNATURE}
+            alt="HitPay products"
             width="600"
             style={{ display: 'block', width: '100%', maxWidth: '600px' }}
           />
