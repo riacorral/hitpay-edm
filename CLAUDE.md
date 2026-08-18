@@ -48,6 +48,33 @@ Markdown files with YAML frontmatter specifying template type and metadata. Body
 
 Every email body must open with `Hi {firstName},` as the first line (Loops contact-property tag — no inline fallback syntax; fallback text is set via Loops' dynamic-content menu after upload, not written in the markdown).
 
+## Body Structure (Impactful EDM Pattern)
+
+`emails/adaptive-pricing-checkout.md` is the reference structure for a full feature-launch EDM — default to this shape whenever the campaign has enough substance to carry it (a new capability, a meaningful behavior change, something with a clear "who's this for" split). Copy-to-section mapping:
+
+1. **Greeting** — `Hi {firstName},`
+2. **Hook** — one bold sentence right after the greeting, stating the single biggest partner-facing benefit. Never throat-clearing ("We're excited to announce...") and never just the feature name — lead with the outcome.
+3. **3 bullets, bold lead-in** — `- **Benefit phrase** — supporting clause.` Each bullet a distinct value prop (what/why it matters), not a setup step.
+4. **Optional metric callout** — `**+10%** Average lift in...` — only when there's a real, defensible number. Renders as a stat card. Don't manufacture a stat to fill this slot.
+5. Divider (`---`)
+6. **"Getting Started" section** — `### Getting Started` heading, numbered steps written as dashboard paths (`Go to **Settings > X > Y**...`), an optional screenshot of the exact setting, then a `{.cta}` link. This is the how-to-turn-it-on block.
+7. Divider
+8. **"Key Benefits" section** — `### Key Benefits` heading, a longer bullet list (4-6 items) each leading with a bold short benefit title, going deeper than the hook bullets (more proof, more specificity). Followed by another `{.cta}` link.
+9. Divider
+10. **"Suitable For" / "Who Is This For?" section** — one sentence framing the ideal partner, then a `:::columns` block with exactly 3 segments (icon + bold segment name/stat + one-line description). Followed by another `{.cta}` link.
+11. Divider
+12. **"Availability" section** — plain statement of what channels/products it works with (hosted checkout, POS, API, etc.). Sets expectations up front and heads off support questions.
+13. Divider
+14. **Sign-off** — "Questions? Reply to this email and we will help you out." then `**The HitPay Team**`.
+
+Design notes:
+- The CTA repeats after each major section (steps 6, 8, 10) — not just once at the bottom — each with its own `utm_content` position/slug (see UTM convention below). This reinforces the action at every point of persuasion instead of making the reader scroll back to one link.
+- `###` headings break the body into scannable chunks — don't run the whole email as one undifferentiated stream of paragraphs.
+- Use `:::columns` for audience/use-case segmentation (3 cards: icon + short bold title + one-line description) — the clearest way to make "who this is for" concrete and skimmable.
+- Inline screenshots go right after the step(s) they illustrate, not bunched at the top or bottom of the email.
+
+When to scale down: a minor update or single-feature tweak (see `emails/checkout-customization-updates.md`) doesn't need the full arc — hook, 1-2 feature blocks with inline screenshots, one CTA, sign-off is enough. Ask the user if unsure whether a campaign warrants the full structure vs. a lighter one.
+
 ## CTA URLs & UTM Tracking
 
 Every CTA that links to a webpage (`ctaUrl` in frontmatter, `[text](url){.cta}` links, and secondary text links) must carry UTM parameters:
