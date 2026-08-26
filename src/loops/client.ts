@@ -82,6 +82,7 @@ export async function createDraftCampaign(
   previewText: string,
   content: string,
   useMjml: boolean,
+  campaignName?: string,
   onRefresh?: (newToken: string) => void,
 ): Promise<CreateDraftResult> {
   activeSession = sessionToken;
@@ -127,7 +128,7 @@ export async function createDraftCampaign(
 
   // Step 5: Set campaign name
   await loopsFetch(`/api/campaigns/${campaignId}`, 'PUT', {
-    name: `[EDM] ${subject}`,
+    name: campaignName ?? subject,
   });
 
   if (onRefresh && activeSession !== sessionToken) {

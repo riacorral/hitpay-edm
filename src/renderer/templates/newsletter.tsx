@@ -1,5 +1,5 @@
 import React from 'react';
-import { Section, Text } from '@react-email/components';
+import { Section, Text, Img } from '@react-email/components';
 import { BRAND } from '../../brand/hitpay.js';
 import { Wrapper } from './shared/wrapper.js';
 import { Header } from './shared/header.js';
@@ -19,39 +19,51 @@ export function NewsletterEmail({ frontmatter, sections }: Props) {
     <Wrapper previewText={fm.previewText}>
       <Header />
 
-      {/* Newsletter header bar */}
-      <Section
-        style={{
-          backgroundColor: BRAND.colors.deepBlue,
-          padding: `${BRAND.spacing.lg} ${BRAND.spacing.xl}`,
-        }}
-      >
-        <Text
+      {/* Newsletter header bar — only shown when title/subtitle/date are provided */}
+      {(fm.title || fm.subtitle || fm.date) && (
+        <Section
           style={{
-            fontFamily: BRAND.fonts.headline,
-            fontSize: BRAND.fontSizes.headline,
-            fontWeight: 700,
-            color: BRAND.colors.white,
-            margin: '0',
-            lineHeight: '1.3',
+            backgroundColor: BRAND.colors.deepBlue,
+            padding: `${BRAND.spacing.lg} ${BRAND.spacing.xl}`,
           }}
         >
-          {fm.title ?? fm.subject}
-          {fm.issueNumber ? ` #${fm.issueNumber}` : ''}
-        </Text>
-        {(fm.subtitle ?? fm.date) && (
           <Text
             style={{
-              fontFamily: BRAND.fonts.body,
-              fontSize: BRAND.fontSizes.bodySmall,
-              color: BRAND.colors.neutral200,
-              margin: '4px 0 0 0',
+              fontFamily: BRAND.fonts.headline,
+              fontSize: BRAND.fontSizes.headline,
+              fontWeight: 700,
+              color: BRAND.colors.white,
+              margin: '0',
+              lineHeight: '1.3',
             }}
           >
-            {fm.subtitle ?? fm.date}
+            {fm.title ?? fm.subject}
+            {fm.issueNumber ? ` #${fm.issueNumber}` : ''}
           </Text>
-        )}
-      </Section>
+          {(fm.subtitle ?? fm.date) && (
+            <Text
+              style={{
+                fontFamily: BRAND.fonts.body,
+                fontSize: BRAND.fontSizes.bodySmall,
+                color: BRAND.colors.neutral200,
+                margin: '4px 0 0 0',
+              }}
+            >
+              {fm.subtitle ?? fm.date}
+            </Text>
+          )}
+        </Section>
+      )}
+
+      {/* Optional hero image — full bleed, no rounding */}
+      {fm.heroImage && (
+        <Img
+          src={fm.heroImage}
+          alt=""
+          width="600"
+          style={{ display: 'block', maxWidth: '100%' }}
+        />
+      )}
 
       {/* Body sections */}
       <Section style={{ padding: `${BRAND.spacing.xl} 0` }}>

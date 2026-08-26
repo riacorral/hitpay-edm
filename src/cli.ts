@@ -33,6 +33,7 @@ program
   .description('Upload campaign to Loops.so as a draft')
   .argument('<file-or-slug>', 'Campaign slug, directory path, or HTML file path')
   .option('--html', 'Force HTML upload (skip MJML even if index.mjml exists)')
+  .option('--name <name>', 'Override the campaign name in Loops (defaults to subject line)')
   .action(uploadCommand);
 
 program

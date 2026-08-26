@@ -6,7 +6,7 @@ import { loadConfig, saveConfig } from './init.js';
 import { createDraftCampaign } from '../loops/client.js';
 import type { CampaignMetadata } from '../schema/campaign.js';
 
-export async function uploadCommand(fileOrSlug: string, options: { html?: boolean } = {}): Promise<void> {
+export async function uploadCommand(fileOrSlug: string, options: { html?: boolean; name?: string } = {}): Promise<void> {
   const config = loadConfig();
 
   if (!config.loopsSessionToken) {
@@ -37,6 +37,7 @@ export async function uploadCommand(fileOrSlug: string, options: { html?: boolea
 
   const subject = metadata?.subject || 'HitPay EDM';
   const previewText = metadata?.title || '';
+  const campaignName = options.name || subject;
 
   console.log(chalk.dim(`Uploading to Loops as ${useMjml ? 'MJML' : 'HTML'}...`));
   console.log(chalk.dim(`Subject: ${subject}`));
@@ -49,6 +50,7 @@ export async function uploadCommand(fileOrSlug: string, options: { html?: boolea
       previewText,
       content,
       useMjml,
+      campaignName,
       (newToken) => {
         config.loopsSessionToken = newToken;
         saveConfig(config);

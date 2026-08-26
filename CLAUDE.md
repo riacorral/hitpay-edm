@@ -12,7 +12,7 @@ CLI tool to create HitPay-branded email campaigns (EDMs) from markdown and push 
 
 ## Key Conventions
 
-- Always say **"partners"** — never "customers", "clients", or "merchants"
+- Refer to HitPay's audience as **"partners"**, **"merchant partners"**, or **"merchants"** — all fine; vary them so copy doesn't read stiff (always "partners" sounds forced). Avoid "clients". "customers" is fine when it means a *partner's own shoppers* (e.g. "your customers can now pay with…")
 - Brand colors: Logo Blue `#0E2859`, Action Blue `#2465DE`, Deep Blue `#002771`, Beige `#F9F9F6`
 - Fonts: Manrope (Google Fonts, closest to Hauora), Arial fallback
 - Email max-width: 600px
