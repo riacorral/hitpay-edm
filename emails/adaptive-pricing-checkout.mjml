@@ -34,9 +34,9 @@
           <span style="white-space:nowrap;">🎉 New Product Release - Cross-Border Payments</span>
         </td>
       </tr></table></mj-raw>
-      <mj-text align="center" font-size="28px" font-weight="700" color="#FFFFFF" line-height="1.2" padding="0 0 16px">Adaptive Pricing for Online Checkout</mj-text>
-      
-      <mj-image src="img/adaptive-pricing-checkout-page.png" alt="Adaptive Pricing for Online Checkout" border="2px solid #FFFFFF" border-radius="12px 12px 0 0" padding="0" />
+      <mj-text align="center" font-size="28px" font-weight="700" color="#FFFFFF" line-height="1.2" padding="0 0 16px">Adaptive Pricing for Online Checkout Now Available</mj-text>
+
+      <mj-image src="img/adaptive-pricing-checkout-page.png" alt="Adaptive Pricing for Online Checkout Now Available" border="2px solid #FFFFFF" border-radius="12px 12px 0 0" padding="0" />
     </mj-column>
   </mj-section>
     <mj-section padding="32px 0 0" background-color="#FFFFFF"><mj-column /></mj-section>
@@ -48,12 +48,30 @@
   </mj-section>
   <mj-section padding="0 32px 16px">
     <mj-column>
-      <mj-text align="left" font-size="14px" color="#61667C" line-height="1.6" padding="0"><b style="color:#03102F;">Have overseas customers?</b> They can now pay in their own local currency and familiar payment methods - without you lifting a finger.</mj-text>
+      <mj-text align="left" font-size="14px" color="#61667C" line-height="1.6" padding="0"><b style="color:#03102F;">Better serve international customers with a checkout that feels local to them.</b></mj-text>
     </mj-column>
   </mj-section>
   <mj-section padding="0 32px 16px">
     <mj-column>
-      <mj-text align="left" font-size="14px" color="#61667C" line-height="1.6" padding="0">No separate currency payment link to create, no need to set your product prices in a different currency. Simply keep to your current business as usual, and your customers can keep to theirs too.</mj-text>
+      <mj-raw>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:8px;">
+  <tr>
+    <td width="20" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:700;color:#2465DE;line-height:1.6;padding:0;white-space:nowrap;">•</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;padding:0 0 0 8px;"><b style="color:#03102F;">Show local prices automatically</b> — no need to manage multiple currencies.</td>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:8px;">
+  <tr>
+    <td width="20" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:700;color:#2465DE;line-height:1.6;padding:0;white-space:nowrap;">•</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;padding:0 0 0 8px;"><b style="color:#03102F;">Let customers pay their way</b> — with payment methods they already know and trust.</td>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:0;">
+  <tr>
+    <td width="20" valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:700;color:#2465DE;line-height:1.6;padding:0;white-space:nowrap;">•</td>
+    <td valign="top" style="font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;padding:0 0 0 8px;"><b style="color:#03102F;">Keep business as usual</b> — no separate currency payment links or extra setup. Just more seamless international checkouts.</td>
+  </tr>
+</table></mj-raw>
     </mj-column>
   </mj-section>
   <mj-section padding="0 32px 24px">
@@ -110,7 +128,7 @@
   </mj-section>
   <mj-section padding="16px 32px 24px">
     <mj-column>
-      <mj-button href="https://docs.hitpayapp.com/payments/adaptive-pricing?utm_source=email&amp;utm_medium=email&amp;utm_campaign=adaptive-pricing-checkout&amp;utm_content=2-read-the-documentation" background-color="#2465DE" color="#FFFFFF" border-radius="6px" font-size="16px" font-weight="600" inner-padding="12px 24px" align="center">Read the Documentation</mj-button>
+      <mj-button href="https://docs.hitpayapp.com/payments/adaptive-pricing?utm_source=email&amp;utm_medium=email&amp;utm_campaign=adaptive-pricing-checkout&amp;utm_content=2-enable-adaptive-pricing-now" background-color="#2465DE" color="#FFFFFF" border-radius="6px" font-size="16px" font-weight="600" inner-padding="12px 24px" align="center">Enable Adaptive Pricing Now</mj-button>
     </mj-column>
   </mj-section>
   <mj-section padding="0 32px 24px">

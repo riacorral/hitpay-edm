@@ -4,7 +4,7 @@ subject: "Boost Conversion: Let Overseas Buyers Pay Local"
 previewText: "Save on fees, increase conversion rates when customers pay in their local currency and familiar payment methods."
 market: global
 eyebrowText: "🎉 New Product Release - Cross-Border Payments"
-productName: "Adaptive Pricing for Online Checkout"
+productName: "Adaptive Pricing for Online Checkout Now Available"
 heroImage: "img/adaptive-pricing-checkout-page.png"
 ctaText: "Enable Adaptive Pricing"
 ctaUrl: "https://dashboard.hit-pay.com/?utm_source=email&utm_medium=email&utm_campaign=adaptive-pricing-checkout&utm_content=1-enable-adaptive-pricing"
@@ -12,9 +12,11 @@ ctaUrl: "https://dashboard.hit-pay.com/?utm_source=email&utm_medium=email&utm_ca
 
 Hi {firstName},
 
-**Have overseas customers?** They can now pay in their own local currency and familiar payment methods - without you lifting a finger.
+**Better serve international customers with a checkout that feels local to them.**
 
-No separate currency payment link to create, no need to set your product prices in a different currency. Simply keep to your current business as usual, and your customers can keep to theirs too.
+- **Show local prices automatically** — no need to manage multiple currencies.
+- **Let customers pay their way** — with payment methods they already know and trust.
+- **Keep business as usual** — no separate currency payment links or extra setup. Just more seamless international checkouts.
 
 **+10%** Average lift in international revenue, plus net new sales in markets where customers pay by local methods.
 
@@ -28,7 +30,7 @@ No separate currency payment link to create, no need to set your product prices 
 
 ![Enable adaptive pricing under Settings > Checkout Customisation > Adaptive Pricing](img/adaptive-pricing-settings.png)
 
-[Read the Documentation](https://docs.hitpayapp.com/payments/adaptive-pricing?utm_source=email&utm_medium=email&utm_campaign=adaptive-pricing-checkout&utm_content=2-read-the-documentation){.cta}
+[Enable Adaptive Pricing Now](https://docs.hitpayapp.com/payments/adaptive-pricing?utm_source=email&utm_medium=email&utm_campaign=adaptive-pricing-checkout&utm_content=2-enable-adaptive-pricing-now){.cta}
 
 ---
 
