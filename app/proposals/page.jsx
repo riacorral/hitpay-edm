@@ -4,11 +4,30 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import {
   ShoppingBag, GraduationCap, UtensilsCrossed, Dumbbell, Sparkles, HeartHandshake,
   Store, Plane, Scale, Network, FileText, Printer, Save, FolderOpen, X, Check,
-  RotateCcw, Info, Trash2, Mail, Phone, Globe, ExternalLink, ChevronDown, CreditCard, Volume2
+  RotateCcw, Info, Trash2, Mail, Phone, Globe, ExternalLink, ChevronDown, CreditCard, Volume2,
+  Smartphone, Tablet, Monitor
 } from "lucide-react";
 
-// Icons for hardware line items (shown in the proposal pricing table)
-const HW_ICON = { terminal: CreditCard, soundbox: Volume2 };
+// Consistent device icons for every hardware line item
+const HW_ICON = {
+  terminal: CreditCard, soundbox: Volume2, ttp: Smartphone,
+  wisepad: CreditCard, flexipos: Tablet, allinone: Tablet, posmax: Monitor,
+};
+
+// Brand logos (from HitPay's payment-logo set) shown next to each method in the pricing table
+const METHOD_LOGOS = {
+  card: ["visa", "master", "american_express"], card_ip: ["visa", "master", "american_express"],
+  intlcard: ["visa", "master", "american_express"], intlcard_ip: ["visa", "master", "american_express"],
+  gcash: ["gcash"], gcash_ip: ["gcash"],
+  qrph: ["qrph"], qrph_ip: ["qrph"],
+  paynow: ["paynow"], paynow_ip: ["paynow"],
+  grabpay: ["grabpay"], grabpay_ip: ["grabpay"],
+  shopeepay: ["shopeepay"], shopeepay_ip: ["shopeepay"],
+  wechat: ["wechatpay"], wechat_ip: ["wechatpay"],
+  billease: ["billease"], unionbank: ["ubp"], atome: ["atome"],
+  fpx: ["fpx"], tng: ["touchngo"], tng_ip: ["touchngo"],
+  maybankqr: ["maybankqrpay"], alipay: ["alipay"],
+};
 
 // ---- HitPay brand tokens (official brand guidelines,blue-led) ----
 const COLORS = {
@@ -75,6 +94,7 @@ const COUNTRIES = {
       { id: "soundbox", label: "HitPay SoundBox", rate: "₱2,500 (one-time)" },
     ],
     payouts: { nonCard: "T+1", onlineCards: "T+7", inpersonCards: "T+2" },
+    tapToPay: false, recurringCards: false,
     core: { online: ["card", "gcash", "qrph"], inperson: ["card_ip", "gcash_ip", "qrph_ip"] },
   },
   sg: {
@@ -111,6 +131,7 @@ const COUNTRIES = {
       { id: "posmax", label: "HitPay POS MAX", rate: "S$700 (one-time)" },
     ],
     payouts: { nonCard: "T+1", onlineCards: "T+1", inpersonCards: "T+1" },
+    tapToPay: true, recurringCards: true,
     core: { online: ["paynow", "card"], inperson: ["card_ip", "paynow_ip"] },
   },
   my: {
@@ -149,6 +170,7 @@ const COUNTRIES = {
       { id: "flexipos", label: "FlexiPOS", rate: "RM1,750 (one-time)" },
     ],
     payouts: { nonCard: "T+2", onlineCards: "T+1", inpersonCards: "T+1" },
+    tapToPay: true, recurringCards: true,
     core: { online: ["duitnow", "fpx", "card"], inperson: ["card_ip", "duitnow_ip"] },
   },
 };
@@ -201,7 +223,7 @@ const VERTICALS = {
     label: "F&B", icon: UtensilsCrossed,
     summary: "This proposal outlines how HitPay's Point of Sale and Static QR can speed up payment collection at the counter and across branches for {merchantName}.",
     props: [
-      "Accept cards, local e-wallets, and QR at the counter with HitPay POS",
+      "Accept {tapToPay}cards, local e-wallets, and QR at the counter with HitPay POS",
       "Static QR at tables or counters for fast, contactless payment",
       "Send Payment Links for delivery, pre-orders, or catering deposits",
       "Consolidated reporting across every branch in one dashboard",
@@ -215,8 +237,8 @@ const VERTICALS = {
     summary: "This proposal outlines how HitPay's Payment Links and Invoicing can simplify membership and class payments for {merchantName}.",
     props: [
       "Sell memberships, class packs, and day passes through Payment Links",
-      "Set up recurring billing for monthly memberships",
-      "Accept cards, local e-wallets, and QR at the front desk",
+      "Set up recurring billing{recurringVia} for monthly memberships",
+      "Accept {tapToPay}cards, local e-wallets, and QR at the front desk",
       "One dashboard for online sign-ups and in-person payments",
       "Send Invoices for corporate or bulk membership deals",
       "No lock-in contracts, adjust or cancel plans anytime with no penalty",
@@ -228,8 +250,8 @@ const VERTICALS = {
     summary: "This proposal outlines how HitPay can simplify appointment deposits, packages, and in-store payments for {merchantName}.",
     props: [
       "Collect appointment deposits or package payments via Payment Links",
-      "Set up recurring billing for membership or subscription packages",
-      "Accept cards, local e-wallets, and QR in-store",
+      "Set up recurring billing{recurringVia} for membership or subscription packages",
+      "Accept {tapToPay}cards, local e-wallets, and QR in-store",
       "Send Invoices for larger treatment packages",
       "Reduce no-shows by collecting a deposit upfront before the appointment",
       "Fraud monitoring and dispute handling fully covered, so you are not chasing chargebacks",
@@ -241,7 +263,7 @@ const VERTICALS = {
     summary: "This proposal outlines how HitPay can help {merchantName} collect donations online and on-site, with no setup or monthly fees eating into funds raised.",
     props: [
       "Static QR and Payment Links make on-site and social media giving effortless",
-      "Recurring giving for monthly donors",
+      "Recurring giving{recurringVia} for monthly donors",
       "No setup fees or monthly fees, more of every donation goes to your cause",
       "Accept cards, local e-wallets, and QR from individual donors",
       "Transparent, exportable transaction records for donor reporting and audits",
@@ -253,7 +275,7 @@ const VERTICALS = {
     label: "Retail", icon: Store,
     summary: "This proposal outlines how HitPay's Point of Sale and Online Store give {merchantName} one consistent system across every till and channel.",
     props: [
-      "Accept cards, local e-wallets, and QR at every till with HitPay POS",
+      "Accept {tapToPay}cards, local e-wallets, and QR at every till with HitPay POS",
       "Sync in-store and online sales through Shopify, WooCommerce, or Wix",
       "Static QR for quick self-checkout at any counter",
       "Multi-branch reporting without separate merchant accounts",
@@ -367,7 +389,7 @@ const methodsFromVertical = (vKey, cKey = "ph") => {
     online: wantOnline ? [...(c.core.online || [])] : [],
     inperson: wantInperson ? [...(c.core.inperson || [])] : [],
     crossborder: vKey === "travel" ? (c.crossborder || []).map((x) => x.id) : [],
-    hardware: [],
+    hardware: wantInperson && c.tapToPay && (c.hardware || []).some((h) => h.id === "ttp") ? ["ttp"] : [],
     customPricing: false,
   };
 };
@@ -481,7 +503,15 @@ export default function ProposalGenerator() {
     refreshList();
   };
 
-  const replaceTokens = (text) => (text || "").replaceAll("{merchantName}", form.merchantName || "your business");
+  const replaceTokens = (text) => {
+    const c = COUNTRIES[form.country] || COUNTRIES.ph;
+    const tapToPay = c.tapToPay ? "Tap to Pay, " : "";
+    const recurringVia = c.recurringCards ? "" : " on ShopeePay";
+    return (text || "")
+      .replaceAll("{merchantName}", form.merchantName || "your business")
+      .replaceAll("{tapToPay}", tapToPay)
+      .replaceAll("{recurringVia}", recurringVia);
+  };
 
   const buildStandaloneHTML = () => {
     const origin = typeof window !== "undefined" ? window.location.origin : "";
@@ -770,15 +800,17 @@ export default function ProposalGenerator() {
                         </tr>
                         {sec.rows.map((r) => {
                           const HwIcon = sec.key === "hardware" ? HW_ICON[r.id] : null;
+                          const logos = sec.key === "hardware" ? null : METHOD_LOGOS[r.id];
                           return (
                             <tr key={r.id} style={{ borderTop: `1px solid ${COLORS.line}` }}>
                               <td style={{ padding: "10px 16px", color: INK }}>
-                                {HwIcon ? (
-                                  <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
-                                    <HwIcon size={15} color={COLORS.blue} style={{ flexShrink: 0 }} />
-                                    {r.label}
-                                  </span>
-                                ) : r.label}
+                                <span style={{ display: "inline-flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+                                  {HwIcon && <HwIcon size={15} color={COLORS.blue} style={{ flexShrink: 0 }} />}
+                                  <span>{r.label}</span>
+                                  {logos && logos.map((l) => (
+                                    <img key={l} src={`/payment-logos/${l}.svg`} alt="" style={{ height: 15, width: "auto", display: "block" }} />
+                                  ))}
+                                </span>
                               </td>
                               <td style={{ padding: "10px 16px", textAlign: "right", fontWeight: 700, fontVariantNumeric: "tabular-nums", color: INK }}>{r.rate}</td>
                             </tr>
