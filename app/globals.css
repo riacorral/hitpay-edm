@@ -6,3 +6,35 @@
   --color-logo-blue: #0E2859;
   --color-beige: #F9F9F6;
 }
+
+/* HitPay brand fonts (used by the Proposal Generator at /proposals) */
+@font-face {
+  font-family: "MD Nichrome";
+  src: url("/fonts/MDNichromeTrial-Regular.otf") format("opentype");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "MD Nichrome";
+  src: url("/fonts/MDNichromeTrial-Dark.otf") format("opentype");
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Hauora";
+  src: url("/fonts/Hauora-Regular.woff2") format("woff2");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Hauora";
+  src: url("/fonts/Hauora-Medium.woff2") format("woff2");
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Hauora";
+  src: url("/fonts/Hauora-SemiBold.woff2") format("woff2");
+  font-weight: 600; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Hauora";
+  src: url("/fonts/Hauora-Bold.woff2") format("woff2");
+  font-weight: 700; font-style: normal; font-display: swap;
+}
