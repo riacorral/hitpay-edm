@@ -45,12 +45,9 @@ const COLORS = {
 // Homepage-matched hero wash (hitpayapp.com): a near-white field with delicate
 // pale-blue glows (top-left + right) and a faint warm glow lower-left,subtle,
 // not a heavy blue→cream sweep. Layered radial gradients over a near-white base.
-const HEADER_GRADIENT = [
-  "radial-gradient(130% 95% at 10% -10%, #E7F1FC 0%, rgba(231,241,252,0) 55%)",
-  "radial-gradient(120% 100% at 105% 15%, #E9F2FD 0%, rgba(233,242,253,0) 50%)",
-  "radial-gradient(85% 90% at -5% 125%, #FAF6E6 0%, rgba(250,246,230,0) 55%)",
-  "#FDFDFC",
-].join(", ");
+// Opaque linear wash (no alpha stops) so print-to-PDF renders it faithfully
+// instead of Chromium's transparent-radial-gradient pink artifact.
+const HEADER_GRADIENT = "linear-gradient(150deg, #E9F1FB 0%, #F5F8FC 44%, #FBF8F1 100%)";
 const PRIMARY_GRADIENT = `linear-gradient(135deg, ${COLORS.navyDeep}, ${COLORS.blue})`;
 // hitpayapp.com sets big display headlines in near-black, reserving navy for
 // the logo/wordmark. INK gives the proposal the same near-black display voice.
@@ -599,6 +596,55 @@ export default function ProposalGenerator() {
   const sectionLabel = { fontSize: 11, fontWeight: 700, color: COLORS.blue, textTransform: "uppercase", letterSpacing: ".12em" };
   const payouts = COUNTRIES[form.country].payouts;
 
+  const renderPricingTable = (sections) => (
+    <div style={{ border: `1px solid ${COLORS.line}`, borderRadius: 10, overflow: "hidden" }}>
+      <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
+        <tbody>
+          {sections.map((sec, sIdx) => (
+            <React.Fragment key={sec.key}>
+              <tr style={sIdx === 0 ? { background: COLORS.navy } : { background: "#F4F5F7" }}>
+                <th style={{ textAlign: "left", padding: "9px 14px", fontWeight: 700, fontSize: 10.5, textTransform: "uppercase", letterSpacing: ".08em", color: sIdx === 0 ? "white" : COLORS.blue }}>{sec.label}</th>
+                <th style={{ textAlign: "right", padding: "9px 14px", fontWeight: 700, fontSize: 10.5, textTransform: "uppercase", letterSpacing: ".08em", color: sIdx === 0 ? "white" : COLORS.slate }}>{sec.rateLabel}</th>
+              </tr>
+              {sec.rows.map((r) => {
+                const HwIcon = sec.key === "hardware" ? HW_ICON[r.id] : null;
+                const logos = sec.key === "hardware" ? null : METHOD_LOGOS[r.id];
+                return (
+                  <tr key={r.id} style={{ borderTop: `1px solid ${COLORS.line}` }}>
+                    <td style={{ padding: "8px 14px", color: INK }}>
+                      <span style={{ display: "inline-flex", alignItems: "center", gap: 7, flexWrap: "wrap" }}>
+                        {HwIcon && <HwIcon size={14} color={COLORS.blue} style={{ flexShrink: 0 }} />}
+                        <span>{r.label}</span>
+                        {logos && logos.map((l) => (
+                          <img key={l} src={`/payment-logos/${l}.svg`} alt="" style={{ height: 14, width: "auto", display: "block" }} />
+                        ))}
+                      </span>
+                    </td>
+                    <td style={{ padding: "8px 14px", textAlign: "right", fontWeight: 700, fontVariantNumeric: "tabular-nums", color: INK }}>{r.rate}</td>
+                  </tr>
+                );
+              })}
+            </React.Fragment>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+
+  // Split pricing into two balanced columns when the list is long (helps fit one A4 page)
+  const priceUnits = pricingSections.reduce((n, s) => n + s.rows.length + 1, 0);
+  const twoColPricing = priceUnits > 12 && pricingSections.length > 1;
+  let priceColA = pricingSections, priceColB = [];
+  if (twoColPricing) {
+    priceColA = []; priceColB = [];
+    let acc = 0; const half = priceUnits / 2;
+    for (const s of pricingSections) {
+      const u = s.rows.length + 1;
+      if (acc + u / 2 <= half || priceColA.length === 0) { priceColA.push(s); acc += u; }
+      else priceColB.push(s);
+    }
+  }
+
   return (
     <div style={{ fontFamily: "'Hauora', sans-serif", background: "#F0F0F2", minHeight: "100vh", color: COLORS.navy }}>
       <style>{`
@@ -610,7 +656,14 @@ export default function ProposalGenerator() {
           .paper { box-shadow: none !important; border-radius: 0 !important; max-width: 100% !important; width: 100% !important; margin: 0 !important; }
           /* Force background colors/gradients (banner, table headers, footer, hero wash) to actually print */
           .paper, .paper * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-          @page { size: A4; margin: 12mm; }
+          /* Keep whole blocks together so nothing splits mid-element; clean split if it runs to 2 pages */
+          .pb-avoid { break-inside: avoid; }
+          .paper tr { break-inside: avoid; }
+          /* Tighter spacing in print to favour a single A4 page */
+          .print-hero { padding: 24px 44px 18px !important; }
+          .print-body { padding: 18px 44px 0 !important; }
+          .print-foot { padding: 18px 44px !important; }
+          @page { size: A4; margin: 10mm; }
         }
         .field-label { font-size: 11px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: ${COLORS.slate}; display:block; margin-bottom:4px; }
         .field-input { width: 100%; border: 1px solid ${COLORS.line}; border-radius: 6px; padding: 8px 10px; font-size: 13.5px; font-family: 'Hauora', sans-serif; background: white; color: ${COLORS.navy}; }
@@ -758,7 +811,7 @@ export default function ProposalGenerator() {
 
           {/* PREVIEW */}
           <div ref={paperRef} className="paper" style={{ background: "#FFFFFF", borderRadius: 16, boxShadow: "0 12px 44px rgba(14,40,89,0.09)", maxWidth: 780, margin: "0 auto", overflow: "hidden" }}>
-            <div style={{ background: HEADER_GRADIENT, padding: "40px 48px 34px" }}>
+            <div className="print-hero pb-avoid" style={{ background: HEADER_GRADIENT, padding: "40px 48px 34px" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 16 }}>
                 <HitPayLogo height={30} />
                 <div style={{ textAlign: "right" }}>
@@ -770,11 +823,11 @@ export default function ProposalGenerator() {
               <p style={{ fontSize: 14.5, lineHeight: 1.6, color: COLORS.slate, margin: "14px 0 0", maxWidth: 470 }}>{replaceTokens(form.summary)}</p>
             </div>
 
-            <div style={{ padding: "30px 48px 0" }}>
+            <div className="print-body" style={{ padding: "30px 48px 0" }}>
               <div style={sectionLabel}>Why HitPay</div>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px 30px", marginTop: 12, marginBottom: 26 }}>
                 {form.props.filter(Boolean).map((p, i) => (
-                  <div key={i} style={{ display: "flex", gap: 10, fontSize: 13.5, lineHeight: 1.5, alignItems: "flex-start" }}>
+                  <div key={i} className="pb-avoid" style={{ display: "flex", gap: 10, fontSize: 13.5, lineHeight: 1.5, alignItems: "flex-start" }}>
                     <span style={{ flexShrink: 0, width: 18, height: 18, borderRadius: 5, background: COLORS.blueSoft, display: "inline-flex", alignItems: "center", justifyContent: "center", marginTop: 1 }}>
                       <Check size={12} color={COLORS.blue} strokeWidth={3} />
                     </span>
@@ -783,44 +836,20 @@ export default function ProposalGenerator() {
                 ))}
               </div>
 
-              <div style={{ background: COLORS.blue, color: "white", borderRadius: 10, padding: "13px 20px", fontSize: 13.5, marginBottom: 24, textAlign: "center" }}>
+              <div className="pb-avoid" style={{ background: COLORS.blue, color: "white", borderRadius: 10, padding: "13px 20px", fontSize: 13.5, marginBottom: 24, textAlign: "center" }}>
                 <span style={{ fontWeight: 700 }}>No setup fees. No monthly fees.</span> <span style={{ opacity: 0.85 }}>Pay only per successful transaction.</span>
               </div>
 
               <div style={sectionLabel}>Pricing</div>
 
-              <div style={{ marginTop: 12, marginBottom: 20, border: `1px solid ${COLORS.line}`, borderRadius: 10, overflow: "hidden" }}>
-                <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13.5 }}>
-                  <tbody>
-                    {pricingSections.map((sec, sIdx) => (
-                      <React.Fragment key={sec.key}>
-                        <tr style={sIdx === 0 ? { background: COLORS.navy } : { background: "#F4F5F7" }}>
-                          <th style={{ textAlign: "left", padding: "10px 16px", fontWeight: 700, fontSize: 11, textTransform: "uppercase", letterSpacing: ".08em", color: sIdx === 0 ? "white" : COLORS.blue }}>{sec.label}</th>
-                          <th style={{ textAlign: "right", padding: "10px 16px", fontWeight: 700, fontSize: 11, textTransform: "uppercase", letterSpacing: ".08em", color: sIdx === 0 ? "white" : COLORS.slate }}>{sec.rateLabel}</th>
-                        </tr>
-                        {sec.rows.map((r) => {
-                          const HwIcon = sec.key === "hardware" ? HW_ICON[r.id] : null;
-                          const logos = sec.key === "hardware" ? null : METHOD_LOGOS[r.id];
-                          return (
-                            <tr key={r.id} style={{ borderTop: `1px solid ${COLORS.line}` }}>
-                              <td style={{ padding: "10px 16px", color: INK }}>
-                                <span style={{ display: "inline-flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-                                  {HwIcon && <HwIcon size={15} color={COLORS.blue} style={{ flexShrink: 0 }} />}
-                                  <span>{r.label}</span>
-                                  {logos && logos.map((l) => (
-                                    <img key={l} src={`/payment-logos/${l}.svg`} alt="" style={{ height: 15, width: "auto", display: "block" }} />
-                                  ))}
-                                </span>
-                              </td>
-                              <td style={{ padding: "10px 16px", textAlign: "right", fontWeight: 700, fontVariantNumeric: "tabular-nums", color: INK }}>{r.rate}</td>
-                            </tr>
-                          );
-                        })}
-                      </React.Fragment>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+              {twoColPricing ? (
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginTop: 12, marginBottom: 20, alignItems: "start" }}>
+                  <div>{renderPricingTable(priceColA)}</div>
+                  <div>{renderPricingTable(priceColB)}</div>
+                </div>
+              ) : (
+                <div style={{ marginTop: 12, marginBottom: 20 }}>{renderPricingTable(pricingSections)}</div>
+              )}
 
               {methods.customPricing && (
                 <div style={{ display: "flex", gap: 8, background: COLORS.blueSoft, borderRadius: 8, padding: "11px 16px", fontSize: 13.5, marginBottom: 20 }}>
@@ -829,7 +858,7 @@ export default function ProposalGenerator() {
                 </div>
               )}
 
-              <div style={{ display: "flex", gap: 26, fontSize: 12.5, color: COLORS.slate, marginBottom: 20, flexWrap: "wrap" }}>
+              <div className="pb-avoid" style={{ display: "flex", gap: 26, fontSize: 12.5, color: COLORS.slate, marginBottom: 20, flexWrap: "wrap" }}>
                 <div><span style={{ fontWeight: 700, color: COLORS.navy }}>Non-card payout</span> {payouts.nonCard}</div>
                 <div><span style={{ fontWeight: 700, color: COLORS.navy }}>In-person cards</span> {payouts.inpersonCards}</div>
                 <div><span style={{ fontWeight: 700, color: COLORS.navy }}>Online cards</span> {payouts.onlineCards}</div>
@@ -845,7 +874,7 @@ export default function ProposalGenerator() {
             </div>
 
             {/* Closing footer band */}
-            <div style={{ background: "#F5F5F2", padding: "26px 48px", display: "flex", justifyContent: "space-between", alignItems: "center", gap: 20, flexWrap: "wrap" }}>
+            <div className="print-foot pb-avoid" style={{ background: "#F5F5F2", padding: "26px 48px", display: "flex", justifyContent: "space-between", alignItems: "center", gap: 20, flexWrap: "wrap" }}>
               <div>
                 <div className="brand-head" style={{ fontSize: 22, color: INK, letterSpacing: "-0.01em" }}>Let's find a time to talk.</div>
                 <div style={{ fontSize: 13, marginTop: 10 }}><span style={{ fontWeight: 700, color: COLORS.navy }}>{form.preparedBy || "Your Name"}</span><span style={{ color: COLORS.slate }}> · {form.preparedByRole}, HitPay {COUNTRIES[form.country].label}</span></div>
