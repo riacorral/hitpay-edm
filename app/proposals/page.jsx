@@ -420,8 +420,24 @@ const standaloneFontCSS = (origin) => `
   @font-face { font-family: 'Hauora'; src: url('${origin}/fonts/Hauora-Bold.woff2') format('woff2'); font-weight: 700; font-display: swap; }
 `;
 
+// Collapsible editor card. Module-level so inputs keep focus across re-renders.
+function Section({ title, hint, open, onToggle, children }) {
+  return (
+    <div className="section-card">
+      <button type="button" className="sec-head" onClick={onToggle}>
+        <span className="field-label" style={{ margin: 0 }}>{title}{hint && <span style={{ textTransform: "none", fontWeight: 400 }}> {hint}</span>}</span>
+        <ChevronDown size={15} style={{ color: COLORS.slate, transform: open ? "rotate(180deg)" : "none", transition: "transform .15s", flexShrink: 0 }} />
+      </button>
+      {open && <div style={{ marginTop: 10 }}>{children}</div>}
+    </div>
+  );
+}
+
 export default function ProposalGenerator() {
   const [form, setForm] = useState(defaultForm());
+  const [sectionOpen, setSectionOpen] = useState({});
+  const [aiInstruction, setAiInstruction] = useState("");
+  const [aiBusy, setAiBusy] = useState(false);
   const [methods, setMethods] = useState(methodsFromVertical("fnb", "ph"));
   const [savedList, setSavedList] = useState([]);
   const [status, setStatus] = useState("");
@@ -430,6 +446,35 @@ export default function ProposalGenerator() {
   const paperRef = useRef(null);
 
   const toggleGroup = (k) => setOpenGroups((g) => ({ ...g, [k]: !g[k] }));
+  const secOpen = (id, def = true) => (sectionOpen[id] === undefined ? def : sectionOpen[id]);
+  const secToggle = (id, def = true) => setSectionOpen((s) => ({ ...s, [id]: !(s[id] === undefined ? def : s[id]) }));
+
+  // Rewrite the proposal copy (headline, summary, value props) from a plain instruction
+  const runAiEdit = async () => {
+    if (!aiInstruction.trim() || aiBusy) return;
+    setAiBusy(true);
+    try {
+      const res = await fetch("/api/proposals/refine", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          headline: form.headline, summary: form.summary, props: form.props,
+          instruction: aiInstruction,
+          market: COUNTRIES[form.country].label, vertical: VERTICALS[form.vertical].label,
+        }),
+      });
+      if (!res.ok) { flash(res.status === 401 ? "Sign in to use AI" : "AI edit unavailable"); setAiBusy(false); return; }
+      const data = await res.json();
+      setForm((f) => ({
+        ...f,
+        headline: typeof data.headline === "string" ? data.headline : f.headline,
+        summary: typeof data.summary === "string" ? data.summary : f.summary,
+        props: Array.isArray(data.props) && data.props.length ? data.props : f.props,
+      }));
+      flash("Copy updated by AI");
+    } catch (e) { flash("AI edit failed"); }
+    setAiBusy(false);
+  };
 
   useEffect(() => {
     refreshList();
@@ -670,6 +715,7 @@ export default function ProposalGenerator() {
         .field-input { width: 100%; border: 1px solid ${COLORS.line}; border-radius: 6px; padding: 8px 10px; font-size: 13.5px; font-family: 'Hauora', sans-serif; background: white; color: ${COLORS.navy}; }
         .field-input:focus { outline: 2px solid ${COLORS.blue}; outline-offset: 1px; }
         .section-card { background: white; border: 1px solid ${COLORS.line}; border-radius: 10px; padding: 16px; margin-bottom: 14px; }
+        .sec-head { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 8px; background: transparent; border: none; padding: 0; cursor: pointer; }
         .btn { display:inline-flex; align-items:center; gap:6px; font-size:13px; font-weight:600; padding:8px 12px; border-radius:7px; cursor:pointer; border:1px solid transparent; transition: opacity .15s; font-family: 'Hauora', sans-serif; }
         .btn:hover { opacity: .85; }
         .btn-primary { background: ${COLORS.navy}; color: white; }
@@ -712,8 +758,7 @@ export default function ProposalGenerator() {
         <div className="app-grid" style={{ maxWidth: 1240, margin: "0 auto", display: "grid", gridTemplateColumns: "380px 1fr", gap: 20, alignItems: "start" }}>
           {/* EDITOR */}
           <div className="no-print">
-            <div className="section-card">
-              <div className="field-label">Market <span style={{ textTransform: "none", fontWeight: 400 }}>(sets pricing + available methods)</span></div>
+            <Section title="Market" hint="(sets pricing + available methods)" open={secOpen("market")} onToggle={() => secToggle("market")}>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 6 }}>
                 {COUNTRY_KEYS.map((k) => (
                   <button key={k} className={`vbtn ${form.country === k ? "active" : ""}`} onClick={() => selectCountry(k)} style={{ justifyContent: "center" }}>
@@ -721,9 +766,9 @@ export default function ProposalGenerator() {
                   </button>
                 ))}
               </div>
-            </div>
+            </Section>
 
-            <div className="section-card">
+            <Section title="Business & date" open={secOpen("details")} onToggle={() => secToggle("details")}>
               <div className="field-label">Merchant name</div>
               <input className="field-input" value={form.merchantName} onChange={(e) => updateField("merchantName", e.target.value)} placeholder="e.g. Nast Fitness Center" style={{ marginBottom: 10 }} />
               <div className="field-label">Contact person</div>
@@ -732,10 +777,9 @@ export default function ProposalGenerator() {
                 <div><div className="field-label">Date</div><input type="date" className="field-input" value={form.proposalDate} onChange={(e) => updateField("proposalDate", e.target.value)} /></div>
                 <div><div className="field-label">Valid for (days)</div><input className="field-input" value={form.validityDays} onChange={(e) => updateField("validityDays", e.target.value)} /></div>
               </div>
-            </div>
+            </Section>
 
-            <div className="section-card">
-              <div className="field-label">Vertical <span style={{ textTransform: "none", fontWeight: 400 }}>(selecting one auto-applies its copy + pricing)</span></div>
+            <Section title="Vertical" hint="(auto-applies its copy + pricing)" open={secOpen("vertical")} onToggle={() => secToggle("vertical")}>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
                 {Object.entries(VERTICALS).map(([key, v]) => {
                   const Icon = v.icon;
@@ -746,17 +790,24 @@ export default function ProposalGenerator() {
                   );
                 })}
               </div>
-            </div>
+            </Section>
 
-            <div className="section-card">
+            <Section title="Headline & summary" open={secOpen("copy")} onToggle={() => secToggle("copy")}>
               <div className="field-label">Headline <span style={{ textTransform: "none", fontWeight: 400 }}>(use {"{merchantName}"} to insert the name)</span></div>
               <input className="field-input" value={form.headline} onChange={(e) => updateField("headline", e.target.value)} style={{ marginBottom: 10 }} />
               <div className="field-label">Executive summary (subhead)</div>
               <textarea className="field-input" rows={4} value={form.summary} onChange={(e) => updateField("summary", e.target.value)} style={{ resize: "vertical" }} />
-            </div>
+            </Section>
 
-            <div className="section-card">
-              <div className="field-label" style={{ marginBottom: 8 }}>Value propositions</div>
+            <Section title="Edit with AI" hint="(rewrite the copy from an instruction)" open={secOpen("ai")} onToggle={() => secToggle("ai")}>
+              <textarea className="field-input" rows={2} value={aiInstruction} onChange={(e) => setAiInstruction(e.target.value)} placeholder={'e.g. "make it punchier and shorter"'} style={{ resize: "vertical", marginBottom: 8 }} />
+              <button className="btn btn-accent" onClick={runAiEdit} disabled={aiBusy || !aiInstruction.trim()} style={{ width: "100%", justifyContent: "center", opacity: aiBusy || !aiInstruction.trim() ? 0.6 : 1 }}>
+                <Sparkles size={14} /> {aiBusy ? "Rewriting…" : "Rewrite headline, summary & value props"}
+              </button>
+              <div style={{ fontSize: 11, color: COLORS.slate, marginTop: 8 }}>Uses HitPay's AI. Edits the copy only, your pricing and methods stay as set.</div>
+            </Section>
+
+            <Section title="Value propositions" open={secOpen("valueprops")} onToggle={() => secToggle("valueprops")}>
               {form.props.map((p, i) => (
                 <div key={i} style={{ display: "flex", gap: 6, marginBottom: 6 }}>
                   <input className="field-input" value={p} onChange={(e) => updateProp(i, e.target.value)} />
@@ -764,10 +815,9 @@ export default function ProposalGenerator() {
                 </div>
               ))}
               <button className="btn btn-outline" onClick={addProp} style={{ marginTop: 4 }}>+ Add point</button>
-            </div>
+            </Section>
 
-            <div className="section-card">
-              <div className="field-label" style={{ marginBottom: 6 }}>Payment methods <span style={{ textTransform: "none", fontWeight: 400 }}>(tap a group to pick methods)</span></div>
+            <Section title="Payment methods" hint="(tap a group to pick methods)" open={secOpen("methods", false)} onToggle={() => secToggle("methods", false)}>
               {methodGroups.map((g) => {
                 const open = !!openGroups[g.key];
                 const count = (methods[g.key] || []).length;
@@ -787,17 +837,16 @@ export default function ProposalGenerator() {
               })}
               <label style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12.5, marginTop: 12, padding: "6px 8px", background: COLORS.blueSoft, borderRadius: 6 }}>
                 <input type="checkbox" checked={methods.customPricing} onChange={toggleCustomPricing} />
-                Flag for custom/enterprise pricing (avg. monthly volume &gt; ₱500k)
+                Flag for custom / enterprise pricing (high monthly volume)
               </label>
-            </div>
+            </Section>
 
-            <div className="section-card">
-              <div className="field-label">Perks / next steps (optional)</div>
+            <Section title="Perks / next steps" hint="(optional)" open={secOpen("perks", false)} onToggle={() => secToggle("perks", false)}>
               <textarea className="field-input" rows={3} value={form.perks} onChange={(e) => updateField("perks", e.target.value)} placeholder="e.g. Onboarding support within 5 business days." style={{ resize: "vertical" }} />
-            </div>
+            </Section>
 
-            <div className="section-card">
-              <div className="field-label">Prepared by <span style={{ textTransform: "none", fontWeight: 400 }}>(shown in the footer)</span></div>
+            <Section title="Prepared by" hint="(shown in the footer)" open={secOpen("prepared", false)} onToggle={() => secToggle("prepared", false)}>
+              <div className="field-label">Your name</div>
               <input className="field-input" value={form.preparedBy} onChange={(e) => updateField("preparedBy", e.target.value)} placeholder="Your name" style={{ marginBottom: 10 }} />
               <div className="field-label">Your role</div>
               <input className="field-input" value={form.preparedByRole} onChange={(e) => updateField("preparedByRole", e.target.value)} placeholder="e.g. Growth and Partnership Manager" style={{ marginBottom: 10 }} />
@@ -807,7 +856,7 @@ export default function ProposalGenerator() {
               <input className="field-input" value={form.preparedByPhone} onChange={(e) => updateField("preparedByPhone", e.target.value)} placeholder="e.g. 0960 541 7099" style={{ marginBottom: 10 }} />
               <div className="field-label">Booking link <span style={{ textTransform: "none", fontWeight: 400 }}>("Book a call" button; blank = HitPay contact page)</span></div>
               <input className="field-input" value={form.bookingLink} onChange={(e) => updateField("bookingLink", e.target.value)} placeholder="https://calendly.com/your-link" />
-            </div>
+            </Section>
           </div>
 
           {/* PREVIEW */}
