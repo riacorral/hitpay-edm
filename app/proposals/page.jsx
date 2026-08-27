@@ -484,15 +484,18 @@ export default function ProposalGenerator() {
   // long to stay readable (a very long pricing list), let it flow to two pages.
   useEffect(() => {
     const MM = 96 / 25.4;                 // px per mm at 96dpi
-    const pageW = (210 - 20) * MM;        // A4 width minus 10mm margins
-    const pageH = (297 - 20) * MM;        // A4 height minus 10mm margins
+    const pageW = 210 * MM;               // full-bleed A4 width (margins are 0)
+    const pageH = 297 * MM;               // full-bleed A4 height
     const MIN_SCALE = 0.62;               // below this it flows to a 2nd page instead
     const before = () => {
       const paper = paperRef.current;
       if (!paper) return;
       paper.style.zoom = "";
       paper.style.setProperty("width", pageW + "px", "important");
+      // Measure the true content height (min-height fills the page, so drop it first)
+      paper.style.setProperty("min-height", "0", "important");
       const h = paper.scrollHeight;
+      paper.style.removeProperty("min-height");
       let scale = Math.min(1, pageH / h);
       if (scale < MIN_SCALE) scale = 1;   // too long: keep full size, allow 2 pages
       paper.style.zoom = String(scale);
@@ -502,6 +505,7 @@ export default function ProposalGenerator() {
       if (!paper) return;
       paper.style.zoom = "";
       paper.style.removeProperty("width");
+      paper.style.removeProperty("min-height");
     };
     window.addEventListener("beforeprint", before);
     window.addEventListener("afterprint", after);
@@ -730,7 +734,7 @@ export default function ProposalGenerator() {
           .app-shell { background: white !important; padding: 0 !important; }
           /* Collapse the editor's grid track so the document uses the full page width */
           .app-grid { display: block !important; max-width: 100% !important; margin: 0 !important; }
-          .paper { box-shadow: none !important; border-radius: 0 !important; max-width: 100% !important; margin: 0 !important; }
+          .paper { box-shadow: none !important; border-radius: 0 !important; max-width: 100% !important; width: 100% !important; margin: 0 !important; min-height: 297mm; display: flex !important; flex-direction: column; }
           /* Force background colors/gradients (banner, table headers, footer, hero wash) to actually print */
           .paper, .paper * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
           /* Keep whole blocks together so nothing splits mid-element; clean split if it runs to 2 pages */
@@ -738,9 +742,9 @@ export default function ProposalGenerator() {
           .paper tr { break-inside: avoid; }
           /* Tighter spacing in print to favour a single A4 page */
           .print-hero { padding: 24px 44px 18px !important; }
-          .print-body { padding: 18px 44px 0 !important; }
-          .print-foot { padding: 18px 44px !important; }
-          @page { size: A4; margin: 10mm; }
+          .print-body { padding: 18px 44px 0 !important; flex: 1 1 auto; }
+          .print-foot { padding: 22px 44px !important; }
+          @page { size: A4; margin: 0; }
         }
         .field-label { font-size: 11px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: ${COLORS.slate}; display:block; margin-bottom:4px; }
         .field-input { width: 100%; border: 1px solid ${COLORS.line}; border-radius: 6px; padding: 8px 10px; font-size: 13.5px; font-family: 'Hauora', sans-serif; background: white; color: ${COLORS.navy}; }
@@ -789,7 +793,7 @@ export default function ProposalGenerator() {
         <div className="app-grid" style={{ maxWidth: 1240, margin: "0 auto", display: "grid", gridTemplateColumns: "380px 1fr", gap: 20, alignItems: "start" }}>
           {/* EDITOR */}
           <div className="no-print">
-            <Section title="Market" hint="(sets pricing + available methods)" open={secOpen("market")} onToggle={() => secToggle("market")}>
+            <Section title="Market" hint="(sets pricing + available methods)" open={secOpen("market", false)} onToggle={() => secToggle("market", false)}>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 6 }}>
                 {COUNTRY_KEYS.map((k) => (
                   <button key={k} className={`vbtn ${form.country === k ? "active" : ""}`} onClick={() => selectCountry(k)} style={{ justifyContent: "center" }}>
@@ -810,7 +814,7 @@ export default function ProposalGenerator() {
               </div>
             </Section>
 
-            <Section title="Vertical" hint="(auto-applies its copy + pricing)" open={secOpen("vertical")} onToggle={() => secToggle("vertical")}>
+            <Section title="Vertical" hint="(auto-applies its copy + pricing)" open={secOpen("vertical", false)} onToggle={() => secToggle("vertical", false)}>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
                 {Object.entries(VERTICALS).map(([key, v]) => {
                   const Icon = v.icon;
@@ -823,14 +827,14 @@ export default function ProposalGenerator() {
               </div>
             </Section>
 
-            <Section title="Headline & summary" open={secOpen("copy")} onToggle={() => secToggle("copy")}>
+            <Section title="Headline & summary" open={secOpen("copy", false)} onToggle={() => secToggle("copy", false)}>
               <div className="field-label">Headline <span style={{ textTransform: "none", fontWeight: 400 }}>(use {"{merchantName}"} to insert the name)</span></div>
               <input className="field-input" value={form.headline} onChange={(e) => updateField("headline", e.target.value)} style={{ marginBottom: 10 }} />
               <div className="field-label">Executive summary (subhead)</div>
               <textarea className="field-input" rows={4} value={form.summary} onChange={(e) => updateField("summary", e.target.value)} style={{ resize: "vertical" }} />
             </Section>
 
-            <Section title="Edit with AI" hint="(rewrite the copy from an instruction)" open={secOpen("ai")} onToggle={() => secToggle("ai")}>
+            <Section title="Edit with AI" hint="(rewrite the copy from an instruction)" open={secOpen("ai", false)} onToggle={() => secToggle("ai", false)}>
               <textarea className="field-input" rows={2} value={aiInstruction} onChange={(e) => setAiInstruction(e.target.value)} placeholder={'e.g. "make it punchier and shorter"'} style={{ resize: "vertical", marginBottom: 8 }} />
               <button className="btn btn-accent" onClick={runAiEdit} disabled={aiBusy || !aiInstruction.trim()} style={{ width: "100%", justifyContent: "center", opacity: aiBusy || !aiInstruction.trim() ? 0.6 : 1 }}>
                 <Sparkles size={14} /> {aiBusy ? "Rewriting…" : "Rewrite headline, summary & value props"}
@@ -838,7 +842,7 @@ export default function ProposalGenerator() {
               <div style={{ fontSize: 11, color: COLORS.slate, marginTop: 8 }}>Uses HitPay's AI. Edits the copy only, your pricing and methods stay as set.</div>
             </Section>
 
-            <Section title="Value propositions" open={secOpen("valueprops")} onToggle={() => secToggle("valueprops")}>
+            <Section title="Value propositions" open={secOpen("valueprops", false)} onToggle={() => secToggle("valueprops", false)}>
               {form.props.map((p, i) => (
                 <div key={i} style={{ display: "flex", gap: 6, marginBottom: 6 }}>
                   <input className="field-input" value={p} onChange={(e) => updateProp(i, e.target.value)} />
