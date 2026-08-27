@@ -45,9 +45,10 @@ const COLORS = {
 // Homepage-matched hero wash (hitpayapp.com): a near-white field with delicate
 // pale-blue glows (top-left + right) and a faint warm glow lower-left,subtle,
 // not a heavy blue→cream sweep. Layered radial gradients over a near-white base.
-// Opaque linear wash (no alpha stops) so print-to-PDF renders it faithfully
-// instead of Chromium's transparent-radial-gradient pink artifact.
-const HEADER_GRADIENT = "linear-gradient(150deg, #E9F1FB 0%, #F5F8FC 44%, #FBF8F1 100%)";
+// Homepage-matched hero wash: soft blue (top) -> near-white -> warm cream
+// (lower-left), per hitpayapp.com. Opaque stops (no alpha) so print-to-PDF
+// renders it faithfully instead of Chromium's transparent-gradient pink bug.
+const HEADER_GRADIENT = "linear-gradient(160deg, #E3EDFA 0%, #EFF4FB 40%, #F9F9F2 68%, #FAF5E2 100%)";
 const PRIMARY_GRADIENT = `linear-gradient(135deg, ${COLORS.navyDeep}, ${COLORS.blue})`;
 // hitpayapp.com sets big display headlines in near-black, reserving navy for
 // the logo/wordmark. INK gives the proposal the same near-black display voice.
