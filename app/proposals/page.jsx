@@ -487,18 +487,22 @@ export default function ProposalGenerator() {
     const pageW = 210 * MM;               // full-bleed A4 width (margins are 0)
     const pageH = 297 * MM;               // full-bleed A4 height
     const MIN_SCALE = 0.62;               // below this it flows to a 2nd page instead
+    const SAFE = pageH - 8;               // tiny safety margin against sub-pixel rounding
     const before = () => {
       const paper = paperRef.current;
       if (!paper) return;
       paper.style.zoom = "";
       paper.style.setProperty("width", pageW + "px", "important");
-      // Measure the true content height (min-height fills the page, so drop it first)
+      // Measure the true content height first
       paper.style.setProperty("min-height", "0", "important");
       const h = paper.scrollHeight;
-      paper.style.removeProperty("min-height");
-      let scale = Math.min(1, pageH / h);
+      let scale = Math.min(1, SAFE / h);
       if (scale < MIN_SCALE) scale = 1;   // too long: keep full size, allow 2 pages
       paper.style.zoom = String(scale);
+      // Fill the page: at this zoom the paper's visual height becomes exactly SAFE,
+      // so short proposals reach the bottom and long ones never overflow onto page 2.
+      if (scale >= MIN_SCALE) paper.style.setProperty("min-height", SAFE / scale + "px", "important");
+      else paper.style.removeProperty("min-height");
     };
     const after = () => {
       const paper = paperRef.current;
@@ -734,7 +738,7 @@ export default function ProposalGenerator() {
           .app-shell { background: white !important; padding: 0 !important; }
           /* Collapse the editor's grid track so the document uses the full page width */
           .app-grid { display: block !important; max-width: 100% !important; margin: 0 !important; }
-          .paper { box-shadow: none !important; border-radius: 0 !important; max-width: 100% !important; width: 100% !important; margin: 0 !important; min-height: 297mm; display: flex !important; flex-direction: column; }
+          .paper { box-shadow: none !important; border-radius: 0 !important; max-width: 100% !important; width: 100% !important; margin: 0 !important; display: flex !important; flex-direction: column; }
           /* Force background colors/gradients (banner, table headers, footer, hero wash) to actually print */
           .paper, .paper * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
           /* Keep whole blocks together so nothing splits mid-element; clean split if it runs to 2 pages */
