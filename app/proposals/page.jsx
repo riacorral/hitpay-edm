@@ -480,6 +480,37 @@ export default function ProposalGenerator() {
     refreshList();
   }, []);
 
+  // Scale the proposal down to fit a single A4 page on print. If it is still too
+  // long to stay readable (a very long pricing list), let it flow to two pages.
+  useEffect(() => {
+    const MM = 96 / 25.4;                 // px per mm at 96dpi
+    const pageW = (210 - 20) * MM;        // A4 width minus 10mm margins
+    const pageH = (297 - 20) * MM;        // A4 height minus 10mm margins
+    const MIN_SCALE = 0.62;               // below this it flows to a 2nd page instead
+    const before = () => {
+      const paper = paperRef.current;
+      if (!paper) return;
+      paper.style.zoom = "";
+      paper.style.setProperty("width", pageW + "px", "important");
+      const h = paper.scrollHeight;
+      let scale = Math.min(1, pageH / h);
+      if (scale < MIN_SCALE) scale = 1;   // too long: keep full size, allow 2 pages
+      paper.style.zoom = String(scale);
+    };
+    const after = () => {
+      const paper = paperRef.current;
+      if (!paper) return;
+      paper.style.zoom = "";
+      paper.style.removeProperty("width");
+    };
+    window.addEventListener("beforeprint", before);
+    window.addEventListener("afterprint", after);
+    return () => {
+      window.removeEventListener("beforeprint", before);
+      window.removeEventListener("afterprint", after);
+    };
+  }, []);
+
   const refreshList = useCallback(() => {
     setSavedList(draftStore.list());
   }, []);
@@ -699,7 +730,7 @@ export default function ProposalGenerator() {
           .app-shell { background: white !important; padding: 0 !important; }
           /* Collapse the editor's grid track so the document uses the full page width */
           .app-grid { display: block !important; max-width: 100% !important; margin: 0 !important; }
-          .paper { box-shadow: none !important; border-radius: 0 !important; max-width: 100% !important; width: 100% !important; margin: 0 !important; }
+          .paper { box-shadow: none !important; border-radius: 0 !important; max-width: 100% !important; margin: 0 !important; }
           /* Force background colors/gradients (banner, table headers, footer, hero wash) to actually print */
           .paper, .paper * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
           /* Keep whole blocks together so nothing splits mid-element; clean split if it runs to 2 pages */
