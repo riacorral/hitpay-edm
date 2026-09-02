@@ -2,12 +2,10 @@
 
 import { useState, useRef } from 'react';
 
-const CDN = 'https://3cse8uwfv1q9zblo.public.blob.vercel-storage.com/hitpay-edm';
-
 const LIBRARY = [
-  { label: 'HitPay Logo (Dark)',  url: `${CDN}/logo-dark%402x.png` },
-  { label: 'HitPay Logo (White)', url: `${CDN}/logo-white%402x.png` },
-  { label: 'HitPay Logogram',     url: `${CDN}/hitpay-logogram.svg` },
+  { label: 'HitPay Logo (Dark)',  url: '/brand/logo-dark.png' },
+  { label: 'HitPay Logo (White)', url: '/brand/logo-white.png' },
+  { label: 'HitPay Logogram',     url: '/brand/hitpay-logogram.svg' },
 ];
 
 interface Props {
