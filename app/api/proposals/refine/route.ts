@@ -56,7 +56,7 @@ Return the edited copy as JSON only.`;
 
   try {
     const message = await client.messages.create({
-      model: 'claude-opus-4-6',
+      model: 'claude-sonnet-5',
       max_tokens: 1600,
       system: SYSTEM_PROMPT,
       messages: [{ role: 'user', content: userMsg }],
