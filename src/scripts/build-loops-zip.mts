@@ -10,10 +10,14 @@ import { basename, join, resolve } from 'path';
 import AdmZip from 'adm-zip';
 import mjml2html from 'mjml';
 import { parseEdm } from '../parser/markdown.js';
-import { generateMjml } from '../renderer/mjml.js';
+import { generateMjml, minifyEmailHtml } from '../renderer/mjml.js';
 
 const BRAND_URL_RE = /https?:\/\/[^\s"'<>]+\/brand\/([\w.-]+)/g;
 const REMOTE_IMG_RE = /https?:\/\/[^\s"'<>]+\.(?:jpe?g|png|webp|gif)/gi;
+// Inline base64 images (e.g. footer logo/social icons in mjml.ts) — most email
+// clients (Gmail, Outlook) strip or fail to render data: URI <img> tags, so these
+// must be bundled as real files, same as loops/client.ts's bundleBase64Images.
+const BASE64_IMG_RE = /data:image\/([a-zA-Z0-9.+-]+);base64,([A-Za-z0-9+/=]+)/g;
 
 async function fetchBuffer(url: string): Promise<Buffer> {
   const res = await fetch(url);
@@ -42,6 +46,22 @@ async function main() {
     }
     return local;
   });
+
+  // 1b. Inline base64 images → img/<file> (decode to real files)
+  {
+    let counter = 0;
+    mjml = mjml.replace(BASE64_IMG_RE, (fullMatch, rawExt: string) => {
+      if (seen.has(fullMatch)) return seen.get(fullMatch)!;
+      const ext = rawExt.toLowerCase() === 'jpeg' ? 'jpg' : rawExt.toLowerCase();
+      counter++;
+      const name = `inline-${counter}.${ext}`;
+      const base64Data = fullMatch.slice(fullMatch.indexOf(',') + 1);
+      imgFiles.push({ name, buffer: Buffer.from(base64Data, 'base64') });
+      const local = `img/${name}`;
+      seen.set(fullMatch, local);
+      return local;
+    });
+  }
 
   // 2. Remaining remote images (hero + inline) → download to img/.
   //    If a URL is unreachable (404 etc.), leave it as-is and report it.
@@ -84,8 +104,11 @@ async function main() {
   });
 
   // 3. Recompile MJML → HTML so the local preview uses img/ paths
-  const { html, errors } = mjml2html(mjml, { validationLevel: 'skip' });
+  const { html: rawHtml, errors } = mjml2html(mjml, { validationLevel: 'skip' });
   if (errors?.length) console.warn('MJML warnings:', errors.map(e => e.formattedMessage).join('\n'));
+  // Minify — long campaigns can exceed Gmail's ~102KB clip threshold otherwise
+  const html = minifyEmailHtml(rawHtml);
+  console.log(`  HTML size: ${(rawHtml.length / 1024).toFixed(1)}KB -> ${(html.length / 1024).toFixed(1)}KB minified`);
 
   // 4. Build ZIP
   const zip = new AdmZip();

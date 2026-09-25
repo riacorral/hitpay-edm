@@ -192,30 +192,39 @@ function sectionToMjml(section: EdmSection): string {
   </mj-section>`;
 
     case 'image_text': {
-      const imgCol = `
-    <mj-column width="42%" vertical-align="middle" padding="0 16px 0 0" css-class="img-col">
-      <mj-image src="${esc(section.src)}" alt="${esc(section.alt || '')}" padding="0" />
-    </mj-column>`;
+      // Rendered as a plain HTML <table> (not mj-column) — two mj-column divs whose
+      // widths sum to exactly 100% wrap onto separate lines if any whitespace slips
+      // between them (classic inline-block gotcha), which pushed the image outside
+      // the card in production. A table's <td>s can't wrap like that.
+      const isLeft = section.imagePosition === 'left';
 
-      const textColContent =
-        section.items && section.items.length > 0
-          ? `<mj-raw>${bulletItemsTable(section.items)}</mj-raw>`
-          : section.orderedItems && section.orderedItems.length > 0
-            ? `<mj-raw>${numberedItemsTable(section.orderedItems)}</mj-raw>`
-            : `<mj-text align="left" font-size="14px" color="${B.textSecondary}" line-height="1.6" padding="0">${inlineMd(section.text || '')}</mj-text>`;
-
-      const headingContent = section.heading
-        ? `<mj-text align="left" font-size="16px" font-weight="700" color="${B.textPrimary}" line-height="1.3" padding="0 0 12px">${esc(section.heading)}</mj-text>\n      `
+      const headingHtml = section.heading
+        ? `<div style="font-family:${B.font};font-size:16px;font-weight:700;color:${B.textPrimary};line-height:1.3;margin:0 0 12px 0;">${esc(section.heading)}</div>`
         : '';
 
-      const textCol = `
-    <mj-column width="58%" vertical-align="middle" padding="0">
-      ${headingContent}${textColContent}
-    </mj-column>`;
+      const textContent =
+        section.items && section.items.length > 0
+          ? bulletItemsTable(section.items)
+          : section.orderedItems && section.orderedItems.length > 0
+            ? numberedItemsTable(section.orderedItems)
+            : `<div style="font-family:${B.font};font-size:14px;color:${B.textSecondary};line-height:1.6;">${inlineMd(section.text || '')}</div>`;
+
+      const img = `<img src="${esc(section.src)}" alt="${esc(section.alt || '')}" width="100%" style="display:block;width:100%;max-width:100%;height:auto;border:0;outline:none;text-decoration:none;" />`;
+      const imgTd = `<td class="img-text-img" width="42%" valign="middle" style="width:42%;padding:${isLeft ? '0 16px 0 0' : '0 0 0 16px'};">${img}</td>`;
+      const textTd = `<td class="img-text-body" width="58%" valign="middle" style="width:58%;">${headingHtml}${textContent}</td>`;
+
+      // Mobile gets its own table, always text-then-image regardless of desktop
+      // imagePosition — the desktop table is hidden and this one shown instead
+      // (see the img-text-wrap / img-text-mobile media-query swap below).
+      const imgTdMobile = `<td class="img-text-img" width="100%" valign="middle" style="width:100%;padding:0;">${img}</td>`;
+      const textTdMobile = `<td class="img-text-body" width="100%" valign="middle" style="width:100%;padding:0;">${headingHtml}${textContent}</td>`;
 
       return `
   <mj-section padding="16px 32px 24px">
-    ${section.imagePosition === 'left' ? imgCol + textCol : textCol + imgCol}
+    <mj-column padding="0">
+      <mj-raw><table class="img-text-wrap" width="100%" cellpadding="0" cellspacing="0" border="0" role="presentation"><tr>${isLeft ? imgTd + textTd : textTd + imgTd}</tr></table>
+      <table class="img-text-mobile" width="100%" cellpadding="0" cellspacing="0" border="0" role="presentation"><tr>${textTdMobile}${imgTdMobile}</tr></table></mj-raw>
+    </mj-column>
   </mj-section>`;
     }
 
@@ -314,7 +323,7 @@ export function generateMjml(edm: ParsedEdm): string {
       </tr></table></mj-raw>
       <mj-text align="center" font-size="28px" font-weight="700" color="${B.white}" line-height="1.2" padding="0 0 16px">${esc(fm.productName).replace(/\n/g, '<br/>')}</mj-text>
       ${fm.subtitle ? `<mj-text align="center" font-size="15px" color="${B.neutral200}" line-height="1.5" padding="0 8px 24px">${esc(fm.subtitle)}</mj-text>` : ''}
-      ${fm.heroImage ? `<mj-image src="${esc(fm.heroImage)}" alt="${esc(fm.productName)}" border="2px solid ${B.white}" border-radius="12px 12px 0 0" padding="0" />` : ''}
+      ${fm.heroImage ? `<mj-image src="${esc(fm.heroImage)}" alt="${esc(fm.productName)}"${fm.heroVideoUrl ? ` href="${esc(fm.heroVideoUrl)}"` : ''} border="2px solid ${B.white}" border-radius="12px 12px 0 0" padding="0" />` : ''}
     </mj-column>
   </mj-section>`;
   }
@@ -517,9 +526,21 @@ export function generateMjml(edm: ParsedEdm): string {
     <mj-style>
       a { color: inherit; text-decoration: none; }
       p { margin: 0 !important; }
+      /* Mobile-order (text, then image) duplicate of img-text-wrap — hidden until the
+         mobile breakpoint swaps it in, so degradation without media-query support
+         still shows the (desktop-ordered) img-text-wrap table rather than nothing. */
+      table.img-text-mobile { display: none; }
       @media only screen and (max-width:480px) {
-        /* Add gap below image when image+text block stacks on mobile */
-        .img-col { padding-bottom: 20px !important; }
+        /* Swap to the mobile-ordered table instead of stacking img-text-wrap in
+           place, since img-text-wrap's column order follows desktop imagePosition
+           (image can be first) and we always want text before image on mobile. */
+        table.img-text-wrap { display: none !important; }
+        table.img-text-mobile { display: block !important; }
+        table.img-text-mobile tr { display: block !important; }
+        table.img-text-mobile td.img-text-img,
+        table.img-text-mobile td.img-text-body { display: block !important; width: 100% !important; max-width: 100% !important; box-sizing: border-box !important; padding: 0 !important; }
+        table.img-text-mobile td.img-text-img { padding-top: 16px !important; }
+        table.img-text-mobile td.img-text-img img { width: 100% !important; height: auto !important; }
         /* Stack stat/column cards vertically on mobile */
         table.col-wrap tr { display: block !important; }
         td.col-card { display: block !important; width: 100% !important; max-width: 100% !important; box-sizing: border-box !important; margin-bottom: 8px !important; }
@@ -536,11 +557,11 @@ export function generateMjml(edm: ParsedEdm): string {
     ${ctaSection}
   ${cobrandFooterSection}
   <!-- Footer: help banner -->
-  <mj-section background-color="${B.beige}" padding="24px 32px 0">
+  ${fm.showHelpBanner ? `<mj-section background-color="${B.beige}" padding="24px 32px 0">
     <mj-column>
       <mj-image src="img/help_banner.png" alt="Need help? Visit our Help Centre" href="https://help.hit-pay.com/" width="536px" padding="0" />
     </mj-column>
-  </mj-section>
+  </mj-section>` : ''}
   <!-- Footer -->
   <mj-section background-color="${B.beige}" padding="24px 32px 16px">
     <mj-column>
@@ -571,4 +592,13 @@ export function generateMjml(edm: ParsedEdm): string {
   </mj-section>
   </mj-body>
 </mjml>`;
+}
+
+// Strips whitespace between tags from compiled MJML output — pure formatting,
+// no visual change — to stay under Gmail's ~102KB clip threshold on long emails.
+// Safe for MSO conditional comments: it only removes whitespace between `>` and
+// `<`, never touches comment content, so `<!--[if mso]>`/`<![endif]-->` counts
+// are preserved exactly (verified against this file's own output).
+export function minifyEmailHtml(html: string): string {
+  return html.replace(/>\s+</g, '><').replace(/[ \t]{2,}/g, ' ').trim();
 }

@@ -30,7 +30,7 @@ Hi {firstName},
 
 ![Enable adaptive pricing under Settings > Checkout Customisation > Adaptive Pricing](img/adaptive-pricing-settings.png)
 
-[Enable Adaptive Pricing Now](https://docs.hitpayapp.com/payments/adaptive-pricing?utm_source=email&utm_medium=email&utm_campaign=adaptive-pricing-checkout&utm_content=2-enable-adaptive-pricing-now){.cta}
+[Boost International Conversions Now](https://dashboard.hit-pay.com/?utm_source=email&utm_medium=email&utm_campaign=adaptive-pricing-checkout&utm_content=2-boost-international-conversions-now){.cta}
 
 ---
 

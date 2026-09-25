@@ -253,20 +253,31 @@ function parseBody(body: string): EdmSection[] {
       }
       i++; // skip closing :::
 
+      // Optional description: leading non-bold line(s) before the first **Title** item
+      let descLines: string[] = [];
+      let itemStart = 0;
+      while (itemStart < blockLines.length && !blockLines[itemStart].match(/^\*\*(.+?)\*\*\.?$/)) {
+        if (blockLines[itemStart]) descLines.push(blockLines[itemStart]);
+        itemStart++;
+      }
+      const hasItemsAhead = blockLines.slice(itemStart).some(l => l.match(/^\*\*(.+?)\*\*\.?$/));
+      const description = hasItemsAhead && descLines.length > 0 ? descLines.join(' ') : undefined;
+      const itemLines = description ? blockLines.slice(itemStart) : blockLines;
+
       // Detect title+body pairs: **Title** followed by non-bold line
       const items: { title: string; body: string }[] = [];
       let j = 0;
-      while (j < blockLines.length) {
-        const titleMatch = blockLines[j].match(/^\*\*(.+?)\*\*\.?$/);
-        if (titleMatch && j + 1 < blockLines.length && !blockLines[j + 1].match(/^\*\*/)) {
-          items.push({ title: titleMatch[1].replace(/\.$/, ''), body: blockLines[j + 1] });
+      while (j < itemLines.length) {
+        const titleMatch = itemLines[j].match(/^\*\*(.+?)\*\*\.?$/);
+        if (titleMatch && j + 1 < itemLines.length && !itemLines[j + 1].match(/^\*\*/)) {
+          items.push({ title: titleMatch[1].replace(/\.$/, ''), body: itemLines[j + 1] });
           j += 2;
         } else {
           j++;
         }
       }
 
-      const orderedItems = blockLines
+      const orderedItems = itemLines
         .filter(l => /^\d+\.\s+/.test(l.trim()))
         .map(l => l.trim().replace(/^\d+\.\s+/, ''));
 
@@ -275,11 +286,12 @@ function parseBody(body: string): EdmSection[] {
         src,
         imagePosition,
         heading,
+        description,
         ...(items.length > 0
           ? { items }
           : orderedItems.length > 0
             ? { orderedItems }
-            : { text: blockLines.filter(Boolean).join(' ') }),
+            : { text: itemLines.filter(Boolean).join(' ') }),
       });
       continue;
     }

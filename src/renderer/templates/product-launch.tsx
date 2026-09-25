@@ -50,16 +50,16 @@ export function ProductLaunchEmail({ frontmatter, sections }: Props) {
             </tr>
           </tbody>
         </table>
-        {fm.productName.trim().split('\n').map((line, i) => (
+        {fm.productName.trim().split('\n').map((line, i, lines) => (
           <Text
             key={i}
             style={{
               fontFamily: BRAND.fonts.headline,
-              fontSize: i === 0 ? BRAND.fontSizes.heroTitle : BRAND.fontSizes.subheadline,
-              fontWeight: i === 0 ? 700 : 400,
-              color: i === 0 ? BRAND.colors.white : BRAND.colors.neutral200,
+              fontSize: fm.productNameUniformStyle || i === 0 ? BRAND.fontSizes.heroTitle : BRAND.fontSizes.subheadline,
+              fontWeight: fm.productNameUniformStyle || i === 0 ? 700 : 400,
+              color: fm.productNameUniformStyle || i === 0 ? BRAND.colors.white : BRAND.colors.neutral200,
               lineHeight: '1.2',
-              margin: i === 0 ? '0 0 4px 0' : '0 0 16px 0',
+              margin: i === lines.length - 1 ? '0 0 16px 0' : '0 0 4px 0',
             }}
           >
             {line}
@@ -80,17 +80,33 @@ export function ProductLaunchEmail({ frontmatter, sections }: Props) {
           </Text>
         )}
         {fm.heroImage && (
-          <Img
-            src={fm.heroImage}
-            alt={fm.productName}
-            width="480"
-            style={{
-              display: 'block',
-              margin: '16px auto 0',
-              borderRadius: `${BRAND.email.borderRadius} ${BRAND.email.borderRadius} 0 0`,
-              maxWidth: '100%',
-            }}
-          />
+          fm.heroVideoUrl ? (
+            <a href={fm.heroVideoUrl} target="_blank" rel="noopener noreferrer">
+              <Img
+                src={fm.heroImage}
+                alt={fm.productName}
+                width="480"
+                style={{
+                  display: 'block',
+                  margin: '16px auto 0',
+                  borderRadius: `${BRAND.email.borderRadius} ${BRAND.email.borderRadius} 0 0`,
+                  maxWidth: '100%',
+                }}
+              />
+            </a>
+          ) : (
+            <Img
+              src={fm.heroImage}
+              alt={fm.productName}
+              width="480"
+              style={{
+                display: 'block',
+                margin: '16px auto 0',
+                borderRadius: `${BRAND.email.borderRadius} ${BRAND.email.borderRadius} 0 0`,
+                maxWidth: '100%',
+              }}
+            />
+          )
         )}
       </Section>
 

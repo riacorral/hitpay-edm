@@ -7,6 +7,7 @@ productName: "HitPay Philippine Virtual Account\nNow Live 🚀"
 subtitle: "Need to Collect Payments from your Vendors/Business Partners?"
 secondaryEyebrowText: "All-in-One CFO Finance Stack"
 heroImage: img/philippine-va-dashboard.png
+showHelpBanner: false
 ---
 
 Hi {firstName},
@@ -61,6 +62,14 @@ No manual matching across multiple wallets and bank accounts.
 
 - Funds settle instantly the moment a transfer clears, regardless of sending bank or e-wallet
 - One flat ₱15 fee per collection - no surprise charges buried in a rate card
+
+---
+
+## How Your Funds Are Settled
+
+A Virtual Account is a collection method, not a bank account. It is not a place to hold or store funds, and it cannot be used to send money out.
+
+Every transfer received into a Virtual Account is collected into your business's "Available" HitPay Wallet — it does not sit in the Virtual Account itself. From there, it is paid out to your linked external bank account together with the rest of your HitPay sales, following your normal HitPay payout schedule (daily, weekly, or monthly) — the same route as if you accepted payments from customers.
 
 ---
 

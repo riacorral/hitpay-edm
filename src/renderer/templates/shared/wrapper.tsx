@@ -26,10 +26,22 @@ export function Wrapper({ previewText, children }: WrapperProps) {
         <style>{`@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap');`}</style>
         {/* Mobile responsiveness */}
         <style>{`
+  /* Mobile-order (text, then image) duplicate of img-text-wrap — hidden until the
+     mobile breakpoint swaps it in, so degradation without media-query support
+     still shows the (desktop-ordered) img-text-wrap row rather than nothing. */
+  table.img-text-mobile { display: none; }
   @media only screen and (max-width: 600px) {
     img { max-width: 100% !important; height: auto !important; }
     .m-block { display: block !important; width: 100% !important; box-sizing: border-box !important; padding-left: 0 !important; padding-right: 0 !important; }
     .m-hide { display: none !important; max-height: 0 !important; overflow: hidden !important; }
+    /* Swap to the mobile-ordered row instead of stacking img-text-wrap in place,
+       since img-text-wrap's column order follows desktop imagePosition (image can
+       be first) and we always want text before image on mobile. */
+    table.img-text-wrap { display: none !important; }
+    table.img-text-mobile { display: block !important; }
+    table.img-text-mobile tr { display: block !important; }
+    table.img-text-mobile td.img-text-img,
+    table.img-text-mobile td.img-text-body { display: block !important; width: 100% !important; box-sizing: border-box !important; padding-left: 0 !important; padding-right: 0 !important; }
   }
 `}</style>
         <Font

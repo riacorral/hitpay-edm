@@ -197,21 +197,29 @@ export function SectionRenderer({ section }: SectionRendererProps) {
 
     case 'image_text': {
       const isLeft = section.imagePosition === 'left';
+      const image = (
+        <Img
+          src={section.src}
+          alt={section.alt || ''}
+          width="100%"
+          style={{ display: 'block', objectFit: 'cover' as const }}
+        />
+      );
       const imgCol = (
-        <Column className="m-block" style={{ width: '42%', verticalAlign: 'middle', paddingRight: isLeft ? '16px' : '0', paddingLeft: isLeft ? '0' : '16px' }}>
-          <Img
-            src={section.src}
-            alt={section.alt || ''}
-            width="100%"
-            style={{ display: 'block', objectFit: 'cover' as const }}
-          />
+        <Column className="img-text-img" style={{ width: '42%', verticalAlign: 'middle', paddingRight: isLeft ? '16px' : '0', paddingLeft: isLeft ? '0' : '16px' }}>
+          {image}
         </Column>
       );
-      const textCol = (
-        <Column className="m-block" style={{ width: '58%', verticalAlign: 'middle' }}>
+      const textBody = (
+        <>
           {section.heading && (
-            <Text style={{ fontFamily: BRAND.fonts.headline, fontSize: BRAND.fontSizes.body, fontWeight: 700, color: BRAND.colors.textPrimary, lineHeight: '1.3', margin: '0 0 12px 0' }}>
+            <Text style={{ fontFamily: BRAND.fonts.headline, fontSize: BRAND.fontSizes.body, fontWeight: 700, color: BRAND.colors.textPrimary, lineHeight: '1.3', margin: '0 0 8px 0' }}>
               {section.heading}
+            </Text>
+          )}
+          {section.description && (
+            <Text style={{ fontFamily: BRAND.fonts.body, fontSize: BRAND.fontSizes.bodySmall, fontWeight: 400, color: BRAND.colors.textSecondary, lineHeight: '1.5', margin: '0 0 14px 0' }}>
+              {section.description}
             </Text>
           )}
           {section.items && section.items.length > 0
@@ -269,13 +277,35 @@ export function SectionRenderer({ section }: SectionRendererProps) {
                 </Text>
               )
           }
+        </>
+      );
+      const textCol = (
+        <Column className="img-text-body" style={{ width: '58%', verticalAlign: 'middle' }}>
+          {textBody}
+        </Column>
+      );
+      // Mobile gets its own row, always text-then-image regardless of desktop
+      // imagePosition — the desktop row is hidden and this one shown instead
+      // (see the img-text-wrap / img-text-mobile media-query swap in wrapper.tsx).
+      const textColMobile = (
+        <Column className="img-text-body" style={{ width: '100%' }}>
+          {textBody}
+        </Column>
+      );
+      const imgColMobile = (
+        <Column className="img-text-img" style={{ width: '100%', paddingTop: '16px' }}>
+          {image}
         </Column>
       );
       return (
         <Section style={{ padding: `16px ${BRAND.spacing.lg} 24px` }}>
-          <Row style={{ width: '100%' }}>
+          <Row className="img-text-wrap" style={{ width: '100%' }}>
             {isLeft ? imgCol : textCol}
             {isLeft ? textCol : imgCol}
+          </Row>
+          <Row className="img-text-mobile" style={{ width: '100%' }}>
+            {textColMobile}
+            {imgColMobile}
           </Row>
         </Section>
       );

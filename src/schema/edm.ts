@@ -20,16 +20,19 @@ const BaseFrontmatter = z.object({
   subject: z.string(),
   previewText: z.string().optional(),
   market: z.enum(['sg', 'my', 'ph', 'global']).default('sg'),
+  showHelpBanner: z.boolean().default(false),
 });
 
 // Template-specific frontmatter
 export const ProductLaunchFrontmatter = BaseFrontmatter.extend({
   template: z.literal('product-launch'),
   productName: z.string(),
+  productNameUniformStyle: z.boolean().default(false),
   eyebrowText: z.string().optional(),
   secondaryEyebrowText: z.string().optional(),
   subtitle: z.string().optional(),
   heroImage: z.string().optional(),
+  heroVideoUrl: z.string().url().optional(),
   ctaText: z.string().default('Get Started'),
   ctaUrl: z.string().url().optional(),
   secondaryCtaText: z.string().optional(),
@@ -179,6 +182,7 @@ export const EdmSectionSchema = z.discriminatedUnion('type', [
     alt: z.string().optional(),
     imagePosition: z.enum(['left', 'right']),
     heading: z.string().optional(),
+    description: z.string().optional(),
     text: z.string().optional(),
     items: z.array(z.object({ title: z.string(), body: z.string() })).optional(),
     orderedItems: z.array(z.string()).optional(),

@@ -4,9 +4,10 @@ subject: "Multi-currency Virtual Accounts on HitPay? Create Yours Today!"
 previewText: "Accept 12 currencies · No monthly fees · Established financial institution backing"
 market: sg
 productName: HitPay Multi-Currency Virtual Accounts Now Live 🚀
-subtitle: "Need to Collect Payments from your Vendors/Business Partners?"
+subtitle: "Need to Collect Payments from your Vendors/Business Partners/Clients?"
 secondaryEyebrowText: "All-in-One CFO Finance Stack"
 heroImage: img/multi-currency-va-dashboard.png
+showHelpBanner: false
 ---
 
 ## One Account for Customer Payments and Business Receivables
@@ -37,11 +38,11 @@ No additional sign-up. No new KYB process.
 
 ## What It's For
 
-Your Multi-Currency Virtual Accounts work for any inbound business payment — not just customer sales:
+Your Multi-Currency Virtual Accounts work for any inbound business payment - not just customer sales:
 
-- **Business collections & receivables** — collect what customers and clients owe you, all in one account
-- **Invoice receivables** — put your account and SWIFT details on invoices and get paid by direct bank transfer
-- **B2B collections** — receive high-value payments from partners, distributors, and marketplaces
+- **Business collections & receivables** - collect what customers and clients owe you, all in one account
+- **Invoice receivables** - put your account and SWIFT details on invoices and get paid by direct bank transfer
+- **B2B collections** - receive high-value payments from partners, distributors, and marketplaces
 
 [Activate Your Multi-Currency Virtual Accounts Now](https://dashboard.hit-pay.com/?utm_source=email&utm_medium=email&utm_campaign=multi-currency-collection-va&utm_content=2-activate-your-hitpay-multi-currency-virtual-accounts-now){.cta}
 
@@ -49,24 +50,29 @@ Your Multi-Currency Virtual Accounts work for any inbound business payment — n
 
 ## What You Get
 
-**1. A Dedicated Virtual Account in Your Business Name**
+**1. Get Paid by Business Customers via Bank Transfer**
 
-Receive a dedicated virtual account number and SWIFT/BIC details issued to your registered business name.
+Give corporate clients a familiar way to pay - aligned to their accounting and access requirements - by bank transfer, while keeping it within your existing HitPay payment setup.
 
-Share your account details with overseas customers, partners, and marketplaces to receive wire transfers in 12 currencies.
+**2. Know When You've Been Paid - Instantly**
 
-**2. One Dashboard. One Reconciliation Process.**
+Get real-time payment confirmation when funds arrive in the HitPay Dashboard, without waiting for bank statements or manually checking whether an invoice has been paid.
 
-Customer payments via PayNow and cards appear alongside incoming international transfers in the same transaction view.
+**3. Reconcile B2B Payments in One Place**
 
-Export once. Sync once. Reconcile once.
+Payments flow directly into your HitPay Wallet and can be tracked and reconciled alongside your other HitPay payments - no more managing bank transfers across separate systems.
 
-No manual matching across multiple systems.
+**4. Fixed, Minimal Fee per Transfer - Not a %-Based Fee**
 
-**3. Faster Access to Funds**
+Pay a small flat fee per collection, and nothing at all for most other currencies. Especially useful if your business is receiving high-value transfers, where a percentage fee would otherwise scale with the amount.
 
-- SGD payments via FAST and PayNow arrive in real time
-- USD, EUR, GBP, AUD and other supported currencies arrive via SWIFT, typically within 1–3 business days
+---
+
+## How Your Funds Are Settled
+
+A Virtual Account is a collection method, not a bank account. It is not a place to hold or store funds, and it cannot be used to send money out.
+
+Every transfer received into a Virtual Account is collected into your business's "Available" HitPay Wallet - it does not sit in the Virtual Account itself. From there, it is paid out to your linked external bank account together with the rest of your HitPay sales, following your normal HitPay payout schedule (daily, weekly, or monthly) - the same route as if you accepted payments from customers.
 
 ---
 
@@ -74,11 +80,13 @@ No manual matching across multiple systems.
 
 :::columns center
 ::column 💰 **S$0**
-Monthly fees — ever
+Monthly fees - ever
 ::column 🪙 **S$0.50**
 Per SGD collection
+::column 🪙 **A$3**
+Per AUD collection
 ::column 🌐 **Free**
-Inbound for most currencies
+Inbound for most other currencies
 :::
 
 [Get Started with Multi-Currency Virtual Accounts](https://dashboard.hit-pay.com/?utm_source=email&utm_medium=email&utm_campaign=multi-currency-collection-va&utm_content=3-get-started-with-multi-currency-virtual-accounts){.cta}

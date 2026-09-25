@@ -1,5 +1,5 @@
 import { readFileSync, existsSync } from 'fs';
-import { resolve } from 'path';
+import { resolve, join } from 'path';
 import chalk from 'chalk';
 import { parseEdm } from '../parser/markdown.js';
 import { renderEdm } from '../renderer/engine.js';
@@ -47,8 +47,16 @@ export async function createCommand(
 
   // Render to HTML and MJML
   console.log(chalk.dim('Rendering HTML...'));
-  const html = await renderEdm(edm);
+  let html = await renderEdm(edm);
   const mjml = generateMjml(edm);
+
+  // Local preview HTML is opened directly via file:// from campaigns/<slug>/, where
+  // relative "img/..." references (the portable form used in markdown + the Loops ZIP)
+  // don't resolve — rewrite them to absolute file:// paths so the browser preview works.
+  const projectRoot = process.cwd();
+  html = html.replace(/(src|href)="img\/([^"]+)"/g, (_m, attr: string, rel: string) =>
+    `${attr}="file://${join(projectRoot, 'img', rel)}"`,
+  );
 
   // Create campaign directory
   const slug = campaignSlug(edm.frontmatter.subject);
