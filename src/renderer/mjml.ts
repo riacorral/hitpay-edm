@@ -1,5 +1,6 @@
 import type { ParsedEdm, EdmSection } from '../schema/edm.js';
-import { LOGO_WHITE, LOGO_DARK, ICON_INSTAGRAM, ICON_FACEBOOK, ICON_LINKEDIN, ICON_TIKTOK, ICON_YOUTUBE, EMAIL_SIGNATURE } from './brand-assets.js';
+import { eventCardHtml, agendaHtml } from './event-card.js';
+import { LOGO_WHITE, LOGO_DARK, LOGO_DARK_OPAQUE, ICON_INSTAGRAM, ICON_FACEBOOK, ICON_LINKEDIN, ICON_TIKTOK, ICON_YOUTUBE, ICON_WEBSITE, EMAIL_SIGNATURE } from './brand-assets.js';
 
 // Footer banners are market-specific. Add files to public/brand/ to enable them.
 const FOOTER_BANNERS: Record<string, string> = {
@@ -296,6 +297,22 @@ function sectionToMjml(section: EdmSection): string {
   </mj-section>`;
     }
 
+    case 'event':
+      return `
+  <mj-section padding="0 32px 24px">
+    <mj-column>
+      <mj-raw>${eventCardHtml(section)}</mj-raw>
+    </mj-column>
+  </mj-section>`;
+
+    case 'agenda':
+      return `
+  <mj-section padding="0 32px 32px">
+    <mj-column>
+      <mj-raw>${agendaHtml(section)}</mj-raw>
+    </mj-column>
+  </mj-section>`;
+
     default:
       return '';
   }
@@ -307,6 +324,7 @@ export function generateMjml(edm: ParsedEdm): string {
   const preview = fm.previewText ? `\n    <mj-preview>${esc(fm.previewText)}</mj-preview>` : '';
 
   const hitpayWhiteLogo = LOGO_WHITE;
+  const cleanFooter = (fm as Record<string, unknown>).cleanFooter === true;
 
   let heroSection = '';
   let cobrandFooterSection = '';
@@ -329,16 +347,17 @@ export function generateMjml(edm: ParsedEdm): string {
   }
 
   if (fm.template === 'newsletter') {
+    const lightHeader = fm.headerStyle === 'light';
     heroSection = `
   <mj-section background-color="${B.white}" padding="16px 32px">
     <mj-column>
-      <mj-image src="${LOGO_DARK}" alt="HitPay" width="120" align="left" padding="0" />
+      <mj-image src="${lightHeader ? LOGO_DARK_OPAQUE : LOGO_DARK}" alt="HitPay" width="120" align="left" padding="0" />
     </mj-column>
   </mj-section>
-  <mj-section background-color="${B.deepBlue}" padding="16px 32px">
+  <mj-section background-color="${lightHeader ? B.white : B.deepBlue}" padding="${lightHeader ? '8px 32px 24px' : '16px 32px'}">
     <mj-column>
-      <mj-text font-size="24px" font-weight="700" color="${B.white}" line-height="1.3" padding="0">${esc(fm.title ?? fm.subject)}${fm.issueNumber ? ` #${fm.issueNumber}` : ''}</mj-text>
-      ${(fm.subtitle ?? fm.date) ? `<mj-text font-size="12px" color="${B.neutral200}" padding="4px 0 0">${esc(fm.subtitle ?? fm.date)}</mj-text>` : ''}
+      <mj-text font-size="${lightHeader ? '28px' : '24px'}" font-weight="700" color="${lightHeader ? B.deepBlue : B.white}" line-height="1.3" padding="0">${esc(fm.title ?? fm.subject)}${fm.issueNumber ? ` #${fm.issueNumber}` : ''}</mj-text>
+      ${(fm.subtitle ?? fm.date) ? `<mj-text font-size="12px" color="${lightHeader ? B.textSecondary : B.neutral200}" padding="4px 0 0">${esc(fm.subtitle ?? fm.date)}</mj-text>` : ''}
     </mj-column>
   </mj-section>`;
   }
@@ -566,7 +585,7 @@ export function generateMjml(edm: ParsedEdm): string {
   <mj-section background-color="${B.beige}" padding="24px 32px 16px">
     <mj-column>
       <mj-text align="center" padding="0">
-        <a href="https://www.hitpayapp.com" style="display:inline-block;vertical-align:middle;margin-right:14px;"><img src="${LOGO_DARK}" width="70" alt="HitPay" style="display:inline-block;vertical-align:middle;" /></a><a href="https://www.instagram.com/hitpayapp" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="${ICON_INSTAGRAM}" width="24" height="24" alt="Instagram" style="display:inline-block;border-radius:50%;vertical-align:middle;" /></a><a href="https://www.facebook.com/hitpayapp" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="${ICON_FACEBOOK}" width="24" height="24" alt="Facebook" style="display:inline-block;border-radius:50%;vertical-align:middle;" /></a><a href="https://www.linkedin.com/company/hit-pay/" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="${ICON_LINKEDIN}" width="24" height="24" alt="LinkedIn" style="display:inline-block;border-radius:50%;vertical-align:middle;" /></a><a href="https://www.tiktok.com/@hitpayapp" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="${ICON_TIKTOK}" width="24" height="24" alt="TikTok" style="display:inline-block;border-radius:50%;vertical-align:middle;" /></a><a href="https://www.youtube.com/@hitpayapp" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="${ICON_YOUTUBE}" width="24" height="24" alt="YouTube" style="display:inline-block;border-radius:50%;vertical-align:middle;" /></a>
+        ${cleanFooter ? '' : `<a href="https://www.hitpayapp.com" style="display:inline-block;vertical-align:middle;margin-right:14px;"><img src="${LOGO_DARK}" width="70" alt="HitPay" style="display:inline-block;vertical-align:middle;" /></a>`}${cleanFooter ? `<a href="https://www.hitpayapp.com" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="${ICON_WEBSITE}" width="24" height="24" alt="Website" style="display:inline-block;border-radius:50%;vertical-align:middle;" /></a>` : ''}<a href="https://www.instagram.com/hitpayapp" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="${ICON_INSTAGRAM}" width="24" height="24" alt="Instagram" style="display:inline-block;border-radius:50%;vertical-align:middle;" /></a><a href="https://www.facebook.com/hitpayapp" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="${ICON_FACEBOOK}" width="24" height="24" alt="Facebook" style="display:inline-block;border-radius:50%;vertical-align:middle;" /></a><a href="https://www.linkedin.com/company/hit-pay/" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="${ICON_LINKEDIN}" width="24" height="24" alt="LinkedIn" style="display:inline-block;border-radius:50%;vertical-align:middle;" /></a><a href="https://www.tiktok.com/@hitpayapp" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="${ICON_TIKTOK}" width="24" height="24" alt="TikTok" style="display:inline-block;border-radius:50%;vertical-align:middle;" /></a><a href="https://www.youtube.com/@hitpayapp" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="${ICON_YOUTUBE}" width="24" height="24" alt="YouTube" style="display:inline-block;border-radius:50%;vertical-align:middle;" /></a>
       </mj-text>
     </mj-column>
   </mj-section>

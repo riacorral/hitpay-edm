@@ -167,6 +167,79 @@ function parseBody(body: string): EdmSection[] {
       continue;
     }
 
+    // Event card block: ::: event
+    // Format (one "key: value" per line, "- " lines are takeaways):
+    //   ::: event
+    //   date: 6 Oct
+    //   day: Tue
+    //   tag: Online · Free webinar
+    //   title: Event name
+    //   when: 10:30–11:30am SGT
+    //   where: Online
+    //   image: https://... | alt text
+    //   for: Who this is for
+    //   list: Optional heading for the - list (default "What you'll take away")
+    //   - Takeaway one
+    //   note: Extra line (speakers, offers)
+    //   cta: Button text | https://...
+    //   :::
+    if (trimmed === '::: event') {
+      i++;
+      const fields: Record<string, string> = {};
+      const takeaways: string[] = [];
+      while (i < lines.length && lines[i].trim() !== ':::') {
+        const bt = lines[i].trim();
+        const kv = bt.match(/^([a-z]+):\s*(.+)$/);
+        if (/^[-*]\s+/.test(bt)) takeaways.push(bt.replace(/^[-*]\s+/, ''));
+        else if (kv) fields[kv[1]] = kv[2].trim();
+        i++;
+      }
+      i++; // skip closing :::
+      const splitPipe = (v?: string) => {
+        if (!v) return [undefined, undefined];
+        const idx = v.lastIndexOf(' | ');
+        return idx === -1 ? [v, undefined] : [v.slice(0, idx).trim(), v.slice(idx + 3).trim()];
+      };
+      const [image, imageAlt] = splitPipe(fields.image);
+      const [ctaText, ctaUrl] = splitPipe(fields.cta);
+      sections.push({
+        type: 'event',
+        date: fields.date ?? '',
+        day: fields.day,
+        tag: fields.tag,
+        title: fields.title ?? '',
+        when: fields.when,
+        where: fields.where,
+        image,
+        imageAlt,
+        for: fields.for,
+        takeaways,
+        listLabel: fields.list,
+        note: fields.note,
+        ctaText,
+        ctaUrl,
+      });
+      continue;
+    }
+
+    // Agenda block: ::: agenda [Heading]
+    // Each line: date | day | title | format
+    const agendaMatch = trimmed.match(/^:::\s+agenda(?:\s+(.+))?$/);
+    if (agendaMatch) {
+      i++;
+      const items: { date: string; day?: string; title: string; format?: string }[] = [];
+      while (i < lines.length && lines[i].trim() !== ':::') {
+        const parts = lines[i].trim().split(/\s+\|\s+/);
+        if (parts.length >= 3) {
+          items.push({ date: parts[0], day: parts[1] || undefined, title: parts[2], format: parts[3] });
+        }
+        i++;
+      }
+      i++; // skip closing :::
+      if (items.length > 0) sections.push({ type: 'agenda', heading: agendaMatch[1], items });
+      continue;
+    }
+
     // Bullet-list block: ::: bullets
     // Format:
     //   ::: bullets

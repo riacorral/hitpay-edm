@@ -1,0 +1,152 @@
+<mjml>
+  <mj-head>
+    <mj-font name="Manrope" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap" />
+    <mj-preview>A live walkthrough on selling online and in person from one account</mj-preview>
+    <mj-attributes>
+      <mj-all font-family="Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif" />
+      <mj-section padding="0" background-color="#FFFFFF" />
+      <mj-column padding="0" />
+      <mj-text font-family="Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif" padding="0" />
+      <mj-image padding="0" />
+    </mj-attributes>
+    <mj-style>
+      a { color: inherit; text-decoration: none; }
+      p { margin: 0 !important; }
+      /* Mobile-order (text, then image) duplicate of img-text-wrap — hidden until the
+         mobile breakpoint swaps it in, so degradation without media-query support
+         still shows the (desktop-ordered) img-text-wrap table rather than nothing. */
+      table.img-text-mobile { display: none; }
+      @media only screen and (max-width:480px) {
+        /* Swap to the mobile-ordered table instead of stacking img-text-wrap in
+           place, since img-text-wrap's column order follows desktop imagePosition
+           (image can be first) and we always want text before image on mobile. */
+        table.img-text-wrap { display: none !important; }
+        table.img-text-mobile { display: block !important; }
+        table.img-text-mobile tr { display: block !important; }
+        table.img-text-mobile td.img-text-img,
+        table.img-text-mobile td.img-text-body { display: block !important; width: 100% !important; max-width: 100% !important; box-sizing: border-box !important; padding: 0 !important; }
+        table.img-text-mobile td.img-text-img { padding-top: 16px !important; }
+        table.img-text-mobile td.img-text-img img { width: 100% !important; height: auto !important; }
+        /* Stack stat/column cards vertically on mobile */
+        table.col-wrap tr { display: block !important; }
+        td.col-card { display: block !important; width: 100% !important; max-width: 100% !important; box-sizing: border-box !important; margin-bottom: 8px !important; }
+        td.col-spacer { display: none !important; width: 0 !important; }
+        /* Wrap secondary eyebrow pill text onto its own line */
+        .eyebrow-sep { display: none !important; }
+        .eyebrow-break { display: block !important; }
+      }
+    </mj-style>
+  </mj-head>
+  <mj-body background-color="#F0F2F5" width="600px">
+    
+  <mj-section background-color="#FFFFFF" padding="16px 32px">
+    <mj-column>
+      <mj-image src="img/inline-1.png" alt="HitPay" width="120" align="left" padding="0" />
+    </mj-column>
+  </mj-section>
+  <mj-section background-color="#FFFFFF" padding="8px 32px 24px">
+    <mj-column>
+      <mj-text font-size="28px" font-weight="700" color="#002771" line-height="1.3" padding="0">Selling at the counter and online, on one account</mj-text>
+      
+    </mj-column>
+  </mj-section>
+    <mj-section padding="32px 0 0" background-color="#FFFFFF"><mj-column /></mj-section>
+    
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text align="left" font-size="14px" color="#61667C" line-height="1.6" padding="0">Hi {firstName},</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text align="left" font-size="14px" color="#61667C" line-height="1.6" padding="0">A quick reminder that our webinar for merchants in Malaysia is this Friday, and we'd love to see you there. If you haven't registered yet, grab your spot on Luma.</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 24px">
+    <mj-column>
+      <mj-raw><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border:1px solid #D4D9E0;border-radius:12px;border-collapse:separate;background-color:#FFFFFF;">
+<tr><td style="padding:24px 24px 20px 24px;">
+  <table width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+    <td width="64" valign="top" style="width:64px;">
+      <table width="64" cellpadding="0" cellspacing="0" border="0"><tr><td align="center" bgcolor="#002771" style="background-color:#002771;border-radius:8px;padding:10px 0 8px 0;text-align:center;">
+        <div style="font-family:Hauora, Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;font-size:26px;font-weight:700;color:#FFFFFF;line-height:1;">16</div>
+        <div style="font-family:Hauora, Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#FFFFFF;line-height:1.4;margin-top:4px;">Oct</div>
+        <div style="font-family:Hauora, Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#B8C4DE;line-height:1.4;">Fri</div>
+      </td></tr></table>
+    </td>
+    <td valign="top" style="padding-left:16px;">
+      <table cellpadding="0" cellspacing="0" border="0" style="margin:0 0 8px 0;"><tr><td style="background-color:#EBF0FA;border-radius:12px;padding:3px 10px;font-family:Hauora, Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#002771;">Online · Webinar</td></tr></table>
+      
+      <div style="font-family:Hauora, Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;font-size:13px;font-weight:600;color:#03102F;line-height:1.6;">3–4pm MYT<br/>Online</div>
+    </td>
+  </tr></table>
+</td></tr>
+<tr><td style="padding:0 24px 20px 24px;"><img src="img/webinar-grow-beyond-the-till.jpg" alt="From counter to cart, then take the till further with HitPay" width="100%" style="display:block;width:100%;max-width:100%;height:auto;border-radius:8px;border:0;" /></td></tr><tr><td style="padding:0 24px 16px 24px;"><div style="font-family:Hauora, Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#2465DE;line-height:1.4;margin:0 0 6px 0;">Who it's for</div><div style="font-family:Hauora, Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;">Run a retail, F&amp;B, or service business that's counter-first and ready to sell online? Or already online and ready to bring in-person sales onto the same account? This hour is for you, and you don't need to replace what already works.</div></td></tr><tr><td style="padding:0 24px 16px 24px;"><div style="font-family:Hauora, Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#2465DE;line-height:1.4;margin:0 0 6px 0;">What you'll take away</div><table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:8px;"><tr>
+<td width="18" valign="top" style="font-family:Hauora, Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;font-size:14px;font-weight:700;color:#2465DE;line-height:1.6;">&#10003;</td>
+<td valign="top" style="font-family:Hauora, Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;padding-left:6px;">Part 1 (30 min): Taking your counter online, with a light note on Bukku.</td>
+</tr></table><table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:8px;"><tr>
+<td width="18" valign="top" style="font-family:Hauora, Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;font-size:14px;font-weight:700;color:#2465DE;line-height:1.6;">&#10003;</td>
+<td valign="top" style="font-family:Hauora, Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;padding-left:6px;">Part 2 (30 min): In-person payments on the same account as your online sales.</td>
+</tr></table><table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:0;"><tr>
+<td width="18" valign="top" style="font-family:Hauora, Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;font-size:14px;font-weight:700;color:#2465DE;line-height:1.6;">&#10003;</td>
+<td valign="top" style="font-family:Hauora, Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;font-size:14px;color:#61667C;line-height:1.6;padding-left:6px;">You'll leave with a clear path from POS to checkout, and back.</td>
+</tr></table></td></tr><tr><td style="padding:0 24px 20px 24px;"><div style="background-color:#F5F7FC;border-radius:8px;padding:12px 14px;font-family:Hauora, Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;font-size:13px;color:#61667C;line-height:1.6;">This webinar is only for HitPay official merchants.</div></td></tr><tr><td style="padding:0 24px 24px 24px;"><table cellpadding="0" cellspacing="0" border="0"><tr><td bgcolor="#2465DE" style="background-color:#2465DE;border-radius:6px;"><a href="https://luma.com/8w0yuvet?utm_source=email&amp;utm_medium=email&amp;utm_campaign=my-webinar-reminder-16-oct&amp;utm_content=1-register-for-the-webinar" style="display:inline-block;padding:12px 24px;font-family:Hauora, Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;font-size:15px;font-weight:600;color:#FFFFFF;text-decoration:none;">Register for the webinar →</a></td></tr></table></td></tr>
+</table></mj-raw>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 24px">
+    <mj-column>
+      <mj-divider border-color="#D4D9E0" border-width="1px" padding="8px 0 0" />
+    </mj-column>
+  </mj-section>
+  <mj-section padding="16px 32px 24px">
+    <mj-column>
+      <mj-text align="left" font-size="16px" font-weight="700" color="#002771" line-height="1.3" padding="0">Can't make it?</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text align="left" font-size="14px" color="#61667C" line-height="1.6" padding="0">We'd love to see you at the next one. <a href="https://luma.com/hitpay?utm_source=email&amp;utm_medium=email&amp;utm_campaign=my-webinar-reminder-16-oct&amp;utm_content=2-follow-hitpay-on-luma" style="color:#2465DE;text-decoration:underline;">Follow HitPay on Luma</a> and you'll hear about it first.</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text align="left" font-size="14px" color="#61667C" line-height="1.6" padding="0">Questions? Reply to this email and we will help you out.</mj-text>
+    </mj-column>
+  </mj-section>
+  <mj-section padding="0 32px 16px">
+    <mj-column>
+      <mj-text align="left" font-size="14px" color="#61667C" line-height="1.6" padding="0"><b style="color:#03102F;">The HitPay Team</b></mj-text>
+    </mj-column>
+  </mj-section>
+    
+    
+  
+  <!-- Footer: help banner -->
+  
+  <!-- Footer -->
+  <mj-section background-color="#F9F9F6" padding="24px 32px 16px">
+    <mj-column>
+      <mj-text align="center" padding="0">
+        <a href="https://www.hitpayapp.com" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="img/inline-2.png" width="24" height="24" alt="Website" style="display:inline-block;border-radius:50%;vertical-align:middle;" /></a><a href="https://www.instagram.com/hitpayapp" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="img/inline-3.png" width="24" height="24" alt="Instagram" style="display:inline-block;border-radius:50%;vertical-align:middle;" /></a><a href="https://www.facebook.com/hitpayapp" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="img/inline-4.png" width="24" height="24" alt="Facebook" style="display:inline-block;border-radius:50%;vertical-align:middle;" /></a><a href="https://www.linkedin.com/company/hit-pay/" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="img/inline-5.png" width="24" height="24" alt="LinkedIn" style="display:inline-block;border-radius:50%;vertical-align:middle;" /></a><a href="https://www.tiktok.com/@hitpayapp" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="img/inline-6.png" width="24" height="24" alt="TikTok" style="display:inline-block;border-radius:50%;vertical-align:middle;" /></a><a href="https://www.youtube.com/@hitpayapp" style="display:inline-block;vertical-align:middle;margin:0 3px;"><img src="img/inline-7.png" width="24" height="24" alt="YouTube" style="display:inline-block;border-radius:50%;vertical-align:middle;" /></a>
+      </mj-text>
+    </mj-column>
+  </mj-section>
+  <!-- Footer banner (conditional — add market URL to FOOTER_BANNERS to enable) -->
+  
+  <!-- Footer signature image -->
+  <mj-section background-color="#F9F9F6" padding="0">
+    <mj-column padding="0">
+      <mj-image src="img/inline-8.png" alt="HitPay products" width="600px" padding="0" />
+    </mj-column>
+  </mj-section>
+  <!-- Footer text -->
+  <mj-section background-color="#F9F9F6" padding="12px 32px 24px">
+    <mj-column>
+      <mj-divider border-color="#D4D9E0" border-width="1px" padding="0 0 12px" />
+      <mj-text align="center" font-size="11px" color="#9295A5" line-height="16px" padding="0 0 4px">HitPay Payment Solutions Pte Ltd</mj-text>
+      <mj-text align="center" font-size="9px" color="#D4D9E0" line-height="14px" padding="0"><a href="{unsubscribe_link}" style="color:#D4D9E0;text-decoration:none;font-size:9px;">Unsubscribe</a></mj-text>
+    </mj-column>
+  </mj-section>
+  </mj-body>
+</mjml>

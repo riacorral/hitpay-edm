@@ -54,6 +54,8 @@ export const NewsletterFrontmatter = BaseFrontmatter.extend({
   title: z.string().optional(),
   subtitle: z.string().optional(),
   heroImage: z.string().optional(),
+  headerStyle: z.enum(['dark', 'light']).optional(),
+  cleanFooter: z.boolean().optional(),
 });
 
 export const PromotionalFrontmatter = BaseFrontmatter.extend({
@@ -202,6 +204,33 @@ export const EdmSectionSchema = z.discriminatedUnion('type', [
   z.object({
     type: z.literal('image_row'),
     images: z.array(z.object({ src: z.string(), alt: z.string().optional() })),
+  }),
+  z.object({
+    type: z.literal('event'),
+    date: z.string(),
+    day: z.string().optional(),
+    tag: z.string().optional(),
+    title: z.string(),
+    when: z.string().optional(),
+    where: z.string().optional(),
+    image: z.string().optional(),
+    imageAlt: z.string().optional(),
+    for: z.string().optional(),
+    takeaways: z.array(z.string()),
+    listLabel: z.string().optional(),
+    note: z.string().optional(),
+    ctaText: z.string().optional(),
+    ctaUrl: z.string().optional(),
+  }),
+  z.object({
+    type: z.literal('agenda'),
+    heading: z.string().optional(),
+    items: z.array(z.object({
+      date: z.string(),
+      day: z.string().optional(),
+      title: z.string(),
+      format: z.string().optional(),
+    })),
   }),
   z.object({
     type: z.literal('columns'),

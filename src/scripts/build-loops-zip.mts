@@ -93,7 +93,8 @@ async function main() {
     if (/^https?:|^data:/i.test(src)) return full; // remote/data handled elsewhere
     const name = basename(src);
     if (imgFiles.some(f => f.name === name)) return full; // already bundled (brand/remote)
-    const abs = join(process.cwd(), src);
+    const localPath = src.startsWith('file://') ? src.slice(7) : src;
+    const abs = localPath.startsWith('/') ? localPath : join(process.cwd(), localPath);
     if (existsSync(abs)) {
       imgFiles.push({ name, buffer: readFileSync(abs) });
       console.log(`  + ${name}  (local)`);

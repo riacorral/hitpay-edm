@@ -4,6 +4,7 @@ import { BRAND } from '../../../brand/hitpay.js';
 import { Button } from './button.js';
 import { Divider } from './divider.js';
 import { MetricCard } from './card.js';
+import { eventCardHtml, agendaHtml } from '../../event-card.js';
 import type { EdmSection } from '../../../schema/edm.js';
 
 interface SectionRendererProps {
@@ -430,6 +431,20 @@ export function SectionRenderer({ section }: SectionRendererProps) {
         </Section>
       );
     }
+
+    case 'event':
+      return (
+        <Section style={{ padding: `0 ${BRAND.spacing.lg} 24px` }}>
+          <div dangerouslySetInnerHTML={{ __html: eventCardHtml(section) }} />
+        </Section>
+      );
+
+    case 'agenda':
+      return (
+        <Section style={{ padding: `0 ${BRAND.spacing.lg} 32px` }}>
+          <div dangerouslySetInnerHTML={{ __html: agendaHtml(section) }} />
+        </Section>
+      );
 
     case 'feature_card': {
       const isLeft = section.imagePosition === 'left';

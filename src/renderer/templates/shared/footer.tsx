@@ -2,6 +2,7 @@ import React from 'react';
 import { join } from 'path';
 import { Section, Row, Column, Text, Link, Hr, Img } from '@react-email/components'; // Img used for banner + social icons
 import { BRAND } from '../../../brand/hitpay.js';
+import { ICON_WEBSITE } from '../../brand-assets.js';
 
 const CDN_LOCAL = join(process.cwd(), 'public', 'brand');
 const EMAIL_SIGNATURE = `${CDN_LOCAL}/email-signature.png`;
@@ -27,7 +28,10 @@ function SocialIcon({ name, href, src }: { name: string; href: string; src: stri
   );
 }
 
-export function Footer({ market = 'sg' }: { market?: string }) {
+export function Footer({ market = 'sg', clean = false }: { market?: string; clean?: boolean }) {
+  const icons = clean
+    ? [...SOCIAL_ICONS, { name: 'Website', href: BRAND.defaults.website, src: ICON_WEBSITE }]
+    : SOCIAL_ICONS;
   const bannerSrc = FOOTER_BANNERS[market];
   return (
     <Section>
@@ -37,12 +41,14 @@ export function Footer({ market = 'sg' }: { market?: string }) {
           <table cellPadding={0} cellSpacing={0} style={{ margin: '0 auto' }}>
             <tbody>
               <tr>
+                {!clean && (
                 <td style={{ paddingRight: '16px', verticalAlign: 'middle' }}>
                   <Link href={BRAND.defaults.website} style={{ textDecoration: 'none' }}>
                     <Img src={BRAND.logo.dark} alt="HitPay" width={70} style={{ display: 'block' }} />
                   </Link>
                 </td>
-                {SOCIAL_ICONS.map(s => (
+                )}
+                {icons.map(s => (
                   <SocialIcon key={s.name} {...s} />
                 ))}
               </tr>

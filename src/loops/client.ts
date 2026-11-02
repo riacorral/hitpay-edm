@@ -62,6 +62,11 @@ export async function loopsFetch(
   const headers: Record<string, string> = {
     Cookie: cookieHeader(),
     'Content-Type': 'application/json',
+    // Loops rejects dashboard API calls (401) that lack browser-like headers
+    Origin: BASE_URL,
+    Referer: `${BASE_URL}/campaigns`,
+    'User-Agent':
+      'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36',
   };
   if (method === 'PUT') {
     headers['X-Request-Timestamp'] = Date.now().toString();
